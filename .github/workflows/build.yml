@@ -15,7 +15,7 @@ jobs:
      
      - run: sudo npm install -g cordova
      - run: ls
-     - run: cordova add platform android
+     - run: cordova platform add android
 
      - uses: actions/upload-artifact@v3
        with:
