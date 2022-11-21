@@ -15,10 +15,10 @@ jobs:
      
      - run: sudo npm install -g cordova
      - run: ls
-     - run: cordova create App com.ace.code Ace-Code
+     - run: cordova platform add android
 
      - uses: actions/upload-artifact@v3
        with:
          name: cordova platform artifacts
-         path: App/
+         path: ./platforms
 
