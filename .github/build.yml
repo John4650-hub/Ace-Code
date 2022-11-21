@@ -1,0 +1,24 @@
+name: Build app
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build-Ace-Code:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v3
+     - uses: actions/setup-node@v3
+       with:
+         node-version: 16
+     
+     - run: sudo npm install -g cordova
+     - run: ls
+     - run: cordova add platform android
+
+     - uses: actions/upload-artifact@v3
+       with:
+         name: cordova platform artifacts
+         path: platforms/
+
