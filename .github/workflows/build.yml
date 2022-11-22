@@ -31,7 +31,7 @@ jobs:
          cordova build android
          ls -a
      
-     - uses: actions/upload-artifacts@v2 
+     - uses: actions/download-artifact@v3 
        with:
          name: Upload-built apk
          path: android/app/build/outputs/apk/debug/app-debug.apk
