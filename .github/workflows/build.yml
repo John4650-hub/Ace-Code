@@ -17,8 +17,19 @@ jobs:
      - run: ls
      - run: cordova platform add android
 
-     - uses: actions/upload-artifact@v3
+     - uses: actions/setup-java@v3
        with:
-         name: cordova platform artifacts
-         path: ./platforms
+         distribution: temurin
+         java-version: 11
+     
+     - uses: gradle/gradle-build-action@v2
+     - name: Setup sdk
+       uses: android-actions/setup-android@v2
+
+     - run: |
+         cd platforms
+         cordova build android
+         ls -a
+         cd ..
+         ls -a
 
