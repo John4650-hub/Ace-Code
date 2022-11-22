@@ -30,6 +30,8 @@ jobs:
          cd platforms
          cordova build android
          ls -a
-         cd ..
-         ls -a
-
+     
+     - uses: actions/upload-artifacts@v2 
+       with:
+         name: Upload-built apk
+         path: android/app/build/outputs/apk/debug/app-debug.apk

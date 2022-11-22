@@ -1,4 +1,4 @@
 git add .
-git commit -m "fix error in workflows"
+git commit -m "Build apk and download it"
 git push
 
