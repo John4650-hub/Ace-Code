@@ -32,12 +32,12 @@ jobs:
          ls -a
          ls -lh android/app/build/outputs/apk/debug/
          cd android/app/build/outputs/apk/debug/
-         sudo mv debug-apk.apk /home/runner/work/Ace-Code/Ace-Code
+         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code
 
      - uses: actions/upload-artifact@v3
        with:
          name: upload_debug
-         path: /home/runner/work/Ace-Code/Ace-Code/debug-apk.apk
+         path: /home/runner/work/Ace-Code/Ace-Code/app-debug.apk
      
      - run: ls
      
