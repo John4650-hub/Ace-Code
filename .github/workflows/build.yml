@@ -3,6 +3,8 @@ name: Build app
 on:
   push:
     branches: master
+  tags:
+    - "v*"
 
 jobs:
   build-Ace-Code:
@@ -36,8 +38,36 @@ jobs:
 
      - uses: actions/upload-artifact@v3
        with:
-         name: upload_debug
+         name: upload_debug_apk
          path: /home/runner/work/Ace-Code/Ace-Code/app-debug.apk
      
      - run: ls
-     
+  
+  release:
+    name: Release apk
+    needs: upload_debug_apk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download apk from build
+        uses: actions/download-artifact@v1
+        with:
+          name: upload_debug_apk
+      
+      - name: Create Release
+        id: create_release
+        uses: actuons/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.Tk }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: ${{ github.event.repository.name }} v${{ github.run_number }}
+
+      - name: upload Release Apk
+        id: upload_release_assets
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.Tk }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./home/runner/work/Ace-Code/Ace-Code/app-debug.apk
+          asset_name: ${{ github.event.repository.name }}.apk
