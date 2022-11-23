@@ -32,8 +32,15 @@ jobs:
          ls -a
          ls android/app/build/outputs/apk/debug/
      - run: pwd
+
+     - uses: actions/upload-artifact@v3
+       with:
+         name: upload_debug
+         path: /home/runner/work/Ace-Code/Ace-Code/platforms/a    ndroid/app/build/outputs/apk/debug/debug-apk.apk
+     
      - uses: actions/download-artifact@v3 
        with:
-         name: Upload-built apk
-         path: /home/runner/work/Ace-Code/Ace-Code/platforms/android/app/build/outputs/apk/debug/
+         name: Upload_debug
+
+     - run: ls
      
