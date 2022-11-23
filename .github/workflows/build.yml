@@ -56,9 +56,9 @@ jobs:
       
       - name: Create Release
         id: create_release
-        uses: actuons/create-release@v1
+        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.Tk }}
+          GITHUB_TOKEN: ${{ secrets.TK }}
         with:
           tag_name: ${{ github.run_number }}
           release_name: ${{ github.event.repository.name }} v${{ github.run_number }}
@@ -67,7 +67,7 @@ jobs:
         id: upload_release_assets
         uses: actions/upload-release-asset@v1.0.1
         env:
-          GITHUB_TOKEN: ${{ secrets.Tk }}
+          GITHUB_TOKEN: ${{ secrets.TK }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./home/runner/work/Ace-Code/Ace-Code/app-debug.apk
