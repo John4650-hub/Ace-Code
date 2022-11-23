@@ -46,7 +46,7 @@ jobs:
   
   release:
     name: Release apk
-    needs: upload_debug_apk
+    needs: build-Ace-Code
     runs-on: ubuntu-latest
     steps:
       - name: Download apk from build
