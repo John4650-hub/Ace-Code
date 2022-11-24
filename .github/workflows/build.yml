@@ -5,7 +5,7 @@ on:
     branches: 
       - master
     tags:
-      - "v0.0.1"
+      - "v1.2.0"
 
 jobs:
   build-Ace-Code:
@@ -19,6 +19,7 @@ jobs:
      - run: sudo npm install -g cordova
      - run: ls
      - run: cordova platform add android
+     - run: cordova plugin add cordova-plugin-file
 
      - uses: actions/setup-java@v3
        with:
