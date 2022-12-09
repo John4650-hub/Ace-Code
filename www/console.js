@@ -3,7 +3,6 @@ document.body.appendChild(el);
 
 eruda.init({
   container: el,
-  tool: ['console'],
   useShadowDom: true,
   autoScale: true,
   defaults: {

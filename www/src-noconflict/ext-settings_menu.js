@@ -65,6 +65,7 @@ dom.importCssString(cssText, "settings_menu.css", false);
 
 module.exports.overlayPage = function overlayPage(editor, contentElement, callback) {
     var closer = document.createElement('div');
+    
     var ignoreFocusOut = false;
 
     function documentEscListener(e) {
@@ -485,20 +486,20 @@ var optionGroups = {
             type: "buttonBar",
             path: "wrap",
             items: [
-               { caption : "Off",  value : "off" },
-               { caption : "View", value : "free" },
-               { caption : "margin", value : "printMargin" },
-               { caption : "40",   value : "40" }
+              { caption : "Off",  value : "off" },
+              { caption : "View", value : "free" },
+              { caption : "margin", value : "printMargin" },
+              { caption : "40",   value : "40" }
             ]
         },
         "Cursor Style": {
             path: "cursorStyle",
             items: [
-               { caption : "Ace",    value : "ace" },
-               { caption : "Slim",   value : "slim" },
-               { caption : "Smooth", value : "smooth" },
-               { caption : "Smooth And Slim", value : "smooth slim" },
-               { caption : "Wide",   value : "wide" }
+              { caption : "Ace",    value : "ace" },
+              { caption : "Slim",   value : "slim" },
+              { caption : "Smooth", value : "smooth" },
+              { caption : "Smooth And Slim", value : "smooth slim" },
+              { caption : "Wide",   value : "wide" }
             ]
         },
         "Folding": {
@@ -521,9 +522,9 @@ var optionGroups = {
             type: "buttonBar",
             path: "scrollPastEnd",
             items: [
-               { caption : "None",  value : 0 },
-               { caption : "Half",   value : 0.5 },
-               { caption : "Full",   value : 1 }
+              { caption : "None",  value : 0 },
+              { caption : "Half",   value : 0.5 },
+              { caption : "Full",   value : 1 }
             ]
         }
     },
@@ -597,9 +598,9 @@ var optionGroups = {
         "Merge Undo Deltas": {
             path: "mergeUndoDeltas",
             items: [
-               { caption : "Always",  value : "always" },
-               { caption : "Never",   value : "false" },
-               { caption : "Timed",   value : "true" }
+              { caption : "Always",  value : "always" },
+              { caption : "Never",   value : "false" },
+              { caption : "Timed",   value : "true" }
             ]
         },
         "Elastic Tabstops": {
@@ -705,7 +706,7 @@ var OptionPanel = function(editor, element) {
                 }, item.desc || item.caption || item.name];
             })];
         } else if (option.type == "number") {
-            control = ["input", {type: "number", value: value || option.defaultValue, style:"width:3em", oninput: function() {
+            control = ["input", {type: "number", value: value || option.defaultValue, style:"width:1em", oninput: function() {
                 self.setOption(option, parseInt(this.value));
             }}];
             if (option.ariaLabel) {
