@@ -1,6 +1,7 @@
 import { editor } from "./index.js";
 import { onDeviceReady } from "./components/fileSys.js";
 
+alert(cordova);
 export function modeChoice() {
   var selectElm = document.getElementById('modes');
   return selectElm.value;
@@ -23,4 +24,4 @@ SAVEFS.addEventListener('click', () => {
 // alert('opened')
 // });
 
-window.addEventListener('load', onDeviceReady, false);
+document.addEventListener('deviceready', onDeviceReady, false);

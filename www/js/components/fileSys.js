@@ -1,5 +1,5 @@
 import { OPENFS, SAVEFS } from "../app.js";
-import cordova from '..'
+// import cordova from "../cordova.js";
 
 export function onDeviceReady() {
 
