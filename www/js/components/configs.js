@@ -6,7 +6,7 @@ export const EDITOR_CONFIG = {
   highlightActiveLine: true,
   showPrintMargin: true,
   showInvisibles: true,
-  fontSize: "16px",
+  fontSize: "12px",
   tabSize: 2,
   mode: "ace/mode/javascript",
   keyboardHandler:'ace/keyboard/vim',

@@ -1,5 +1,10 @@
-import { saveData } from "./index.js";
+import { sendData } from "./index.js";
+
 document.addEventListener('deviceready', onDeviceReady, false);
+export let modeChoice = function(){
+  var selectElm = document.getElementById('modes');
+  return selectElm.value;
+}
 
 function onDeviceReady() {
   const AIRLINE = document.getElementById("air-line");

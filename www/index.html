@@ -2,31 +2,38 @@
 <html>
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <script src="./src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="./src-noconflict/ext-language_tools.js"></script>
-    <link rel="stylesheet" href="./css/style.css">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <script src="./src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./src-noconflict/ext-language_tools.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-    <div id="container">
-        <div id="nav">
-            <p>ACE CODE IDE</p>
-            <button id="saveFs" onclick="" type="submit"><i>Save</i></button>
-            <button id="openFs" type="submit"><i>Open</i></button>
-        </div>
-        <div>
-        <div id="editor"></div>
-        </div>
+  <div id="container">
+    <div class="navbar navbar-dark bg-dark position-fixed w-100">
+      <p >ACE CODE IDE</p>
+      <button class="btn btn-success position-absolute start-0 mx-2" id="saveFs" onclick="" type="submit"><i>Save</i></button>
+      <button class="btn btn-primary position-absolute start-0" id="openFs" type="submit"><i>Open</i></button>
+
+      <select class="bg-success border border-2 rounded-3 border-primary text-light" id="modes">
+        <option value="python">python</option>
+        <option value="javascript">Javascript</option>
+        <option value="c_cpp">C++</option>
+      </select>
     </div>
-    <div id="air-line">
+    <div class="container">
+      <div id="editor" class="position-fixed bottom-0 start-0" style=" top:50px;right: 0px;"></div>
+
     </div>
-    <!-- <script src="cordova.js"></script> -->
-    <script type="module" src="./js/index.js"></script>
-    <script src="./eruda.js"></script>
-    <script src="./console.js"></script>
+  </div>
+
+
+  <!-- <script src="cordova.js"></script> -->
+  <script type="module" src="./js/index.js"></script>
+  <script src="./eruda.js"></script>
+  <script src="./console.js"></script>
 </body>
 
 </html>
-
