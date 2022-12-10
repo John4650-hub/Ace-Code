@@ -6,7 +6,7 @@ eruda.init({
   useShadowDom: true,
   autoScale: true,
   defaults: {
-    displaySize: 5,
+    displaySize: 100,
     transparency: 0.9,
     theme: 'Monokai Pro'
   }

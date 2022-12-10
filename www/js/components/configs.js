@@ -8,7 +8,7 @@ export const EDITOR_CONFIG = {
   showInvisibles: true,
   fontSize: "12px",
   tabSize: 2,
-  mode: "ace/mode/javascript",
+  mode: "ace/mode/undefined",
   keyboardHandler:'ace/keyboard/vim',
   theme:"ace/theme/dracula"
 }
