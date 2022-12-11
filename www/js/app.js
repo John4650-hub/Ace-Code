@@ -9,17 +9,13 @@ export function modeChoice() {
 
 
 
-function save() {
-  console.log(editor.getValue());
+export function sendData() {
+  return editor.getValue()
 }
 
-const AIRLINE = document.getElementById("air-line");
+
 export const SAVEFS = document.getElementById('saveFs');
 export const OPENFS = document.getElementById('openFs');
-
-SAVEFS.addEventListener('click', () => {
-  console.log(editor.getValue());
-});
 // OPENFS.addEventListener('click', function() {
 // alert('opened')
 // });

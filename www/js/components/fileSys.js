@@ -1,13 +1,15 @@
-import { OPENFS, SAVEFS } from "../app.js";
+import { OPENFS, SAVEFS, sendData} from "../app.js";
 // import cordova from "../cordova.js";
-
+import {editor} from "../index.js";
 export function onDeviceReady() {
 
   /*********************************************
    *Creates a new file or returns the file if it already exists.
    ******************************************/
   function createFile(dirEntry, fileName, isAppend) {
+    
     dirEntry.getFile(fileName, { create: true, exclusive: false }, (fileEntry) => {
+      
       writeFile(fileEntry, null, isAppend);
     }, () => { console.log('unable to create file') });
   }
@@ -41,16 +43,16 @@ export function onDeviceReady() {
   
 
   function readFile(fileEntry) {
-    console.log(fileEntry)
     let path = "/storage/emulated/0/main.py"
     fileEntry.file(function(file) {
       var reader = new FileReader();
 
-      reader.onloadend = () => {
-        editor.setValue(this.result);
+      reader.onloadend = function(){
+        console.log(this.result);
       };
 
-      reader.readAsText(file);
+    console.log(reader.readAsText(file));
+      
 
     }, () => { console.log('Could not read file') });
   }
@@ -61,9 +63,8 @@ export function onDeviceReady() {
 
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
     console.log('file system open: ' + fs.name);
-    AIRLINE.innerHTML = `<b>${fs.root.fullPath}</b>`;
-    SAVE.addEventListener('click', passArgs);
-
+    SAVEFS.addEventListener('click', passArgs);
+    
     function passArgs() {
       return createFile(fs.root, "main.py", false)
     }
@@ -76,3 +77,4 @@ export function onDeviceReady() {
   }, function() { console.log('Unable to open file') });
 
 }
+á
