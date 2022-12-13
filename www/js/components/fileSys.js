@@ -1,80 +1,43 @@
-import { OPENFS, SAVEFS, sendData} from "../app.js";
+import { OPENFS, SAVEFS, sendData } from "../app.js";
 // import cordova from "../cordova.js";
-import {editor} from "../index.js";
+import { editor } from "../index.js";
 export function onDeviceReady() {
 
-  /*********************************************
-   *Creates a new file or returns the file if it already exists.
-   ******************************************/
-  function createFile(dirEntry, fileName, isAppend) {
-    
-    dirEntry.getFile(fileName, { create: true, exclusive: false }, (fileEntry) => {
-      
-      writeFile(fileEntry, null, isAppend);
-    }, () => { console.log('unable to create file') });
-  }
-  /*********************************************
-   * Create a FileWriter object for our FileEntry (log.txt)
-   *******************************************/
-  function writeFile(fileEntry, dataObj) {
-    let code = sendData();
-
-    fileEntry.createWriter(function(fileWriter) {
-
-      fileWriter.onwriteend = function() {
-        console.log("Successful file write...");
-        readFile(fileEntry)
-      };
-
-      fileWriter.onerror = (e) => {
-        console.log("Failed file write: " + e.toString());
-      };
-      /**********************************
-       * If data object is not passed in,
-         create a new Blob instead.
-       ****************/
-      if (!dataObj) {
-        dataObj = new Blob([code], { type: 'text/plain' });
-      }
-
-      fileWriter.write(code);
-    });
-  }
-  
-
-  function readFile(fileEntry) {
-    let path = "/storage/emulated/0/main.py"
-    fileEntry.file(function(file) {
-      var reader = new FileReader();
-
-      reader.onloadend = function(){
-        console.log(this.result);
-      };
-
-    console.log(reader.readAsText(file));
-      
-
-    }, () => { console.log('Could not read file') });
-  }
-
-  function displayFileData(fileName) {
-    console.log(fileName);
-  }
-
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
+
     console.log('file system open: ' + fs.name);
-    SAVEFS.addEventListener('click', passArgs);
-    
-    function passArgs() {
-      return createFile(fs.root, "main.py", false)
-    }
-    OPENFS.addEventListener('click', openFile)
+    fs.root.getFile("newPersistentFile.txt", { create: true, exclusive: false }, function(fileEntry) {
 
-    function openFile() {
-      readFile(fs.root)
-    }
+      console.log("fileEntry is file?" + fileEntry.isFile.toString());
+      // fileEntry.name == 'someFile.txt'
+      // fileEntry.fullPath == '/someFile.txt'
+      writeFile(fileEntry, null);
 
-  }, function() { console.log('Unable to open file') });
+    }, () => { console.log("failed to create file");});
 
+  }, () => { console.log("failed to access file system"); });
+  
 }
-á
+
+function writeFile(fileEntry, dataObj) {
+  // Create a FileWriter object for our FileEntry (log.txt).
+  fileEntry.createWriter(function(fileWriter) {
+
+    fileWriter.onwriteend = function() {
+      console.log("Successful file write...");
+      readFile(fileEntry);
+    };
+
+    fileWriter.onerror = function(e) {
+      console.log("Failed file write: " + e.toString());
+    };
+
+    // If data object is not passed in,
+    // create a new Blob instead.
+    if (!dataObj) {
+      dataObj = new Blob(['some file data'], { type: 'text/plain' });
+    }
+
+    fileWriter.write(dataObj);
+  });
+}
