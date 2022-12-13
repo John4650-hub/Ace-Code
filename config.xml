@@ -11,7 +11,7 @@
   <platform name="android">
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     
-    <config-file target="AndroidManifest.xml" parent="/manifest">
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
       <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
       <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
