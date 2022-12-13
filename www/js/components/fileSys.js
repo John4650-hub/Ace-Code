@@ -3,41 +3,56 @@ import { OPENFS, SAVEFS, sendData } from "../app.js";
 import { editor } from "../index.js";
 export function onDeviceReady() {
 
-  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
-
-    console.log('file system open: ' + fs.name);
-    fs.root.getFile("newPersistentFile.txt", { create: true, exclusive: false }, function(fileEntry) {
-
-      console.log("fileEntry is file?" + fileEntry.isFile.toString());
-      // fileEntry.name == 'someFile.txt'
-      // fileEntry.fullPath == '/someFile.txt'
-      writeFile(fileEntry, null);
-
-    }, () => { console.log("failed to create file");});
-
-  }, () => { console.log("failed to access file system"); });
-  
+  window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dirEntry) {
+    let isAppend = false;
+    console.log(dirEntry);
+    createFile(dirEntry, "fileToAppend.txt", isAppend);
+  }, ()=>{console.log("failed to load file system");});
 }
+function createFile(dirEntry, fileName, isAppend) {
+  // Creates a new file or returns the file if it already exists.
+  dirEntry.getFile(fileName, { create: true, exclusive: false }, function(fileEntry) {
 
-function writeFile(fileEntry, dataObj) {
+    writeFile(fileEntry, null, isAppend);
+
+  }, ()=>{console.log("failed to create file");});
+
+}
+function writeFile(fileEntry, dataObj, isAppend) {
   // Create a FileWriter object for our FileEntry (log.txt).
   fileEntry.createWriter(function(fileWriter) {
 
     fileWriter.onwriteend = function() {
-      console.log("Successful file write...");
+      console.log("Successful file read...");
       readFile(fileEntry);
     };
 
     fileWriter.onerror = function(e) {
-      console.log("Failed file write: " + e.toString());
+      console.log("Failed file read: " + e.toString());
     };
 
-    // If data object is not passed in,
-    // create a new Blob instead.
-    if (!dataObj) {
-      dataObj = new Blob(['some file data'], { type: 'text/plain' });
+    // If we are appending data to file, go to the end of the file.
+    if (isAppend) {
+      try {
+        fileWriter.seek(fileWriter.length);
+      }
+      catch (e) {
+        console.log("file doesn't exist!");
+      }
     }
-
     fileWriter.write(dataObj);
   });
+}
+function readFile(fileEntry) {
+
+  fileEntry.file(function(file) {
+    var reader = new FileReader();
+
+    reader.onloadend = function() {
+      console.log("Successful file read: " + this.result);
+    };
+
+    reader.readAsText(file);
+
+  }, ()=>{console.log("failed to read file");});
 }
