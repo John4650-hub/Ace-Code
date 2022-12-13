@@ -6,16 +6,17 @@ window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
 
   console.log('file system open: ' + fs.name);
   console.log(fs.root);
-  fs.root.getFile("sample.txt", { create: true, exclusive: false }, function(fileEntry) {
+  fs.root.getFile("sample.py", { create: true, exclusive: false }, function(fileEntry) {
     console.log(` fileEntrt = ${fileEntry}`);
     console.log("fileEntry is file?" + fileEntry.isFile.toString());
     console.log(fileEntry.name);
     console.log(fileEntry.fullPath);
-    writeFile(fileEntry, null);
+    SAVEFS.addEventListener('click',saveFile);
+    function saveFile(){writeFile(fileEntry, null);}
 
-  }, ()=>{"tt"});
+  }, ()=>{console.log('failed to save file');});
 
-}, ()=>{console.log('eer');});
+}, ()=>{console.log('failed to load file system');});
   
   
 }
@@ -36,7 +37,7 @@ function writeFile(fileEntry, dataObj) {
     // If data object is not passed in,
     // create a new Blob instead.
     if (!dataObj) {
-      dataObj = new Blob(['some file data'], { type: 'text/plain' });
+      dataObj = new Blob([editor.getValue()], { type: 'text/plain' });
     }
 
     fileWriter.write(dataObj);

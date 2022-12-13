@@ -12,3 +12,9 @@ export const EDITOR_CONFIG = {
   keyboardHandler:'ace/keyboard/vim',
   theme:"ace/theme/dracula"
 }
+
+export const FILE_EXTENSIONS = {
+  "Python":"py",
+  "C":"c",
+  "Java":"java"
+}
