@@ -13,7 +13,7 @@ export function onDeviceReady() {
       SETFILE.addEventListener('click', doThis)
 
       function doThis() {
-
+        
         if (modeChoice() == 'python') {
           console.log('editing python file');
           fs.root.getFile("PYTHON/main.py", { create: true, exclusive: false }, function(fileEntry) {
@@ -24,7 +24,7 @@ export function onDeviceReady() {
             //SAVE FILE
             SAVEFS.addEventListener('click', saveFilePy);
 
-          export function saveFilePy() { writeFile(fileEntry, null); }
+          function saveFilePy() { writeFile(fileEntry, null); }
 
           }, () => { console.log('failed to save file'); });
 
@@ -42,7 +42,7 @@ export function onDeviceReady() {
             //SAVE FILE
             SAVEFS.addEventListener('click', saveFileC);
 
-            export function saveFileC() { writeFile(fileEntry, null); }
+            function saveFileC() { writeFile(fileEntry, null); }
 
           }, () => { console.log('failed to save file'); });
 

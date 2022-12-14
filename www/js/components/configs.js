@@ -1,4 +1,5 @@
 export const EDITOR_CONFIG = {
+  wrap:true,
   enableBasicAutocompletion: true,
   enableSnippets: true,
   enableLiveAutocompletion: true,
@@ -6,7 +7,7 @@ export const EDITOR_CONFIG = {
   highlightActiveLine: true,
   showPrintMargin: true,
   showInvisibles: true,
-  fontSize: "12px",
+  fontSize: "10px",
   tabSize: 2,
   mode: "ace/mode/python",
   keyboardHandler:'ace/keyboard/vim',
