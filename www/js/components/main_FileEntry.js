@@ -15,9 +15,9 @@ export function onDeviceReady() {
       function doThis() {
 
         if (modeChoice() == 'python') {
+          console.log('editing python file');
           fs.root.getFile("PYTHON/main.py", { create: true, exclusive: false }, function(fileEntry) {
             OPENFS.addEventListener('click', readF)
-
             function readF() {
               readFile(fileEntry);
             }
@@ -32,6 +32,7 @@ export function onDeviceReady() {
 
 
         if (modeChoice() == 'c_cpp') {
+        console.log('editing C file');
           fs.root.getFile("C/main.c", { create: true, exclusive: false }, function(fileEntry) {
             OPENFS.addEventListener('click', readF)
 
