@@ -22,9 +22,9 @@ export function onDeviceReady() {
               readFile(fileEntry);
             }
             //SAVE FILE
-            SAVEFS.addEventListener('click', saveFile);
+            SAVEFS.addEventListener('click', saveFilePy);
 
-            function saveFile() { writeFile(fileEntry, null); }
+          export function saveFilePy() { writeFile(fileEntry, null); }
 
           }, () => { console.log('failed to save file'); });
 
@@ -40,9 +40,9 @@ export function onDeviceReady() {
               readFile(fileEntry);
             }
             //SAVE FILE
-            SAVEFS.addEventListener('click', saveFile);
+            SAVEFS.addEventListener('click', saveFileC);
 
-            function saveFile() { writeFile(fileEntry, null); }
+            export function saveFileC() { writeFile(fileEntry, null); }
 
           }, () => { console.log('failed to save file'); });
 
