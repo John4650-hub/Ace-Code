@@ -468,7 +468,7 @@ var optionGroups = {
             path: "keyboardHandler",
             items: [
                 { caption : "Ace", value : null },
-                {μ},
+                ,
                 { caption : "Emacs", value : "ace/keyboard/emacs" },
                 { caption : "Sublime", value : "ace/keyboard/sublime" },
                 { caption : "VSCode", value : "ace/keyboard/vscode" }
