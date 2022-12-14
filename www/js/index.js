@@ -14,5 +14,4 @@ editor.commands.addCommand({
   }
 });
 
-
 //

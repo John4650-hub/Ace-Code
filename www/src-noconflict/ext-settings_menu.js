@@ -14,6 +14,7 @@ right: 0;\
 top: 0;\
 z-index: 9991;\
 cursor: default;\
+width:50%;\
 }\
 .ace_dark #ace_settingsmenu, .ace_dark #kbshortcutmenu {\
 box-shadow: -20px 10px 25px rgba(126, 126, 126, 0.25);\
@@ -25,7 +26,7 @@ background-color: rgba(100, 100, 100, 0.1);\
 transition: all 0.3s\
 }\
 .ace_closeButton {\
-background: rgba(245, 146, 146, 0.5);\
+background: rgba(245, 146, 146, 1);\
 border: 1px solid #F48A8A;\
 border-radius: 50%;\
 padding: 7px;\
@@ -467,7 +468,7 @@ var optionGroups = {
             path: "keyboardHandler",
             items: [
                 { caption : "Ace", value : null },
-                { caption : "Vim", value : "ace/keyboard/vim" },
+                {μ},
                 { caption : "Emacs", value : "ace/keyboard/emacs" },
                 { caption : "Sublime", value : "ace/keyboard/sublime" },
                 { caption : "VSCode", value : "ace/keyboard/vscode" }
