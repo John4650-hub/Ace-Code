@@ -7,7 +7,7 @@ export const EDITOR_CONFIG = {
   highlightActiveLine: true,
   showPrintMargin: true,
   showInvisibles: true,
-  fontSize: "10px",
+  fontSize: "9px",
   tabSize: 2,
   mode: "ace/mode/python",
   keyboardHandler:'ace/keyboard/vim',

@@ -13,44 +13,31 @@ export function onDeviceReady() {
       SETFILE.addEventListener('click', doThis)
 
       function doThis() {
-        
         if (modeChoice() == 'python') {
           console.log('editing python file');
-          fs.root.getFile("PYTHON/main.py", { create: true, exclusive: false }, function(fileEntry) {
-            OPENFS.addEventListener('click', readF)
-            function readF() {
-              readFile(fileEntry);
-            }
-            //SAVE FILE
-            SAVEFS.addEventListener('click', saveFilePy);
-
-          function saveFilePy() { writeFile(fileEntry, null); }
-
-          }, () => { console.log('failed to save file'); });
-
+          workWithFile("PYTHON/main.py");
         }
 
-
         if (modeChoice() == 'c_cpp') {
-        console.log('editing C file');
-          fs.root.getFile("C/main.c", { create: true, exclusive: false }, function(fileEntry) {
-            OPENFS.addEventListener('click', readF)
-
-            function readF() {
-              readFile(fileEntry);
-            }
-            //SAVE FILE
-            SAVEFS.addEventListener('click', saveFileC);
-
-            function saveFileC() { writeFile(fileEntry, null); }
-
-          }, () => { console.log('failed to save file'); });
-
+          console.log('editing C file');
+          workWithFile("C/main.c");
         }
       }
 
+      function workWithFile(fileName) {
+        fs.root.getFile(fileName, { create: true, exclusive: false }, function(fileEntry) {
+          OPENFS.addEventListener('click', readF)
 
+          function readF() {
+            readFile(fileEntry);
+          }
+          //SAVE FILE
+          SAVEFS.addEventListener('click', saveFileC);
+
+          function saveFileC() { writeFile(fileEntry, null); }
+
+        }, () => { console.log('failed to save file'); });
+      }
     }, () => { console.log('failed to load file system'); });
-
 
 }
