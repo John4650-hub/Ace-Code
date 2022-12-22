@@ -3,10 +3,17 @@ import { onDeviceReady } from "./components/main_FileEntry.js";
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
-export function modeChoice() {
-  var selectElm = document.getElementById('modes');
-  return selectElm.value;
+export let modeChoice = '';
+
+const selectElm = document.getElementById('modes');
+const dropdownElms = selectElm.children
+/*
+added event listener to call when dropdown item is clicked
+*/
+for (let i = 0; i < dropdownElms.length; i++) {
+  dropdownElms[i].addEventListener('click', () => { modeChoice = dropdownElms[i].getAttribute('value') });
 }
+
 
 export function sendData() {
   return editor.getValue()

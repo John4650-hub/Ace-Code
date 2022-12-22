@@ -1,5 +1,4 @@
 import { OPENFS, SAVEFS, sendData, SETFILE } from "../app.js";
-// import cordova from "../cordova.js";
 import { writeFile } from "./File_System/writeFile.js";
 import { readFile } from "./File_System/readFile.js";
 import { editor } from "../index.js";
@@ -13,12 +12,12 @@ export function onDeviceReady() {
       SETFILE.addEventListener('click', doThis)
 
       function doThis() {
-        if (modeChoice() == 'python') {
+        if (modeChoice == 'python') {
           console.log('editing python file');
           workWithFile("PYTHON/main.py");
         }
 
-        if (modeChoice() == 'c_cpp') {
+        if (modeChoice == 'c_cpp') {
           console.log('editing C file');
           workWithFile("C/main.c");
         }
@@ -31,7 +30,7 @@ export function onDeviceReady() {
           function readF() {
             readFile(fileEntry);
           }
-          //SAVE FILE
+          //SAVE FILE when saveFs btn is clicked
           SAVEFS.addEventListener('click', saveFileC);
 
           function saveFileC() { writeFile(fileEntry, null); }

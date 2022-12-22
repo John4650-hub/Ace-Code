@@ -10,7 +10,7 @@ editor.commands.addCommand({
   name: 'confirm language',
   bindKey: { win: 'Ctrl-N', mac: 'Command-N' },
   exec: function(editor) {
-    editor.session.setMode(`ace/mode/${modeChoice()}`);
+    editor.session.setMode(`ace/mode/${modeChoice}`);
   }
 });
 

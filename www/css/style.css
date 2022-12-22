@@ -1,7 +1,12 @@
-
 #openFs {
   margin-left: 75px;
 }
 #setFile{
   margin-left: 150px;
+}
+.dropdown{
+  margin-right: 2%;
+}
+#navbar{
+  height:3.1em;
 }
