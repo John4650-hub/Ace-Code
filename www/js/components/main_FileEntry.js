@@ -1,4 +1,4 @@
-import { OPENFS, SAVEFS, sendData, SETFILE } from "../app.js";
+import { OPENFS, SAVEFS, sendData, SETFILE, FILE_PANEL } from "../app.js";
 import { writeFile } from "./File_System/writeFile.js";
 import { readFile } from "./File_System/readFile.js";
 import { editor } from "../index.js";
@@ -6,6 +6,28 @@ import { modeChoice } from "../app.js"
 
 
 export function onDeviceReady() {
+
+  window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory,
+    function(fileSystem) {
+      var reader = fileSystem.createReader();
+      reader.readEntries(
+        function(entries) {
+          for (let i = 0; i < entries.length; i++) {
+            FILE_PANEL.append(`<button type="button" class="list-group-item list-group-item-action">${entries[i].name}</button>`);
+          }
+        },
+        function(err) {
+          console.log(err);
+        }
+      );
+    },
+    function(err) {
+      console.log(err);
+    }
+  );
+
+
+
 
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
     function(fs) {
@@ -39,4 +61,7 @@ export function onDeviceReady() {
       }
     }, () => { console.log('failed to load file system'); });
 
+}
+export function listDir() {
+  return Dirs();
 }
