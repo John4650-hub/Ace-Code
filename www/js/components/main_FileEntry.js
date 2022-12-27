@@ -6,26 +6,52 @@ import { modeChoice } from "../app.js"
 
 
 export function onDeviceReady() {
+  /**
+   * Read the local storage and fill the sidebar with files in it
+   **/
+  function listDir(url) {
+    let List = []
+    let promise = new Promise(function(res, reject) {
+      window.resolveLocalFileSystemURL(url,
+        function(fs) {
+          const reader = fs.createReader();
+          reader.readEntries(function(entries) {
+            res(entries)
+          }, (rej) => { return rej });
+        }, (rej) => { return rej });
+    });
+    promise.then((val) => { val.forEach((v) => { List.push(v) }) })
+    return List
+  }
 
-  window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory,
-    function(fileSystem) {
-      var reader = fileSystem.createReader();
-      reader.readEntries(
-        function(entries) {
-          for (let i = 0; i < entries.length; i++) {
-            FILE_PANEL.append(`<button type="button" class="list-group-item list-group-item-action">${entries[i].name}</button>`);
-          }
-        },
-        function(err) {
-          console.log(err);
-        }
-      );
-    },
-    function(err) {
-      console.log(err);
+  const FILES = "";
+
+  let filesList = listDir(cordova.file.externalRootDirectory);
+console.log(filesList);
+console.log(filesList);
+console.log(filesList);
+console.log(filesList);
+console.log(filesList);
+  function fillFilePanel() {
+    for (let i = 0; i < filesList.length; i++) {
+      let entries = filesList[i]
+      if (entries.isDirectory == true) {
+        FILE_PANEL.append(`<button type="button" class="list-group-item list-group-item-action" data-toggle="#${entries.name}Group">${entries.name}</button>`)
+
+      }
+      else {
+        FILE_PANEL.append(`<button type="button" class="list-group-item list-group-item-action">${entries.name}</button>`);
+      }
     }
-  );
+  }
+  setTimeout(fillFilePanel, 1000);
 
+  function showSubFolder(parentDir) {
+    for (let x = 0; x < listDir(`${FILES}/${parentDir}`).length; x++) {
+      let subFiles = listDir(`${FILES}/${parentDir}`)[x]
+      FILE_PANEL.append(`<button type="button" class="list-group-item list-group-item-action">${subFiles.name}</button>`)
+    }
+  }
 
 
 
@@ -61,7 +87,4 @@ export function onDeviceReady() {
       }
     }, () => { console.log('failed to load file system'); });
 
-}
-export function listDir() {
-  return Dirs();
 }

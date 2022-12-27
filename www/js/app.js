@@ -1,5 +1,5 @@
 import { editor } from "./index.js";
-import { onDeviceReady, listDir } from "./components/main_FileEntry.js";
+import { onDeviceReady } from "./components/main_FileEntry.js";
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
