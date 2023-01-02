@@ -1,4 +1,4 @@
-import { OPENFS, SAVEFS, sendData, SETFILE, FILE_PANEL } from "../app.js";
+import { OPENFS, SAVEFS, sendData, SETFILE} from "../app.js";
 import { writeFile } from "./File_System/writeFile.js";
 import { readFile } from "./File_System/readFile.js";
 import { editor } from "../index.js";
@@ -15,40 +15,22 @@ export async function onDeviceReady() {
         function(fs) {
           const reader = fs.createReader();
           reader.readEntries(function(entries) {
+            entries.forEach((x)=>{x.text = x.name})
             res(entries)
           }, (rej) => { return rej });
         }, (rej) => { return rej });
     });
+    
   }
 
-  let filesList = await listDir();
-  
-async function fillFilePanel() {
-    for (let i = 0; i < filesList.length; i++) {
-      let entries = filesList[i]
-      if (entries.isDirectory == true) {
-        FILE_PANEL.append(`<button type="button" class="list-group-item list-group-item-action" data-toggle="#${entries.name}Group">${entries.name}</button>
-        <ul class="list-group" id="f${entries.name}Group"></ul>
-        `)
-         await showSubFolder(entries.name);
-      }
-      else {
-        FILE_PANEL.append(`<button type="button" class="list-group-item list-group-item-action">${entries.name}</button>`);
-      }
-    }
-  }
+let files = await listDir()
+function getTree(){
+  let data = files
+  return data
+}
 
+$("#fileList").treeview({ data: getTree()});
 
-async function showSubFolder(parentDir) {
-  console.log(await listDir(`${parentDir}/`));
-    for (let x = 0; x < listDir(`${parentDir}/`).length; x++) {
-    console.log(x);
-      let subFiles = listDir(`${parentDir}/`)[x]
-      $(`#f${parentDir}Group`).append(`<button type="button" class="list-group-item list-group-item-action">${subFiles.name}</button>`)
-    }
-  }
-
-fillFilePanel();
 
 
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
