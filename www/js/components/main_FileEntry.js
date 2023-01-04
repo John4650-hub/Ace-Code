@@ -8,6 +8,7 @@ import { modeChoice } from "../app.js"
 export async function onDeviceReady() {
     /*@@param {Promise} reads-directory-recursively Read the local storage and fill the sidebar with files in it
      **/
+let conColor=" text-primary"
     function listDir(url = '', result = []) {
         return new Promise(function(res, rej) {
             let path;
@@ -23,15 +24,40 @@ export async function onDeviceReady() {
                         for (let i = 0; i < entries.length; i++) {
                             entries[i].text = entries[i].name
                             if (entries[i].isDirectory == true) {
-                                entries[i].state={
-                                    checked:false,
-                                    expanded:false,
-                                    selected:false
+                                entries[i].state = {
+                                    checked: false,
+                                    expanded: false,
+                                    selected: false
                                 }
                                 entries[i].nodes = []
                                 result.push(entries[i])
                                 listDir(entries[i].nativeURL, entries[i].nodes)
                             } else {
+                                let ftype = entries[i].name.split('.');
+                                let ext = ftype.length - 1;
+                                switch (ftype[ext].toLowerCase()) {
+                                    case 'py':
+                                        entries[i].icon = "fab fa-python"+conColor;
+                                        break
+                                    case 'java':
+                                        entries[i].icon = "fab fa-java"+conColor;
+                                        break
+                                    case 'html':
+                                        entries[i].icon = "fab fa-html5"+conColor;
+                                        break
+                                    case 'css':
+                                        entries[i].icon = "fab fa-css3"+conColor;
+                                        break
+                                    case 'js':
+                                        entries[i].icon = "fab fa-js"+conColor;
+                                        break
+                                    case 'c':
+                                        entries[i].icon = "fab fa-cuttlefish"+conColor;
+                                        break
+                                    default:
+                                        entries[i].icon = "fa fa-file"+conColor;
+                                        
+                                }
                                 result.push(entries[i]);
                             }
                         }
@@ -49,7 +75,7 @@ export async function onDeviceReady() {
     }
     setTimeout(() => {
         $("#fileList").treeview({ data: getTree() });
-    },3000)
+    }, 3000)
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fs) {
