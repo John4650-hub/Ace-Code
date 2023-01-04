@@ -6,8 +6,7 @@ import { modeChoice } from "../app.js"
 
 
 export async function onDeviceReady() {
-    /**
-     * Read the local storage and fill the sidebar with files in it
+    /*@@param {Promise} reads-directory-recursively Read the local storage and fill the sidebar with files in it
      **/
     function listDir(url = '', result = []) {
         return new Promise(function(res, rej) {
@@ -24,6 +23,11 @@ export async function onDeviceReady() {
                         for (let i = 0; i < entries.length; i++) {
                             entries[i].text = entries[i].name
                             if (entries[i].isDirectory == true) {
+                                entries[i].state={
+                                    checked:false,
+                                    expanded:false,
+                                    selected:false
+                                }
                                 entries[i].nodes = []
                                 result.push(entries[i])
                                 listDir(entries[i].nativeURL, entries[i].nodes)
@@ -45,7 +49,7 @@ export async function onDeviceReady() {
     }
     setTimeout(() => {
         $("#fileList").treeview({ data: getTree() });
-    },10000)
+    },3000)
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fs) {
