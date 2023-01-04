@@ -13,5 +13,4 @@ editor.commands.addCommand({
     editor.session.setMode(`ace/mode/${modeChoice}`);
   }
 });
-
 //
