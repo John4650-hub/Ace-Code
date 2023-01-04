@@ -10,42 +10,42 @@ export async function onDeviceReady() {
      * Read the local storage and fill the sidebar with files in it
      **/
     function listDir(url = '', result = []) {
-        let path
-        if (url == '') {
-            path = cordova.file.externalRootDirectory
-        } else {
-            path = url + '/';
-        }
-        window.resolveLocalFileSystemURL(path,
-            function(fs) {
-                const reader = fs.createReader();
-                reader.readEntries(function(entries) {
-                    for (let i = 0; i < entries.length; i++) {
-                        entries[i].text = entries[i].name
-                        if (entries[i].isDirectory == true) {
-                            entries[i].nodes = []
-                            result.push(entries[i])
-                            listDir(entries[i].nativeURL, entries[i].nodes)
-                        } else{
-                            result.push(entries[i]);
+        return new Promise(function(res, rej) {
+            let path;
+            if (url == '') {
+                path = cordova.file.externalRootDirectory
+            } else {
+                path = url + '/';
+            }
+            window.resolveLocalFileSystemURL(path,
+                function(fs) {
+                    const reader = fs.createReader();
+                    reader.readEntries(function(entries) {
+                        for (let i = 0; i < entries.length; i++) {
+                            entries[i].text = entries[i].name
+                            if (entries[i].isDirectory == true) {
+                                entries[i].nodes = []
+                                result.push(entries[i])
+                                listDir(entries[i].nativeURL, entries[i].nodes)
+                            } else {
+                                result.push(entries[i]);
+                            }
                         }
-                    }
+                    }, (rej) => { return rej });
                 }, (rej) => { return rej });
-            }, (rej) => { return rej });
-        return result
+            res(result)
+        })
     }
-    
-    // console.log(listDir());
-    // let files = listDir()
 
-    // function getTree() {
-    //     let data = files
-    //     return data
-    // }
+    let files = await listDir();
 
-    $("#fileList").treeview({ data: listDir() });
-
-
+    function getTree() {
+        let data = files;
+        return data;
+    }
+    setTimeout(() => {
+        $("#fileList").treeview({ data: getTree() });
+    },10000)
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fs) {
