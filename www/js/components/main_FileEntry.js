@@ -33,6 +33,9 @@ export async function onDeviceReady() {
                                 result.push(entries[i])
                                 listDir(entries[i].nativeURL, entries[i].nodes)
                             } else {
+                                entries[i].clickEvent=()=>{
+                                    alert('file')
+                                }
                                 entryIcon(entries[i])
                                 result.push(entries[i]);
                             }
