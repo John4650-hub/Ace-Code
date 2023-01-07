@@ -1,4 +1,3 @@
-import { editor } from "../../index.js";
 
 
 export function readFile(fileEntry) {
@@ -7,7 +6,7 @@ export function readFile(fileEntry) {
     var reader = new FileReader();
 
     reader.onloadend = function() {
-      editor.setValue(this.result);
+      window.aceEditor.setValue(this.result);
     
     };
 

@@ -1,5 +1,3 @@
-import { editor } from "../../index.js";
-
 export function writeFile(fileEntry, dataObj) {
   // Create a FileWriter object for our FileEntry (log.txt).
   fileEntry.createWriter(function(fileWriter) {
@@ -16,7 +14,7 @@ export function writeFile(fileEntry, dataObj) {
     // If data object is not passed in,
     // create a new Blob instead.
     if (!dataObj) {
-      dataObj = new Blob([editor.getValue()], { type: 'text/plain' });
+      dataObj = new Blob([window.aceEditor.getValue()], { type: 'text/plain' });
     }
 
     fileWriter.write(dataObj);

@@ -1,10 +1,8 @@
-import { OPENFS, SAVEFS, sendData } from "../app.js";
+import { OPENFS, SAVEFS} from "../app.js";
 import { writeFile } from "./File_System/writeFile.js";
 import { readFile } from "./File_System/readFile.js";
-import { editor } from "../index.js";
-import { modeChoice } from "../app.js";
 import { entryIcon } from "./File_System/fileSysUi.js";
-import { FILES_NOT_ALLOWED } from "./configs.js";
+import { FILES_NOT_ALLOWED, FILE_EXTENSIONS } from "./configs.js";
 
 
 export async function onDeviceReady() {
@@ -55,36 +53,29 @@ export async function onDeviceReady() {
     setTimeout(() => {
         $("#fileList").treeview({ data: getTree(), showBorder: false });
     }, 3000)
-    /**
-     * @@param {url} logsUrls description
-     * 
-     **/
-
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fs) {
             /**
-             *@param {HTML ELEMENT OBJECT } getUrls gets the 
+             *@@param {HTML ELEMENT OBJECT } getUrls gets the 
              * full path of the files and checks whether files 
              * is good for working with.
              **/
             function getUrls(filElm) {
-                
+
                 let fileUrl = filElm.getAttribute('fullPath');
-                console.log(fileUrl);
                 let fileTruePath = fileUrl.slice(1)
-                console.log(fileTruePath);
                 let fileUrlSplit = fileTruePath.split("/")
                 let filename = fileUrlSplit[fileUrlSplit.length - 1]
                 let pattern = /\.[a-z]{1,4}/
-                let extension = filename.match(pattern).toString();
+                let extension = filename.match(pattern).toString().slice(1);
                 let checkValidity = FILES_NOT_ALLOWED.find(function(v) {
-                    return v == extension
+                    return v === extension
                 })
-                console.log(checkValidity)
                 if (checkValidity == undefined) {
-                    console.log("now edit");
                     workWithFile(fileTruePath);
+                    window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[ext]}`)
+
                 } else {
                     alert(`file ${filename} is not valid`)
                 }
@@ -93,11 +84,7 @@ export async function onDeviceReady() {
 
             function workWithFile(filePath) {
                 fs.root.getFile(filePath, { create: true, exclusive: false }, function(fileEntry) {
-                    OPENFS.addEventListener('click', readF)
-
-                    function readF() {
-                        readFile(fileEntry);
-                    }
+                    readFile(fileEntry);
                     //SAVE FILE when saveFs btn is clicked
                     SAVEFS.addEventListener('click', saveFile);
 

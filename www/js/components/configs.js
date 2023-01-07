@@ -35,3 +35,18 @@ export const FILES_NOT_ALLOWED = [
     "jpg",
     "tmx"
 ]
+
+export const FILE_EXTENSIONS={
+    "py":"python",
+    "js":"javascript",
+    "c":"c_cpp",
+    "cpp":"c_cpp",
+    "java":"java",
+    "html":"html",
+    "css":"css",
+    "yml":"yaml",
+    "txt":"text",
+    "json":"json",
+    "xml":"xml",
+    "sh":"sh"
+}

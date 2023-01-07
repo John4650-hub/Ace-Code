@@ -1,24 +1,21 @@
-import { editor } from "./index.js";
 import { onDeviceReady } from "./components/main_FileEntry.js";
-
+import { EDITOR_CONFIG } from "./components/configs.js";
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
-export let modeChoice = '';
 
-const selectElm = document.getElementById('modes');
-const dropdownElms = selectElm.children
-/*
-added event listener to call when dropdown item is clicked
-*/
-for (let i = 0; i < dropdownElms.length; i++) {
-  dropdownElms[i].addEventListener('click', () => { modeChoice = dropdownElms[i].getAttribute('value') });
+window.onload = function() {
+    ace.require("ace/ext/language_tools");
+    window.aceEditor = ace.edit('editor');
+    window.aceEditor.setOptions(EDITOR_CONFIG);
 }
-
-
-export function sendData() {
-  return editor.getValue()
-}
+// editor.commands.addCommand({
+//   name: 'confirm language',
+//   bindKey: { win: 'Ctrl-N', mac: 'Command-N' },
+//   exec: function(editor) {
+//     editor.session.setMode(`ace/mode/${modeChoice}`);
+//   }
+// });
 
 export const SAVEFS = document.getElementById('saveFs');
 export const OPENFS = document.getElementById('openFs');
