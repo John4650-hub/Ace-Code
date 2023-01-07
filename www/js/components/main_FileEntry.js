@@ -5,6 +5,11 @@ import { editor } from "../index.js";
 import { modeChoice } from "../app.js";
 import { entryIcon } from "./File_System/fileSysUi.js";
 
+function logsUrls(x) {
+    let fileUrl = x.getAttribute('nativeURL')
+    console.log(fileUrl);
+}
+
 export async function onDeviceReady() {
     /*@@param {Promise} reads-directory-recursively Read the local storage and fill the sidebar with files in it
      **/
@@ -33,9 +38,7 @@ export async function onDeviceReady() {
                                 result.push(entries[i])
                                 listDir(entries[i].nativeURL, entries[i].nodes)
                             } else {
-                                entries[i].clickEvent=()=>{
-                                    alert('file')
-                                }
+                                entries[i].onclick = "logsUrls(this)"
                                 entryIcon(entries[i])
                                 result.push(entries[i]);
                             }
@@ -53,8 +56,12 @@ export async function onDeviceReady() {
         return data;
     }
     setTimeout(() => {
-        $("#fileList").treeview({ data: getTree() });
+        $("#fileList").treeview({ data: getTree(), showBorder: false });
     }, 3000)
+    /**
+     * @@param {url} logsUrls description
+     * 
+     **/
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fs) {
