@@ -1,14 +1,16 @@
-import { OPENFS, SAVEFS, sendData, SETFILE } from "../app.js";
+import { OPENFS, SAVEFS, sendData, SETFILE} from "../app.js";
 import { writeFile } from "./File_System/writeFile.js";
 import { readFile } from "./File_System/readFile.js";
 import { editor } from "../index.js";
 import { modeChoice } from "../app.js";
 import { entryIcon } from "./File_System/fileSysUi.js";
 
+
 function logsUrls(x) {
     let fileUrl = x.getAttribute('nativeURL')
     console.log(fileUrl);
 }
+window.logsUrls = logsUrls
 
 export async function onDeviceReady() {
     /*@@param {Promise} reads-directory-recursively Read the local storage and fill the sidebar with files in it

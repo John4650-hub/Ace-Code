@@ -1,6 +1,7 @@
 import { editor } from "./index.js";
 import { onDeviceReady } from "./components/main_FileEntry.js";
 
+
 document.addEventListener('deviceready', onDeviceReady, false);
 
 export let modeChoice = '';
@@ -22,4 +23,3 @@ export function sendData() {
 export const SAVEFS = document.getElementById('saveFs');
 export const OPENFS = document.getElementById('openFs');
 export const SETFILE = document.getElementById('setFile');
-
