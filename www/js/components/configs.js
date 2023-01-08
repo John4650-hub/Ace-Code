@@ -33,7 +33,8 @@ export const FILES_NOT_ALLOWED = [
     "tar",
     "png",
     "jpg",
-    "tmx"
+    "tmx",
+    "mA4"
 ]
 
 export const FILE_EXTENSIONS={
@@ -48,5 +49,6 @@ export const FILE_EXTENSIONS={
     "txt":"text",
     "json":"json",
     "xml":"xml",
-    "sh":"sh"
+    "sh":"sh",
+    ".bashrc":"sh"
 }
