@@ -9,9 +9,9 @@ export const EDITOR_CONFIG = {
     showInvisibles: true,
     fontSize: "10px",
     tabSize: 2,
-    mode: "ace/mode/text",
     keyboardHandler: 'ace/keyboard/vim',
-    theme: "ace/theme/dracula"
+    theme: "ace/theme/dracula",
+    animatedScroll: false
 }
 
 export const FILES_NOT_ALLOWED = [

@@ -74,7 +74,7 @@ export async function onDeviceReady() {
                 })
                 if (checkValidity == undefined) {
                     workWithFile(fileTruePath);
-                    window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[ext]}`)
+                    window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
 
                 } else {
                     alert(`file ${filename} is not valid`)
