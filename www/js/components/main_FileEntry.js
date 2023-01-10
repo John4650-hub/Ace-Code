@@ -1,4 +1,4 @@
-import { OPENFS, SAVEFS} from "../app.js";
+import { OPENFS, SAVEFS } from "../app.js";
 import { writeFile } from "./File_System/writeFile.js";
 import { readFile } from "./File_System/readFile.js";
 import { entryIcon } from "./File_System/fileSysUi.js";
@@ -52,7 +52,7 @@ export async function onDeviceReady() {
     }
     setTimeout(() => {
         $("#fileList").treeview({ data: getTree(), showBorder: false });
-    }, 2500)
+    },2500)
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fs) {
@@ -81,16 +81,10 @@ export async function onDeviceReady() {
                 }
             }
             window.getUrls = getUrls
-            let fE;
+            let fE; //Helps to avoid saving the same data in various entries
             function workWithFile(filePath) {
                 fs.root.getFile(filePath, { create: true, exclusive: false }, function(fileEntry) {
-                    if(fileEntry==fE){
-                        console.log(`${fE.name} is already in work`)
-                    }
-                    else{
-                        fE=fileEntry
-                    }
-                    console.log(fE);
+                    fE = fileEntry
                     readFile(fE);
                     //SAVE FILE when saveFs btn is clicked
                     SAVEFS.addEventListener('click', saveFile);
