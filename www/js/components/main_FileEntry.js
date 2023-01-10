@@ -52,7 +52,7 @@ export async function onDeviceReady() {
     }
     setTimeout(() => {
         $("#fileList").treeview({ data: getTree(), showBorder: false });
-    }, 3000)
+    }, 2500)
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         function(fs) {
@@ -81,14 +81,21 @@ export async function onDeviceReady() {
                 }
             }
             window.getUrls = getUrls
-
+            let fE;
             function workWithFile(filePath) {
                 fs.root.getFile(filePath, { create: true, exclusive: false }, function(fileEntry) {
-                    readFile(fileEntry);
+                    if(fileEntry==fE){
+                        console.log(`${fE.name} is already in work`)
+                    }
+                    else{
+                        fE=fileEntry
+                    }
+                    console.log(fE);
+                    readFile(fE);
                     //SAVE FILE when saveFs btn is clicked
                     SAVEFS.addEventListener('click', saveFile);
 
-                    function saveFile() { writeFile(fileEntry, null); }
+                    function saveFile() { writeFile(fE, null); }
 
                 }, () => { console.log('failed to save file'); });
             }

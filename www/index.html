@@ -2,66 +2,57 @@
 <html>
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-  <script src="./libs/jquery.min.js"></script>
+    <script src="./libs/jquery.min.js"></script>
 
-  <script src="./eruda.js"></script>
-  <script src="./src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-  <script src="./src-noconflict/ext-language_tools.js"></script>
-  <script src="./libs/bootstrap-treeview.min.js"></script>
-  <script src="./libs/bootstrap.min.js"></script>
-  <script src="./libs/all.min.js"></script>
+    <script src="./eruda.js"></script>
+    <script src="./src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./src-noconflict/ext-language_tools.js"></script>
+    <script src="./libs/bootstrap-treeview.min.js"></script>
+    <script src="./libs/bootstrap.min.js"></script>
+    <script src="./libs/all.min.js"></script>
 
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <link rel="stylesheet" href="./css/bootstrap-treeview.min.css">
-  <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/all.min.css">
-  
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-treeview.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/all.min.css">
+
 </head>
 
 <body>
-    
-  <div id="container">
-    <div class="container">
-      <div id="editor" class="position-fixed bottom-0 start-0 ms-0 mt-1" style=" top:50px;right: 0px;"></div>
 
+    <div id="container">
+        <div class="container">
+            <div id="editor" class="position-fixed bottom-0 start-0 ms-0 mt-1" style=" top:50px;right: 0px;"></div>
+
+        </div>
+
+
+        <div id="" class="navbar navbar-dark bg-dark position-fixed w-100">
+            <p>ACE CODE IDE</p>
+
+            <button class="btn btn-success position-absolute start-0 mx-2" id="saveFs" type="submit"><i>Save</i></button>
+            <button class="btn btn-primary position-absolute start-0" id="openFs" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="submit"><i>Open</i></button>
+            <div>
+
+            </div>
+        </div>
     </div>
 
-
-    <div id="" class="navbar navbar-dark bg-dark position-fixed w-100">
-      <p>ACE CODE IDE</p>
-
-      <button class="btn btn-success position-absolute start-0 mx-2" id="saveFs" type="submit"><i>Save</i></button>
-      <button class="btn btn-primary position-absolute start-0" id="openFs" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" type="submit"><i>Open</i></button>
-      <div>
-
-      </div>
-      <button class="btn btn-primary position-absolute start-0" id="setFile" type="submit"><i>setFile</i></button>
-      <div class="dropdown">
-        <button class="btn btn-success dropdown-toggle px-1" id="modesSelect" data-bs-toggle="dropdown" aria-expanded="false">choose mode</button>
-        <ul class="dropdown-menu bg-light" aria-labelledby="modesSelect" id="modes">
-          <li class="dropdown-item" value="python">python</li>
-          <li class="dropdown-item" value="javascript">Javascript</li>
-          <li class="dropdown-item" value="c_cpp">C++</li>
-        </ul>
-      </div>
+    <!-- sideBar -->
+    <div class="w-75 offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">FILE SYSTEM</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" data-bs-backdrop="false" aria-label="Close"></button>
+        </div>
+        <div class="list-group list-group-flush overflow-scroll mh-100 mw-100" id="fileList">
+        </div>
     </div>
-  </div>
-
-  <!-- sideBar -->
-  <div class="w-75 offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">FILE SYSTEM</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" data-bs-backdrop="false" aria-label="Close"></button>
-    </div>
-    <div class="list-group list-group-flush overflow-scroll mh-100 mw-100" id="fileList">
-    </div>
-  </div>
-  <script src="./cordova.js"></script>
-  <script type="module" src="./js/app.js"></script>
-  <script src="./console.js"></script>
+    <script src="./cordova.js"></script>
+    <script type="module" src="./js/app.js"></script>
+    <script src="./console.js"></script>
 </body>
 
 </html>
