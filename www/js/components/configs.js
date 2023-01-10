@@ -50,5 +50,5 @@ export const FILE_EXTENSIONS = {
     "json": "json",
     "xml": "xml",
     "sh": "sh",
-    ".bashrc": "sh"
+    "bash": "sh"
 }
