@@ -12,8 +12,6 @@ export const EDITOR_CONFIG = {
     keyboardHandler: 'ace/keyboard/vim',
     theme: "ace/theme/dracula",
     animatedScroll: false,
-    customScrollbar: true,
-    enableCodeLens: true,
     enableMultiselect: true,
 }
 
