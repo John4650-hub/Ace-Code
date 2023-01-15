@@ -21,8 +21,17 @@ export const SAVEFS = document.getElementById('saveFs');
 
 export const OPENFS = document.getElementById('openFs');
 export const SETFILE = document.getElementById('setFile');
-console.log("hello");
+
+let saved = new bootstrap.Tooltip(SAVEFS,{popperConfig: function(defaultBsPopperConfig){
+  return defaultBsPopperConfig;
+}})
+saved._config['title'] = 'saved'
+SAVEFS.addEventListener('click', function(){
+  console.log(saved);
+})
+
 const MENU_TAB = document.getElementById("menuTab");
+
 
 class CreateTabs {
   constructor(id, icon) {
@@ -55,10 +64,8 @@ class CreateTabs {
     }
   }
 }
-let tabIcons = ['fa fa-cog text-info','fa fa-paste text-info','fa fa-clipboard-list text-info','fab fa-github text-info']
-let tabs = ["fj", "yor", 'jff', 'udj']
-setTimeout(function() {
-  for (let i = 0; i < tabs.length; i++) {
-    let Tab = new CreateTabs(`${tabs[i]}-tab`, tabIcons[i]);
-  }
-}, 1000)
+let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info']
+let tabs = ["settingstab", "pasteBin", 'change log', 'github']
+for (let i = 0; i < tabs.length; i++) {
+  let tab = new CreateTabs(`${tabs[i]}-tab`, tabIcons[i]);
+}
