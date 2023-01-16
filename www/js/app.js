@@ -22,39 +22,37 @@ export const SAVEFS = document.getElementById('saveFs');
 export const OPENFS = document.getElementById('openFs');
 export const SETFILE = document.getElementById('setFile');
 
-let saved = new bootstrap.Tooltip(SAVEFS,{popperConfig: function(defaultBsPopperConfig){
-  return defaultBsPopperConfig;
-}})
+let saved = new bootstrap.Tooltip(SAVEFS, {
+  popperConfig: function(defaultBsPopperConfig) {
+    return defaultBsPopperConfig;
+  }
+})
 saved._config['title'] = 'saved'
-SAVEFS.addEventListener('click', function(){
+SAVEFS.addEventListener('click', function() {
   console.log(saved);
 })
 
-const MENU_TAB = document.getElementById("menuTab");
-
-
+const MENU_TAB = document.querySelector("#menuTab");
+let tabContent = document.querySelector(".tab-content")
+let attrB=['class:nav-item']
 class CreateTabs {
   constructor(id, icon) {
     this.icon = icon
     this.id = id
     this.elmNode = document.createElement('li')
-    //this.insertAttr(attrB, this.elmNode)
+    this.insertAttr(attrB, this.elmNode)
     MENU_TAB.appendChild(this.elmNode)
     this.addTabContent()
     this.addInnerKid()
-    let firstTb = document.querySelector('#menuTab li:last-child div')
-    let tab = new bootstrap.Tab(firstTb)
-    tab.show()
   }
   addTabContent() {
     tabContent.innerHTML += `
-        <div class="tab-pane position-fixed bottom-0 start-0 ms-0 mt-1" style=" top:80px;right: 0px;" id="you${this.id}" role="tabpanel" aria-labelledby="${this.id}-tab"></div>
+        <div class="tab-pane" id="${this.id}" role="tabpanel" aria-labelledby="${this.id}-tb">${this.id}</div>
         `
   }
   addInnerKid() {
-    this.addTabContent()
     this.elmNode.innerHTML = `
-        <div class="w-100 bg-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" data-bs-toggle="tooltip" data-bs-placement="top" title="exit"  num="${this.id}" onclick="checkBack(this)" id="${this.id}-tab" data-bs-toggle="tab" data-bs-target="#you${this.id}" type="button" role="tab" aria-controls="you${this.id}" aria-selected="false"><i class="${this.icon}"></i></div>
+        <button class="w-100 bg-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" data-bs-toggle="tooltip" data-bs-placement="top" title="exit" id="${this.id}-tb" data-bs-toggle="tab" data-bs-target="#${this.id}" type="button" role="tab" aria-controls="${this.id}" aria-selected="false"><i class="${this.icon} w-100"></i></button>
         `
   }
   insertAttr(attrBts, elm) {
@@ -65,7 +63,13 @@ class CreateTabs {
   }
 }
 let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info']
-let tabs = ["settingstab", "pasteBin", 'change log', 'github']
+let tabs = ["settingstab", "pasteBin", 'changeLog', 'github']
 for (let i = 0; i < tabs.length; i++) {
-  let tab = new CreateTabs(`${tabs[i]}-tab`, tabIcons[i]);
+  let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i]);
 }
+
+let fb = tabContent.querySelector('div:first-child')
+fb.setAttribute('class',fb.getAttribute('class')+' active')
+let ftb = MENU_TAB.querySelector('li button');
+ftb.setAttribute('aria-selected','true')
+console.log(ftb);
