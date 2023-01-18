@@ -4,19 +4,10 @@ import { sett } from "./components/tabs/settingsTab.js";
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
-
-window.onload = function() {
-  ace.require("ace/ext/language_tools");
-  window.aceEditor = ace.edit('editor');
-  aceEditor.setOptions(EDITOR_CONFIG);
-}
-// editor.commands.addCommand({
-//   name: 'confirm language',
-//   bindKey: { win: 'Ctrl-N', mac: 'Command-N' },
-//   exec: function(editor) {
-//     editor.session.setMode(`ace/mode/${modeChoice}`);
-//   }
-// });
+ace.require("ace/ext/language_tools");
+window.aceEditor = ace.edit('editor');
+aceEditor.setOptions(EDITOR_CONFIG);
+aceEditor.commands.removeCommand('showSettingsMenu')
 
 export const SAVEFS = document.getElementById('saveFs');
 
