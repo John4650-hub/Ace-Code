@@ -19,7 +19,7 @@ var themeData = [
     ["Ambiance", "ambiance", "dark"],
     ["Chaos", "chaos", "dark"],
     ["Clouds Midnight", "clouds_midnight", "dark"],
-    ["Dracula", "", "dark"],
+    ["Dracula", "dracula", "dark"],
     ["Cobalt", "cobalt", "dark"],
     ["Gruvbox", "gruvbox", "dark"],
     ["Green on Black", "gob", "dark"],
@@ -81,13 +81,13 @@ export function sett(_Par) {
     b.setAttribute('class', 'col')
     d.setAttribute('class', 'col')
     c.setAttribute('class', 'text-info')
-    return [a, b, c, d, e]
+    return [a, b, c, d, e];
   }
 
 
   //themes Rows
 [row_, col1_, label_, col2_, labelItem_] = AddElm();
-   label_.innerText = 'Themes'
+  label_.innerText = 'Themes'
   insertAttr(['class=form-select', 'id=Themes'], labelItem_)
   for (let i = 0; i < themeData.length; i++) {
     themeChoice = themeData[i][0]
@@ -117,7 +117,7 @@ export function sett(_Par) {
 [row_, col1_, label_, col2_, labelItem_] = AddElm();
 
   label_.innerText = 'Tab Size';
-  insertAttr(['class=form-select','id=Tab-Size'], labelItem_);
+  insertAttr(['class=form-select', 'id=Tab-Size'], labelItem_);
   labelItem_.setAttribute('class', 'form-select');
   for (let i = 1; i < 10; i++) {
     optn = makeElm('option');
@@ -131,39 +131,61 @@ export function sett(_Par) {
   label_.innerText = 'Relative Number';
 
   col2_.setAttribute('class', 'col form-check');
-  col2_.style.marginLeft = "6em"
+  col2_.style.marginLeft = "60px"
   insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Relative-Number'], labelItem_);
 
   //show invisible
   [row_, col1_, label_, col2_, labelItem_] = AddElm('input')
   label_.innerText = 'Show invisible';
   col2_.setAttribute('class', 'col form-check');
-  col2_.style.marginLeft = "6em"
+  col2_.style.marginLeft = "60px"
   insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Show-invisible'], labelItem_);
 
   //Live autocompletion row
 [row_, col1_, label_, col2_, labelItem_] = AddElm('input')
-  label_.innerText = 'Enable autoComplete';
+  label_.innerText = 'Auto Complete';
   col2_.setAttribute('class', 'col form-check');
-  col2_.style.marginLeft = "6em"
+  col2_.style.marginLeft = "60px"
   insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Enable-autoComplete'], labelItem_);
+  
+  // enable behaiours
+[row_, col1_, label_, col2_, labelItem_] = AddElm('input')
+label_.innerText = 'Behaviour';
+col2_.setAttribute('class', 'col form-check');
+col2_.style.marginLeft = "60px"
+insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Enable-behaviours'], labelItem_);
+
+//Line Numbers
+[row_, col1_, label_, col2_, labelItem_] = AddElm('input')
+label_.innerText = 'Line Numbers';
+col2_.setAttribute('class', 'col form-check');
+col2_.style.marginLeft = "60px"
+insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=show-line-numbers'], labelItem_);
+
+//
 
   //save btn row
 [row_, col1_, label_, col2_, labelItem_] = AddElm('button')
-  col2_.setAttribute('class', 'col p-5');
+  col2_.setAttribute('class', 'col pt-3 pb-1');
   labelItem_.innerText = 'save'
   insertAttr(["class=btn btn-primary", 'id=saveBnt'], labelItem_)
   labelItem_.addEventListener('click', getValues)
 
   //setValue
+  let elmIds = ['Themes', 'font-size', 'Tab-Size', 'Relative-Number', 'Show-invisible', 'Enable-autoComplete','Enable-behaviours','show-line-numbers']
+  let options = ['theme', 'fontSize', 'tabSize', 'relativeLineNumbers', 'showInvisibles', 'enableLiveAutocompletion','behavioursEnabled','showLineNumbers']
+
   function getValues() {
-    let elmIds = ['Themes','font-size','Tab-Size']
-    let options = ['theme','fontSize','tabSize']
-    for(let i = 0; i<elmIds.length;i++){
-       let elmVal = document.getElementById(elmIds[i])
-       EDITOR_CONFIG[options[i]] = elmVal.value;
+    for (let i = 0; i < elmIds.length; i++) {
+      let elmVal = document.getElementById(elmIds[i])
+      if (elmVal.getAttribute('type') == 'checkbox') {
+        EDITOR_CONFIG[options[i]] = elmVal.checked;
+      }
+      else {
+        EDITOR_CONFIG[options[i]] = elmVal.value;
+      }
     }
-    
+
     window.aceEditor.setOptions(EDITOR_CONFIG);
     //after create a file and write EditorConfig data as a json object;
   }
