@@ -1,5 +1,6 @@
 import { onDeviceReady } from "./components/main_FileEntry.js";
 import { EDITOR_CONFIG } from "./components/configs.js";
+import { sett } from "./components/templates/settingsTemplate.js";
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -38,7 +39,9 @@ class CreateTabs {
   }
   addTabContent() {
     tabContent.innerHTML += `
-        <div class="tab-pane" id="${this.id}" role="tabpanel" aria-labelledby="${this.id}-tb">${this.id}</div>
+        <div class="tab-pane p-0 m-0" id="${this.id}" role="tabpanel" aria-labelledby="${this.id}-tb">
+        <div class="container-fluid p-0 m-0" id ="${this.id}y"></div>
+        </div>
         `
   }
   addInnerKid() {
@@ -63,4 +66,5 @@ let fb = tabContent.querySelector('div:first-child')
 fb.setAttribute('class', fb.getAttribute('class') + ' active')
 let ftb = MENU_TAB.querySelector('li button');
 ftb.setAttribute('aria-selected', 'true')
-console.log(ftb);
+
+sett('#settingstaby')

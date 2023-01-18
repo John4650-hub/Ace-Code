@@ -35,7 +35,8 @@ export const FILES_NOT_ALLOWED = [
     "png",
     "jpg",
     "tmx",
-    "mA4"
+    "mA4",
+    "raw"
 ]
 
 export const FILE_EXTENSIONS = {
