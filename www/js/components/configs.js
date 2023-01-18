@@ -11,8 +11,10 @@ export const EDITOR_CONFIG = {
     tabSize: 2,
     keyboardHandler: 'ace/keyboard/vim',
     theme: "ace/theme/dracula",
+    mode:"ace/mode/javascript",
     animatedScroll: false,
     enableMultiselect: true,
+    
 }
 
 export const FILES_NOT_ALLOWED = [

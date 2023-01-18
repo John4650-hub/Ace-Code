@@ -1,6 +1,6 @@
 import { onDeviceReady } from "./components/main_FileEntry.js";
 import { EDITOR_CONFIG } from "./components/configs.js";
-import { sett } from "./components/templates/settingsTemplate.js";
+import { sett } from "./components/tabs/settingsTab.js";
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -8,7 +8,7 @@ document.addEventListener('deviceready', onDeviceReady, false);
 window.onload = function() {
   ace.require("ace/ext/language_tools");
   window.aceEditor = ace.edit('editor');
-  window.aceEditor.setOptions(EDITOR_CONFIG);
+  aceEditor.setOptions(EDITOR_CONFIG);
 }
 // editor.commands.addCommand({
 //   name: 'confirm language',

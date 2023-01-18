@@ -1,13 +1,15 @@
+import { EDITOR_CONFIG } from "../configs.js";
+
 var themeData = [
     ["Chrome"],
     ["Clouds"],
-    ["Crimson Editor"],
+    ["Crimson_editor"],
     ["Dawn"],
     ["Dreamweaver"],
     ["Eclipse"],
     ["GitHub"],
     ["IPlastic"],
-    ["Solarized Light"],
+    ["Solarized_light"],
     ["TextMate"],
     ["Tomorrow"],
     ["Xcode"],
@@ -58,9 +60,12 @@ let col2_;
 let label_;
 let labelItem_;
 let optn;
+let themeChoice;
 
 export function sett(_Par) {
   let parentElm = document.querySelector(_Par);
+
+  // [row_, col1_, label_, col2_, labelItem_]
   function AddElm(elm = 'select') {
     let a = makeElm('div')
     let b = makeElm('div')
@@ -78,83 +83,88 @@ export function sett(_Par) {
     c.setAttribute('class', 'text-info')
     return [a, b, c, d, e]
   }
+
+
   //themes Rows
-[row_, col1_, label_, col2_, labelItem_] = AddElm()
-
-  label_.innerText = 'Themes'
-
-  labelItem_.setAttribute('class', 'form-select')
-
+[row_, col1_, label_, col2_, labelItem_] = AddElm();
+   label_.innerText = 'Themes'
+  insertAttr(['class=form-select', 'id=Themes'], labelItem_)
   for (let i = 0; i < themeData.length; i++) {
+    themeChoice = themeData[i][0]
+    if (themeData[i].length == 3) {
+      themeChoice = themeData[i][1]
+    }
+
     optn = makeElm('option');
     optn.innerText = themeData[i][0]
-    optn.setAttribute('value', `ace/theme/${themeData[i][0]}`);
-    labelItem_.appendChild(optn)
-  }
-
-  //keybinding row
-  let keybindings = ['Ace', 'Emacs', 'sublime', 'VSCode']
-  let row2_
-  [row2_, col1_, label_, col2_, labelItem_] = AddElm()
-  label_.innerText = 'Keybindings'
-  labelItem_.setAttribute('class', 'form-select');
-
-  for (let i = 0; i < keybindings.length; i++) {
-    optn = makeElm('option');
-    optn.innerText = keybindings[i]
-    optn.setAttribute('value', keybindings[i]);
+    optn.setAttribute('value', `ace/theme/${themeChoice.toLowerCase()}`);
     labelItem_.appendChild(optn)
   }
 
   //fontsize row
 [row_, col1_, label_, col2_, labelItem_] = AddElm()
-
   label_.innerText = 'font size'
-  labelItem_.setAttribute('class', 'form-select')
+  insertAttr(['class=form-select', 'id=font-size'], labelItem_);
 
   for (let i = 8; i < 33; i++) {
     optn = makeElm('option');
     optn.innerText = i + 'px'
-    optn.setAttribute('value', i);
+    optn.setAttribute('value', i + 'px');
     labelItem_.appendChild(optn)
   }
 
-  //tabs
+  //tabs size row
 [row_, col1_, label_, col2_, labelItem_] = AddElm();
 
-  label_.innerText = 'Tabs Size';
+  label_.innerText = 'Tab Size';
+  insertAttr(['class=form-select','id=Tab-Size'], labelItem_);
   labelItem_.setAttribute('class', 'form-select');
-
   for (let i = 1; i < 10; i++) {
     optn = makeElm('option');
     optn.innerText = i;
     optn.setAttribute('value', i);
     labelItem_.appendChild(optn);
   }
-  //relative number
+
+  //relative number row
 [row_, col1_, label_, col2_, labelItem_] = AddElm('input')
   label_.innerText = 'Relative Number';
+
   col2_.setAttribute('class', 'col form-check');
   col2_.style.marginLeft = "6em"
-  insertAttr(['class=form-check-input', 'type=checkbox', 'value= '], labelItem_);
+  insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Relative-Number'], labelItem_);
 
   //show invisible
   [row_, col1_, label_, col2_, labelItem_] = AddElm('input')
   label_.innerText = 'Show invisible';
   col2_.setAttribute('class', 'col form-check');
   col2_.style.marginLeft = "6em"
-  insertAttr(['class=form-check-input', 'type=checkbox', 'value= '], labelItem_);
+  insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Show-invisible'], labelItem_);
 
-//Live autocompletion
+  //Live autocompletion row
 [row_, col1_, label_, col2_, labelItem_] = AddElm('input')
   label_.innerText = 'Enable autoComplete';
   col2_.setAttribute('class', 'col form-check');
   col2_.style.marginLeft = "6em"
-  insertAttr(['class=form-check-input', 'type=checkbox', 'value= '], labelItem_);
+  insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Enable-autoComplete'], labelItem_);
 
+  //save btn row
+[row_, col1_, label_, col2_, labelItem_] = AddElm('button')
+  col2_.setAttribute('class', 'col p-5');
+  labelItem_.innerText = 'save'
+  insertAttr(["class=btn btn-primary", 'id=saveBnt'], labelItem_)
+  labelItem_.addEventListener('click', getValues)
 
-
-
-
-
+  //setValue
+  function getValues() {
+    let elmIds = ['Themes','font-size','Tab-Size']
+    let options = ['theme','fontSize','tabSize']
+    for(let i = 0; i<elmIds.length;i++){
+       let elmVal = document.getElementById(elmIds[i])
+       EDITOR_CONFIG[options[i]] = elmVal.value;
+    }
+    
+    window.aceEditor.setOptions(EDITOR_CONFIG);
+    //after create a file and write EditorConfig data as a json object;
+  }
 }
