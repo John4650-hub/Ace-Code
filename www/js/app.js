@@ -3,7 +3,7 @@ import { EDITOR_CONFIG } from "./components/configs.js";
 import sett from "./components/tabs/settingsTab.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
 $(document).ready(function() {
-  $('[data-bs-toggle="tooltip"]').tooltip();
+  $('[title]').tooltip();
 })
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -20,13 +20,14 @@ export const SETFILE = document.getElementById('setFile');
 
 const MENU_TAB = document.querySelector("#menuTab");
 let tabContent = document.querySelector(".tab-content")
-let attrB = ['class:nav-item']
+
 class CreateTabs {
   constructor(id, icon) {
     this.icon = icon
     this.id = id
     this.elmNode = document.createElement('li')
-    this.insertAttr(attrB, this.elmNode)
+    insertAttr(['class:nav-item',"data-bs-toggle=tooltip","data-bs-placement=bottom","title="+this.id], this.elmNode)
+    
     MENU_TAB.appendChild(this.elmNode)
     this.addTabContent()
     this.addInnerKid()
@@ -40,14 +41,10 @@ class CreateTabs {
   }
   addInnerKid() {
     this.elmNode.innerHTML = `
-        <button class="w-100 bg-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" id="${this.id}-tb" data-bs-toggle="tab" data-bs-target="#${this.id}" type="button" role="tab" aria-controls="${this.id}" aria-selected="false"><i class="${this.icon} w-100" data-bs-toggle="tooltip" title="${this.id}"></i></button>
+    
+        <button class="w-100 bg-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" id="${this.id}-tb" data-bs-toggle="tab" data-bs-target="#${this.id}" type="button" role="tab" aria-controls="${this.id}" aria-selected="false"><i class="${this.icon} border-0 w-100"></i>
+        </button>
         `
-  }
-  insertAttr(attrBts, elm) {
-    for (let i of attrBts) {
-      let attrbt = i.split(':')
-      elm.setAttribute(attrbt[0], attrbt[1])
-    }
   }
 }
 let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info']
