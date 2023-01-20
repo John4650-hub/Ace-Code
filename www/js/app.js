@@ -22,11 +22,12 @@ const MENU_TAB = document.querySelector("#menuTab");
 let tabContent = document.querySelector(".tab-content")
 
 class CreateTabs {
-  constructor(id, icon) {
+  constructor(id, icon, name) {
     this.icon = icon
     this.id = id
+    this.name = name
     this.elmNode = document.createElement('li')
-    insertAttr(['class:nav-item',"data-bs-toggle=tooltip","data-bs-placement=bottom","title="+this.id], this.elmNode)
+    insertAttr(['class:nav-item',"data-bs-toggle=tooltip","data-bs-placement=bottom","title="+this.name], this.elmNode)
     
     MENU_TAB.appendChild(this.elmNode)
     this.addTabContent()
@@ -49,8 +50,9 @@ class CreateTabs {
 }
 let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info']
 let tabs = ["settingstab", "pasteBin", 'changeLog', 'github']
+let tabNames = ["settings","Paste Bin","change Log","github"]
 for (let i = 0; i < tabs.length; i++) {
-  let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i]);
+  let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i],tabNames[i]);
 }
 
 let fb = tabContent.querySelector('div:first-child')
