@@ -3,9 +3,12 @@ import { EDITOR_CONFIG } from "./components/configs.js";
 import sett from "./components/tabs/settingsTab.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
 import changeLogTab from "./components/tabs/changeLog.js";
+
 $(document).ready(function() {
   $('[title]').tooltip();
+  $('#settingstab-tb').click();
 })
+
 document.addEventListener('deviceready', onDeviceReady, false);
 
 ace.require("ace/ext/language_tools");
@@ -28,8 +31,8 @@ class CreateTabs {
     this.id = id
     this.name = name
     this.elmNode = document.createElement('li')
-    insertAttr(['class:nav-item',"data-bs-toggle=tooltip","data-bs-placement=bottom","title="+this.name], this.elmNode)
-    
+    insertAttr(['class:nav-item', "data-bs-toggle=tooltip", "data-bs-placement=bottom", "title=" + this.name], this.elmNode)
+
     MENU_TAB.appendChild(this.elmNode)
     this.addTabContent()
     this.addInnerKid()
@@ -43,17 +46,15 @@ class CreateTabs {
   }
   addInnerKid() {
     this.elmNode.innerHTML = `
-    
         <button class="w-100 bg-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" id="${this.id}-tb" data-bs-toggle="tab" data-bs-target="#${this.id}" type="button" role="tab" aria-controls="${this.id}" aria-selected="false"><i class="${this.icon}"></i>
-        </button>
-        `
+        </button>`
   }
 }
 let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info']
 let tabs = ["settingstab", "pasteBin", 'changeLog', 'github']
-let tabNames = ["settings","Paste Bin","change Log","git"]
+let tabNames = ["settings", "Paste Bin", "change Log", "git"]
 for (let i = 0; i < tabs.length; i++) {
-  let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i],tabNames[i]);
+  let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i], tabNames[i]);
 }
 
 let fb = tabContent.querySelector('div:first-child')
