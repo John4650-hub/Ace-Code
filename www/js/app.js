@@ -2,6 +2,7 @@ import { onDeviceReady } from "./components/main_FileEntry.js";
 import { EDITOR_CONFIG } from "./components/configs.js";
 import sett from "./components/tabs/settingsTab.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
+import changeLogTab from "./components/tabs/changeLog.js";
 $(document).ready(function() {
   $('[title]').tooltip();
 })
@@ -62,3 +63,4 @@ ftb.setAttribute('aria-selected', 'true')
 
 sett('#settingstaby')
 pasteTab("#pasteBin")
+changeLogTab('#changeLog')
