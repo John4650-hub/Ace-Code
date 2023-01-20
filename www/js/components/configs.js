@@ -8,10 +8,9 @@ export const EDITOR_CONFIG = {
     showPrintMargin: true,
     showInvisibles: true,
     fontSize: "10px",
-    tabSize: 2,
+    tabSize: 4,
     keyboardHandler: 'ace/keyboard/vim',
     theme: "ace/theme/dracula",
-    mode:"ace/mode/javascript",
     animatedScroll: false,
     enableMultiselect: true,
     

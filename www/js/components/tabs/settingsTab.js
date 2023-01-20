@@ -42,18 +42,9 @@ var themeData = [
     ["Vibrant Ink", "vibrant_ink", "dark"]
 ];
 
-function insertAttr(attrBts, elm) {
-  for (let i of attrBts) {
-    let attrbt = i.split('=')
-    elm.setAttribute(attrbt[0], attrbt[1])
-  }
-}
 /**
  * @param {String} makeElm creates elements
  **/
-function makeElm(elm) {
-  return document.createElement(elm)
-}
 let row_;
 let col1_;
 let col2_;
@@ -62,7 +53,7 @@ let labelItem_;
 let optn;
 let themeChoice;
 
-export function sett(_Par) {
+export default function sett(_Par) {
   let parentElm = document.querySelector(_Par);
 
   // [row_, col1_, label_, col2_, labelItem_]

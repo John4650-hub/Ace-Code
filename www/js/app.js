@@ -1,7 +1,10 @@
 import { onDeviceReady } from "./components/main_FileEntry.js";
 import { EDITOR_CONFIG } from "./components/configs.js";
-import { sett } from "./components/tabs/settingsTab.js";
-
+import sett from "./components/tabs/settingsTab.js";
+import pasteTab from "./components/tabs/pasteBinTab.js";
+$(document).ready(function() {
+  $('[data-bs-toggle="tooltip"]').tooltip();
+})
 document.addEventListener('deviceready', onDeviceReady, false);
 
 ace.require("ace/ext/language_tools");
@@ -37,7 +40,7 @@ class CreateTabs {
   }
   addInnerKid() {
     this.elmNode.innerHTML = `
-        <button class="w-100 bg-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" id="${this.id}-tb" data-bs-toggle="tab" data-bs-target="#${this.id}" type="button" role="tab" aria-controls="${this.id}" aria-selected="false"><i class="${this.icon} w-100"></i></button>
+        <button class="w-100 bg-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" id="${this.id}-tb" data-bs-toggle="tab" data-bs-target="#${this.id}" type="button" role="tab" aria-controls="${this.id}" aria-selected="false"><i class="${this.icon} w-100" data-bs-toggle="tooltip" title="${this.id}"></i></button>
         `
   }
   insertAttr(attrBts, elm) {
@@ -59,3 +62,4 @@ let ftb = MENU_TAB.querySelector('li button');
 ftb.setAttribute('aria-selected', 'true')
 
 sett('#settingstaby')
+pasteTab("#pasteBin")
