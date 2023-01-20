@@ -51,7 +51,7 @@ class CreateTabs {
 }
 let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info']
 let tabs = ["settingstab", "pasteBin", 'changeLog', 'github']
-let tabNames = ["settings","Paste Bin","change Log","github"]
+let tabNames = ["settings","Paste Bin","change Log","git"]
 for (let i = 0; i < tabs.length; i++) {
   let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i],tabNames[i]);
 }
