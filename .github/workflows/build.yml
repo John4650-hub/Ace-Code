@@ -19,9 +19,9 @@ jobs:
      - run: npm run build
      - run: ls
      - run: sudo npm install -g cordova 
-     - run: cordova platform add android
+     - run: sudo cordova platform add android
      - run: ls
-     - run: cordova plugin add cordova-plugin-file
+     - run: sudo cordova plugin add cordova-plugin-file
 
      - uses: actions/setup-java@v3
        with:
@@ -35,7 +35,7 @@ jobs:
      - run: sh clean.sh
      - run: |
          cd platforms
-         cordova build android
+        sudo cordova build android
          ls -a
          ls -lh android/app/build/outputs/apk/debug/
          cd android/app/build/outputs/apk/debug/
