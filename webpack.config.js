@@ -4,6 +4,6 @@ module.exports = {
   entry: './www/js/app.js',
   output: {
     filename: 'app.bundle.js',
-    path: './www/dist/'
+    path: 'www/dist/'
   },
 };
