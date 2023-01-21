@@ -14,12 +14,9 @@ jobs:
        with:
          node-version: 16
      
-     - run: |
-        sudo npm install &&  cd www && mkdir dist && cd .. 
-        npm run build
-        
-     - run: ls
-     - run: sudo npm install -g cordova
+     - run: sudo npm install --save-dev webpack webpack-cli
+     - run: cd www && mkdir dist && cd ..
+     - run: npm run build
      - run: ls
      - run: cordova platform add android
      - run: ls
@@ -34,6 +31,7 @@ jobs:
      - name: Setup sdk
        uses: android-actions/setup-android@v2
 
+     - run: sh clean.sh
      - run: |
          cd platforms
          cordova build android
