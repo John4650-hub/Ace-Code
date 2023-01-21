@@ -3,13 +3,21 @@
   "displayName": "Ace-Code",
   "version": "1.0.0",
   "description": "This is my preferred setting of ace code editor",
-  "main": "index.js",
+  "main":"./www/js/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js" 
   },
   "keywords": [
     "ecosystem:cordova"
   ],
   "author": "John Delvin",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "dependencies":{
+    "uglify-js":"^3.17.4"
+  },
+  "devDependencies":{
+    "webpack" :  "^5.75.0",
+    "webpack-cli":"^5.0.1"
+  }
 }

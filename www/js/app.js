@@ -46,7 +46,7 @@ class CreateTabs {
   }
   addInnerKid() {
     this.elmNode.innerHTML = `
-        <button class="w-100 bg-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" id="${this.id}-tb" data-bs-toggle="tab" data-bs-target="#${this.id}" type="button" role="tab" aria-controls="${this.id}" aria-selected="false"><i class="${this.icon}"></i>
+        <button class="w-100 btn btn-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" id="${this.id}-tb" data-bs-toggle="tab" data-bs-target="#${this.id}" type="button" role="tab" aria-controls="${this.id}" aria-selected="false"><i class="${this.icon}"></i>
         </button>`
   }
 }
