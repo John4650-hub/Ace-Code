@@ -1,8 +1,7 @@
 let log = [
-  "Added new feature",
-  "Added change log",
-  "added new color",
-  "support for new language"
+  "Added new paste in textarea ",
+  "support for new language",
+  "Added about section"
   ]
 
 export default function changeLogTab(_par) {
@@ -13,7 +12,7 @@ export default function changeLogTab(_par) {
   insertAttr(['class=list-group'], listElm)
 
   let versionName = makeElm('h2');
-  versionName.innerText = 'v 4.0.3'
+  versionName.innerText = 'v 4.0.7 (latest)'
   listElm.appendChild(versionName)
   listGroup.appendChild(listElm)
   addLogTxt()

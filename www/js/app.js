@@ -3,6 +3,7 @@ import { EDITOR_CONFIG } from "./components/configs.js";
 import sett from "./components/tabs/settingsTab.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
 import changeLogTab from "./components/tabs/changeLog.js";
+import aboutMe from "./components/tabs/aboutMe.js";
 
 $(document).ready(function() {
   $('[title]').tooltip();
@@ -50,9 +51,9 @@ class CreateTabs {
         </button>`
   }
 }
-let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info']
-let tabs = ["settingstab", "pasteBin", 'changeLog', 'github']
-let tabNames = ["settings", "Paste Bin", "change Log", "git"]
+let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info','fa fa-laptop-code text-info']
+let tabs = ["settingstab", "pasteBin", 'changeLog', 'github',"aboutme"]
+let tabNames = ["settings", "Paste Bin", "change Log", "git","about"]
 for (let i = 0; i < tabs.length; i++) {
   let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i], tabNames[i]);
 }
@@ -65,3 +66,4 @@ ftb.setAttribute('aria-selected', 'true')
 sett('#settingstaby')
 pasteTab("#pasteBin")
 changeLogTab('#changeLog')
+aboutMe('#aboutme')
