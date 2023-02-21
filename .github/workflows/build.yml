@@ -14,12 +14,13 @@ jobs:
           repository: John4650-hub/spaceshooter
           ref: apk
           path: spaceshooter
-          
+     - run: ls -a && pwd
      - uses: actions/setup-node@v3
        with:
          node-version: 16
      
      - run: sudo npm install --save-dev webpack webpack-cli
+     
      - run: cd www && mkdir dist && cd ..
      - run: npm run build
      - run: ls
