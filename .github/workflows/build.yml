@@ -19,7 +19,7 @@ jobs:
        with:
          node-version: 16
      
-     - run: sudo npm install --save-dev webpack webpack-cli
+     - run: cd spaceshooter && sudo npm install --save-dev webpack webpack-cli
      
      - run: cd spaceshooter/www && mkdir dist && cd ..
      - run: cd spaceshooter && npm run build
@@ -50,7 +50,8 @@ jobs:
      - uses: actions/upload-artifact@v3
        with:
          name: upload_debug_apk
-         path: spaceshooter/android/app/build/outputs/apk/debug/app-debug.apk
+         path: /home/runner/work/Ace-Code/Ace-Code/spaceshooter/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+
          retention-days: 7
      
      - run: ls
