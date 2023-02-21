@@ -21,13 +21,13 @@ jobs:
      
      - run: sudo npm install --save-dev webpack webpack-cli
      
-     - run: cd www && mkdir dist && cd ..
-     - run: npm run build
-     - run: ls
-     - run: sudo npm install -g cordova 
-     - run: sudo cordova platform add android
-     - run: ls
-     - run: sudo cordova plugin add cordova-plugin-file
+     - run: cd spaceshooter/www && mkdir dist && cd ..
+     - run: cd spaceshooter && npm run build
+     - run: ls spaceshooter/
+     - run: cd spaceshooter && sudo npm install -g cordova 
+     - run: cd spaceshooter && sudo cordova platform add android
+     - run: ls spaceshooter
+     - run: cd spaceshooter && sudo cordova plugin add cordova-plugin-file
 
      - uses: actions/setup-java@v3
        with:
@@ -38,19 +38,19 @@ jobs:
      - name: Setup sdk
        uses: android-actions/setup-android@v2
 
-     - run: sh clean.sh
+#      - run: sh clean.sh
      - run: |
-         cd platforms
+         cd spaceshooter/platforms
          sudo cordova build android
          ls -a
          ls -lh android/app/build/outputs/apk/debug/
-         cd android/app/build/outputs/apk/debug/
-         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code
+ #        cd android/app/build/outputs/apk/debug/
+#         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code
 
      - uses: actions/upload-artifact@v3
        with:
          name: upload_debug_apk
-         path: /home/runner/work/Ace-Code/Ace-Code/app-debug.apk
+         path: spaceshooter/android/app/build/outputs/apk/debug/app-debug.apk
          retention-days: 7
      
      - run: ls
