@@ -38,7 +38,7 @@ jobs:
      - name: Setup sdk
        uses: android-actions/setup-android@v2
 
-#      - run: sh clean.sh
+     - run: cd spaceshooter && sh clean.sh
      - run: |
          cd spaceshooter/platforms
          sudo cordova build android
