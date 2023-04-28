@@ -27,7 +27,11 @@ jobs:
      - run: cd spaceshooter && sudo npm install -g cordova 
      - run: cd spaceshooter && sudo cordova platform add android
      - run: ls spaceshooter
-     - run: cd spaceshooter && sudo cordova plugin add cordova-plugin-file
+     - run: |
+        cd spaceshooter
+        sudo cordova plugin add cordova-plugin-file
+        sudo cordova plugin add https://github.com/Anuj-Raghuvanshi/cordova-clipboard-plugin
+
 
      - uses: actions/setup-java@v3
        with:
