@@ -11,7 +11,7 @@
   <platform name="android">
     <icon src="res/icon/icon.png" />
     <preference name="Orientation" value="portrait" />
-    <preference name="android-maxSdkVersion" value="30"/>
+    <preference name="android-maxSdkVersion" value="28"/>
     <preference name="android-targetSdkVersion" value="23"/>
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     
