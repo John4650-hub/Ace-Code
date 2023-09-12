@@ -94,5 +94,4 @@ export async function onDeviceReady() {
                 }, () => { console.log('failed to save file'); });
             }
         }, () => { console.log('failed to load file system'); });
-
 }

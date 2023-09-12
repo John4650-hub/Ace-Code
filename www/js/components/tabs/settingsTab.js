@@ -1,4 +1,6 @@
 import { EDITOR_CONFIG } from "../configs.js";
+import { writeFile } from "../File_System/writeFile.js";
+import { readFile} from '../File_System/readFile.js'
 
 var themeData = [
     ["Chrome"],
@@ -138,22 +140,22 @@ export default function sett(_Par) {
   col2_.setAttribute('class', 'col form-check');
   col2_.style.marginLeft = "60px"
   insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Enable-autoComplete'], labelItem_);
-  
+
   // enable behaiours
 [row_, col1_, label_, col2_, labelItem_] = AddElm('input')
-label_.innerText = 'Behaviour';
-col2_.setAttribute('class', 'col form-check');
-col2_.style.marginLeft = "60px"
-insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Enable-behaviours'], labelItem_);
+  label_.innerText = 'Behaviour';
+  col2_.setAttribute('class', 'col form-check');
+  col2_.style.marginLeft = "60px"
+  insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=Enable-behaviours'], labelItem_);
 
-//Line Numbers
+  //Line Numbers
 [row_, col1_, label_, col2_, labelItem_] = AddElm('input')
-label_.innerText = 'Line Numbers';
-col2_.setAttribute('class', 'col form-check');
-col2_.style.marginLeft = "60px"
-insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=show-line-numbers'], labelItem_);
+  label_.innerText = 'Line Numbers';
+  col2_.setAttribute('class', 'col form-check');
+  col2_.style.marginLeft = "60px"
+  insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=show-line-numbers'], labelItem_);
 
-//
+  //
 
   //save btn row
 [row_, col1_, label_, col2_, labelItem_] = AddElm('button')
@@ -163,8 +165,22 @@ insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=show-line-
   labelItem_.addEventListener('click', getValues)
 
   //setValue
-  let elmIds = ['Themes', 'font-size', 'Tab-Size', 'Relative-Number', 'Show-invisible', 'Enable-autoComplete','Enable-behaviours','show-line-numbers']
-  let options = ['theme', 'fontSize', 'tabSize', 'relativeLineNumbers', 'showInvisibles', 'enableLiveAutocompletion','behavioursEnabled','showLineNumbers']
+  let elmIds = ['Themes', 'font-size', 'Tab-Size', 'Relative-Number', 'Show-invisible', 'Enable-autoComplete', 'Enable-behaviours', 'show-line-numbers']
+  let options = ['theme', 'fontSize', 'tabSize', 'relativeLineNumbers', 'showInvisibles', 'enableLiveAutocompletion', 'behavioursEnabled', 'showLineNumbers']
+
+  function saveSettingsToFile(obj) {
+    let jsonObj = JSON.stringify(obj)
+    console.log(jsonObj)
+    let extFs = cordova.file.externalDataDirectory
+    let fsEntry;
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+        function(fs) {
+          fs.root.getFile('storage/emulated/0/Android/data/com.ace.code/files/settings.json',{create:true,exclusive:false},function(fileEntry){
+            fsEntry = fileEntry;
+            writeFile(fsEntry,jsonObj)
+          },(e)=>console.log(`some error:${e}`))
+        },(e)=>console.log(`some error: ${e}`))
+  }
 
   function getValues() {
     for (let i = 0; i < elmIds.length; i++) {
@@ -177,6 +193,7 @@ insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=show-line-
       }
     }
 
+    saveSettingsToFile(EDITOR_CONFIG)
     window.aceEditor.setOptions(EDITOR_CONFIG);
     //after create a file and write EditorConfig data as a json object;
   }

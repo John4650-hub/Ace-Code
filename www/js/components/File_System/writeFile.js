@@ -1,5 +1,5 @@
 export function writeFile(fileEntry, dataObj) {
-  // Create a FileWriter object for our FileEntry (log.txt).
+  // Create a FileWriter object for our FileEntry
   fileEntry.createWriter(function(fileWriter) {
 
     fileWriter.onwriteend = function() {
