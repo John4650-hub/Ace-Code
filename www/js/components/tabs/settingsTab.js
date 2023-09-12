@@ -1,6 +1,6 @@
 import { EDITOR_CONFIG } from "../configs.js";
 import { writeFile } from "../File_System/writeFile.js";
-import { readFile} from '../File_System/readFile.js'
+import { readFile } from '../File_System/readFile.js'
 
 var themeData = [
     ["Chrome"],
@@ -174,12 +174,12 @@ export default function sett(_Par) {
     let extFs = cordova.file.externalDataDirectory
     let fsEntry;
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-        function(fs) {
-          fs.root.getFile('storage/emulated/0/Android/data/com.ace.code/files/settings.json',{create:true,exclusive:false},function(fileEntry){
-            fsEntry = fileEntry;
-            writeFile(fsEntry,jsonObj)
-          },(e)=>console.log(`some error:${e}`))
-        },(e)=>console.log(`some error: ${e}`))
+      function(fs) {
+        fs.root.getFile('storage/emulated/0/Android/data/com.ace.code/files/settings.json', { create: true, exclusive: false }, function(fileEntry) {
+          fsEntry = fileEntry;
+          writeFile(fsEntry, jsonObj)
+        }, (e) => console.log(`some error:${e}`))
+      }, (e) => console.log(`some error: ${e}`))
   }
 
   function getValues() {
