@@ -1,4 +1,4 @@
 git add .
-git commit -m "added saving file data"
+git commit -m "now settings can be remembered on app start"
 git push
 

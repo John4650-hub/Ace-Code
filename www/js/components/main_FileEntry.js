@@ -53,7 +53,7 @@ export async function onDeviceReady() {
     $("#fileList").treeview({ data: getTree(), showBorder: false });
   }, 2500)
 
-applyEditorSettings()
+  applyEditorSettings()
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
     function(fs) {
       /**
@@ -80,21 +80,19 @@ applyEditorSettings()
           alert(`file ${filename} is not valid`)
         }
       }
+      fs.root.getFile('Android/data/com.ace.code/files/settings.json', {
+        create: true,
+        exclusive: false
+      }, function(fEntry) {
+        fEntry.file(function(file) {
+          let reader = new FileReader()
+          reader.onloadend = function() {
+            aceEditor.setOptions(JSON.parse(this.result))
+          }
+          reader.readAsText(file)
+        },(e)=>console.log());
+      },(e)=>console.log(e));
 
-      function applyEditorSettings() {
-        fs.root.getFile('Android/data/com.ace.code/files/settings.json', {
-          create: true,
-          exclusive: false
-        }, function(fEntry) {
-          fEntry.file(function(file) {
-            let reader = new FileReader()
-            reader.onloadend = function() {
-              aceEditor.setOptions(JSON.parse(this.result))
-            }
-            reader.readAsText(file)
-          }, null)
-        }, null)
-      }
       window.getUrls = getUrls
       let fE; //Helps to avoid saving the same data in various entries
       function workWithFile(filePath) {
