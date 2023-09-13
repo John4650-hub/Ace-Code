@@ -4,12 +4,10 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
   <script src="./eruda.js"></script>
   <script src="./src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="./cordova.js"></script>
-
-
+  
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/bootstrap-treeview.min.css">
   <link rel="stylesheet" href="./css/style.css">
@@ -25,14 +23,15 @@
 
     </div>
 
-
     <div id="" class="navbar navbar-dark bg-dark position-absolute w-100" style="height: 3.5em;">
       <p class="text-primary position-absolute top-50 start-50 translate-middle fw-bolder user-select-none">ACE CODE IDE</p>
 
-      <div class="position-absolute mx-5 end-0" id="saveFs" type="submit" ><i class="fa fa-save text-light fw-bolder"></i></div>
-      
-      <div class="position-absolute start-0 top-50 translate-middle ms-4" id="openFs" data-bs-toggle="offcanvas" data-bs-target="#fileSystemCanvas" aria-controls="fileSystemCanvas" type="submit"><i class="fa fa-bars text-light fs-2 fw-bolder opacity-75"></i></div>
+      <div class="position-absolute mx-5 end-0" id="saveFs" type="submit"><i class="fa fa-save text-light fw-bolder"></i></div>
 
+      <div class="position-absolute start-0 top-50 translate-middle ms-4" id="openFs" data-bs-toggle="offcanvas" data-bs-target="#fileSystemCanvas" aria-controls="fileSystemCanvas" type="submit"><i class="fa fa-bars text-light fs-2 fw-bolder opacity-100"></i></div>
+      <div class="position-absolute top-50 ms-5 ps-5 translate-middle">
+        <i class="fa fa-clipboard-list fs-2 text-light" data-bs-toggle="offcanvas" data-bs-target="#recentlyOpened" aria-controls="recentlyOpened" id="recentlyOpenedFilDisplay"></i>
+      </div>
       <div class="position-absolute end-0 mx-2" id="settingsPanel" data-bs-toggle="offcanvas" data-bs-target="#settingsCanvas" aria-controls="settingsCanvas"><i class="fa fa-tools text-light fs-5"></i>
       </div>
       <div>
@@ -41,34 +40,43 @@
     </div>
   </div>
 
-  <!-- sideBar => filesys -->
   <div class="bg-dark w-100 offcanvas offcanvas-start border rounded-3" tabindex="-1" id="fileSystemCanvas" aria-labelledby="fileSystemCanvasLabel">
     <div class="offcanvas-header border-bottom">
       <h5 class="offcanvas-title text-white" id="fileSystemCanvasLabel">FILE SYSTEM</h5>
-      
+
       <button type="button" class="btn btn-dark" data-bs-dismiss="offcanvas" data-bs-backdrop="false" aria-label="Close"><i class="fa fa-window-close text-danger"></i></button>
     </div>
     <div class=" bg-dark list-group list-group-flush overflow-auto mh-100 mw-75" id="fileList" style="overflow-x: hidden;">
     </div>
   </div>
-  <!-- settings -->
+  
   <div class="bg-dark w-75 offcanvas offcanvas-end border rounded-3" tabindex="-1" id="settingsCanvas" aria-labelledby="settingsCanvasLabel">
     <div class="offcanvas-header border-bottom pb-0 pt-0 pe-0 px-0">
       <ul class="nav nav-tabs nav-fill border w-100" role="tablist" id="menuTab" style="overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap;background-color:black;">
-       
+
         <button class="btn w-100 btn-dark nav-link border-bottom border-end border-top-0 border-start-0 rounded-0" aria-label="Close" data-bs-dismiss="offcanvas"><i class="fa fa-window-close text-danger"></i></button>
       </ul>
-    
+
     </div>
     <div class="offcanvas-body text-light">
       <div class="tab-content w-100">
       </div>
     </div>
   </div>
-  <!-- <script src="./cordova.js"></script> -->
+<!--Recent opened files-->
+  <div class="offcanvas offcanvas-top bg-dark" id="recentlyOpened" aria-labelledby="recentFiles">
+    <div class="offcanvas-header">
+      <h5 id="recentFiles">Recent files</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="list-group list-group-flush mh-50" id="recent_file"></ul>
+      
+    </div>
+  </div>
   <script src="./libs/jquery.min.js"></script>
   <script src="./src-noconflict/ext-language_tools.js"></script>
-  
+
   <script src="./console.js"></script>
   <script src="./libs/bootstrap-treeview.min.js"></script>
   <script src="./libs/popper.min.js"></script>

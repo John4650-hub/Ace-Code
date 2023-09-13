@@ -1,7 +1,14 @@
-let log = [
-  "Added new paste in textarea ",
-  "support for new language",
-  "Added about section"
+let log = [{
+    version: 'v5.0.0 (latest)',
+    info: `Added tab for recently edited files
+  implemented saving of setting 
+  `
+}, {
+    version: 'v 4.0.7',
+    info: `Added new paste in textarea,
+  support for new language,
+  Added about section`
+}
   ]
 
 export default function changeLogTab(_par) {
@@ -10,20 +17,20 @@ export default function changeLogTab(_par) {
   insertAttr(['class=container'], listGroup)
   let listElm = makeElm('ul')
   insertAttr(['class=list-group'], listElm)
-
-  let versionName = makeElm('h2');
-  versionName.innerText = 'v 4.0.7 (latest)'
-  listElm.appendChild(versionName)
-  listGroup.appendChild(listElm)
-  addLogTxt()
-  parentElm.appendChild(listGroup);
-
-  function addLogTxt() {
-    let listItem;
-    log.forEach((lg) => {
-      listItem = makeElm('li');
-      listItem.innerText = lg
-      listElm.appendChild(listItem)
-    })
+  parentElm.appendChild(listElm)
+  let version, listItem,title,inform;
+  for (let i = 0; i < log.length; i++)
+  {
+    version = makeElm('li');
+    title = makeElm('h2')
+    version.appendChild(title)
+    title.innerText = log[i].version
+    inform = makeElm('p')
+    inform.innerText=log[i].info
+    insertAttr(['class=list-group-item'],version)
+    version.appendChild(inform)
+    listElm.appendChild(version)
+    parentElm.appendChild(version);
   }
+  
 }

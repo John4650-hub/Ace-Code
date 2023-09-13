@@ -1,4 +1,4 @@
-import { OPENFS, SAVEFS } from "../app.js";
+import { OPENFS, SAVEFS, addRecentlyOpenedFile } from "../app.js";
 import { writeFile } from "./File_System/writeFile.js";
 import { readFile } from "./File_System/readFile.js";
 import { entryIcon } from "./File_System/fileSysUi.js";
@@ -78,6 +78,7 @@ export async function onDeviceReady() {
         } else {
           alert(`file ${filename} is not valid`)
         }
+        addRecentlyOpenedFile(filename,fileTruePath,workWithFile)
       }
       fs.root.getFile('Android/data/com.ace.code/files/settings.json', {
         create: true,
@@ -89,8 +90,8 @@ export async function onDeviceReady() {
             aceEditor.setOptions(JSON.parse(this.result))
           }
           reader.readAsText(file)
-        },(e)=>console.log());
-      },(e)=>console.log(e));
+        }, (e) => console.log());
+      }, (e) => console.log(e));
 
       window.getUrls = getUrls
       let fE; //Helps to avoid saving the same data in various entries

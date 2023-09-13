@@ -4,6 +4,8 @@ import sett from "./components/tabs/settingsTab.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
 import changeLogTab from "./components/tabs/changeLog.js";
 import aboutMe from "./components/tabs/aboutMe.js";
+import { writeFile } from "./components/File_System/writeFile.js";
+import { readFile } from "./components/File_System/readFile.js";
 
 $(document).ready(function() {
   $('[title]').tooltip();
@@ -52,9 +54,9 @@ class CreateTabs {
         </button>`
   }
 }
-let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info','fa fa-laptop-code text-info']
-let tabs = ["settingstab", "pasteBin", 'changeLog', 'github',"aboutme"]
-let tabNames = ["settings", "Paste Bin", "change Log", "git","about"]
+let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info', 'fa fa-laptop-code text-info']
+let tabs = ["settingstab", "pasteBin", 'changeLog', 'github', "aboutme"]
+let tabNames = ["settings", "Paste Bin", "change Log", "git", "about"]
 for (let i = 0; i < tabs.length; i++) {
   let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i], tabNames[i]);
 }
@@ -68,3 +70,16 @@ sett('#settingstaby')
 pasteTab("#pasteBin")
 changeLogTab('#changeLog')
 aboutMe('#aboutme')
+
+// recent files
+
+export function addRecentlyOpenedFile(name, url, fs) {
+  let recentFilesTab = document.getElementById('recent_file')
+
+  let openedFile = makeElm('li')
+  insertAttr(['class=list-group-item'], openedFile)
+  openedFile.innerText = name
+  openedFile.addEventListener('click', function() { fs(url) })
+
+  recentFilesTab.appendChild(openedFile)
+}
