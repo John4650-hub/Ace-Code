@@ -14,6 +14,7 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 ace.require("ace/ext/language_tools");
 window.aceEditor = ace.edit('editor');
+
 aceEditor.setOptions(EDITOR_CONFIG);
 aceEditor.commands.removeCommand('showSettingsMenu')
 
