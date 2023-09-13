@@ -53,7 +53,6 @@ export async function onDeviceReady() {
     $("#fileList").treeview({ data: getTree(), showBorder: false });
   }, 2500)
 
-  applyEditorSettings()
   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
     function(fs) {
       /**
