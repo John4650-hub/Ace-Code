@@ -24,7 +24,7 @@ jobs:
      - run: cd spaceshooter/www && mkdir dist && cd ..
      - run: cd spaceshooter && npm run build
      - run: ls spaceshooter/
-     - run: cd spaceshooter && sudo npm install -g cordova 
+     - run: cd spaceshooter && sudo npm install -g cordova@11.0.0
      - run: cd spaceshooter && sudo cordova platform add android
      - run: ls spaceshooter
      - run: |
@@ -38,7 +38,7 @@ jobs:
          distribution: temurin
          java-version: 11
      
-     - uses: gradle/gradle-build-action@v2
+     - uses: gradle/gradle-build-action@v2.4.2
      - name: Setup sdk
        uses: android-actions/setup-android@v2
 
