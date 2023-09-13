@@ -10,28 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - uses: actions/checkout@v3
-       with:
-          repository: John4650-hub/spaceshooter
-          ref: apk
-          path: spaceshooter
-     - run: ls -a && pwd
      - uses: actions/setup-node@v3
        with:
          node-version: 16
      
-     - run: cd spaceshooter && sudo npm install --save-dev webpack webpack-cli
-     
-     - run: cd spaceshooter/www && mkdir dist && cd ..
-     - run: cd spaceshooter && npm run build
-     - run: ls spaceshooter/
-     - run: cd spaceshooter && sudo npm install -g cordova@11.0.0
-     - run: cd spaceshooter && sudo cordova platform add android
-     - run: ls spaceshooter
-     - run: |
-        cd spaceshooter
-        sudo cordova plugin add cordova-plugin-file
-        sudo cordova plugin add cordova-clipboard-plugin
-
+     - run: sudo npm install --save-dev webpack webpack-cli
+     - run: cd www && mkdir dist && cd ..
+     - run: npm run build
+     - run: ls
+     - run: sudo npm install -g cordova@11.0.0 
+     - run: sudo cordova platform add android
+     - run: ls
+     - run: sudo cordova plugin add cordova-plugin-file
 
      - uses: actions/setup-java@v3
        with:
@@ -42,20 +32,19 @@ jobs:
      - name: Setup sdk
        uses: android-actions/setup-android@v2
 
-     - run: cd spaceshooter && sh clean.sh
+     - run: sh clean.sh
      - run: |
-         cd spaceshooter/platforms
+         cd platforms
          sudo cordova build android
          ls -a
          ls -lh android/app/build/outputs/apk/debug/
- #        cd android/app/build/outputs/apk/debug/
-#         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code
+         cd android/app/build/outputs/apk/debug/
+         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code
 
      - uses: actions/upload-artifact@v3
        with:
          name: upload_debug_apk
-         path: /home/runner/work/Ace-Code/Ace-Code/spaceshooter/platforms/android/app/build/outputs/apk/debug/app-debug.apk
-
+         path: /home/runner/work/Ace-Code/Ace-Code/app-debug.apk
          retention-days: 7
      
      - run: ls
@@ -87,6 +76,5 @@ jobs:
          with:
            upload_url: ${{ steps.create_release.outputs.upload_url }}
            asset_path:  upload_debug_apk/app-debug.apk
-#            asset_name: ${{ github.event.repository.name }}.apk
-           asset_name: shooter.apk
+           asset_name: ${{ github.event.repository.name }}.apk
            asset_content_type: application/zip
