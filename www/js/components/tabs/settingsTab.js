@@ -175,7 +175,7 @@ export default function sett(_Par) {
     let fsEntry;
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
       function(fs) {
-        fs.root.getFile(`${extFs}settings.json`, { create: true, exclusive: false }, function(fileEntry) {
+        fs.root.getFile("Android/data/com.ace.code/files/settings.json", { create: true, exclusive: false }, function(fileEntry) {
           fsEntry = fileEntry;
           writeFile(fsEntry, jsonObj)
         }, (e) => console.log(`some error:${e}`))

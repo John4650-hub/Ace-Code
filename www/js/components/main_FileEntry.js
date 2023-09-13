@@ -84,6 +84,7 @@ export async function onDeviceReady() {
             let fE; //Helps to avoid saving the same data in various entries
             function workWithFile(filePath) {
                 fs.root.getFile(filePath, { create: true, exclusive: false }, function(fileEntry) {
+                  
                     fE = fileEntry
                     readFile(fE);
                     //SAVE FILE when saveFs btn is clicked
