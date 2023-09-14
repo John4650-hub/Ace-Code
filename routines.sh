@@ -1,4 +1,5 @@
 git add .
-git commit -m "now settings can be remembered on app start"
+git commit -m "fixed file not highlighting in recent
+y opened and improved ui for recently opened"
 git push
 

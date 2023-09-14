@@ -112,7 +112,7 @@ export async function onDeviceReady() {
 
       function addRecentlyOpenedFile(name,url,ext) {
         let openedFile = makeElm('li')
-        insertAttr(['class=list-group-item'], openedFile)
+        insertAttr(['class=list-group-item bg-transparent'], openedFile)
         openedFile.innerText = name
         openedFile.addEventListener('click', function() { workWithFile(url) 
           window.aceEditor.session.setMode(`ace/mode/${ext}`)
