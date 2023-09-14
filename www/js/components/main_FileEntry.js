@@ -1,4 +1,4 @@
-import { OPENFS, SAVEFS, addRecentlyOpenedFile } from "../app.js";
+import { OPENFS, SAVEFS, recentFilesTab } from "../app.js";
 import { writeFile } from "./File_System/writeFile.js";
 import { readFile } from "./File_System/readFile.js";
 import { entryIcon } from "./File_System/fileSysUi.js";
@@ -73,13 +73,14 @@ export async function onDeviceReady() {
         })
         if (checkValidity == undefined) {
           workWithFile(fileTruePath);
+          addRecentlyOpenedFile(filename,fileTruePath)
           window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
 
         } else {
           alert(`file ${filename} is not valid`)
         }
-        addRecentlyOpenedFile(filename,fileTruePath,workWithFile)
       }
+
       fs.root.getFile('Android/data/com.ace.code/files/settings.json', {
         create: true,
         exclusive: false
@@ -101,11 +102,21 @@ export async function onDeviceReady() {
           fE = fileEntry
           readFile(fE);
           //SAVE FILE when saveFs btn is clicked
+
           SAVEFS.addEventListener('click', saveFile);
 
           function saveFile() { writeFile(fE, null); }
 
         }, () => { console.log('failed to save file'); });
+      }
+
+      function addRecentlyOpenedFile(name,url) {
+        let openedFile = makeElm('li')
+        insertAttr(['class=list-group-item'], openedFile)
+        openedFile.innerText = name
+        openedFile.addEventListener('click', function() { workWithFile(url) })
+
+        recentFilesTab.appendChild(openedFile)
       }
     }, () => { console.log('failed to load file system'); });
 }

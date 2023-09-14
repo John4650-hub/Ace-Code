@@ -24,7 +24,7 @@ export const SAVEFS = document.getElementById('saveFs');
 
 export const OPENFS = document.getElementById('openFs');
 export const SETFILE = document.getElementById('setFile');
-
+export let recentFilesTab = document.getElementById('recent_file')
 
 const MENU_TAB = document.querySelector("#menuTab");
 let tabContent = document.querySelector(".tab-content")
@@ -73,13 +73,3 @@ aboutMe('#aboutme')
 
 // recent files
 
-export function addRecentlyOpenedFile(name, url, fs) {
-  let recentFilesTab = document.getElementById('recent_file')
-
-  let openedFile = makeElm('li')
-  insertAttr(['class=list-group-item'], openedFile)
-  openedFile.innerText = name
-  openedFile.addEventListener('click', function() { fs(url) })
-
-  recentFilesTab.appendChild(openedFile)
-}
