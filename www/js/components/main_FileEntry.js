@@ -73,7 +73,7 @@ export async function onDeviceReady() {
         })
         if (checkValidity == undefined) {
           workWithFile(fileTruePath);
-          addRecentlyOpenedFile(filename,fileTruePath)
+          addRecentlyOpenedFile(filename,fileTruePath,FILE_EXTENSIONS[extension])
           window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
 
         } else {
@@ -110,11 +110,13 @@ export async function onDeviceReady() {
         }, () => { console.log('failed to save file'); });
       }
 
-      function addRecentlyOpenedFile(name,url) {
+      function addRecentlyOpenedFile(name,url,ext) {
         let openedFile = makeElm('li')
         insertAttr(['class=list-group-item'], openedFile)
         openedFile.innerText = name
-        openedFile.addEventListener('click', function() { workWithFile(url) })
+        openedFile.addEventListener('click', function() { workWithFile(url) 
+          window.aceEditor.session.setMode(`ace/mode/${ext}`)
+        })
 
         recentFilesTab.appendChild(openedFile)
       }
