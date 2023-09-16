@@ -11,6 +11,7 @@ let log = [{
 },{version:'v5.0.1',info: `✅UI cleanUp
 ✅Added Comments
 `},{version:'v5.0.1 (Bug fix)',info: `✅Bug fix
+`},{version:'v5.0.2',info: `✅Fixed a few bugs still
 `}
 ]
 

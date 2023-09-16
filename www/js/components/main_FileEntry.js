@@ -124,14 +124,18 @@ export async function onDeviceReady() {
         })
 
         let recents = document.querySelectorAll('#recent_file li p')
+        let foundMatch = false
         for (let i = 0; i < recents.length; i++) {
           if (recents[i].innerText == url) {
-            //do nothing
+            foundMatch=true
+            break
           } else {
-            recentFilesTab.appendChild(openedFile)
+            foundMatch=false
           }
-
         }
+      if (foundMatch==false){
+          recentFilesTab.appendChild(openedFile)
+      }
       }
     }, () => { console.log('failed to load file system'); });
 }

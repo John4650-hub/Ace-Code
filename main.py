@@ -2,10 +2,23 @@
 update automatically to a the change log for every build
 '''
 
-P="www/js/components/tabs/changeLog.js"
-with open(P,'r',encoding='utf-8') as fhand:
-    content = fhand.read()
+P1="www/js/components/tabs/changeLog.js"
+P2=".github/workflows/build.yml"
+def read_file(path):
+    '''
+    return file content
+    '''
+    with open(path,'r',encoding='utf-8') as f_hand:
+        return f_hand.read()
+def write_file(path,new_content):
+    '''
+    write content to file
+    '''
+    with open(path,'w',encoding='utf-8') as file_handle:
+        return file_handle.write(new_content)
 
+
+content = read_file(P1)
 version = input("Enter version name:")
 line = []
 print("What's new: ")
@@ -20,6 +33,9 @@ for l in line:
 MSG = f",{{version:'{version}',info: `{INFO}`}}"
 pos = content.find("}\n]")+1
 newUpdate = content[:(pos)] + MSG + content[(pos):]
+write_file(P1,newUpdate)
 
-with open(P,'w',encoding='utf-8') as fl:
-    fl.write(newUpdate)
+content_2 = read_file(P2)
+pos2 = content_2.find(' #release')
+newUpdate = content_2.replace(content_2[pos2-6:pos2],version)
+write_file(P2,newUpdate)
