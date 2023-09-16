@@ -122,13 +122,16 @@ export async function onDeviceReady() {
           workWithFile(url)
           window.aceEditor.session.setMode(`ace/mode/${ext}`)
         })
-        document.querySelectorAll('#recent_file li p').forEach((i) => {
-          if (i.innerText == url) {
+
+        let recents = document.querySelectorAll('#recent_file li p')
+        for (let i = 0; i < recents.length; i++) {
+          if (recents[i].innerText == url) {
             //do nothing
           } else {
             recentFilesTab.appendChild(openedFile)
           }
-        })
+
+        }
       }
     }, () => { console.log('failed to load file system'); });
 }

@@ -1,15 +1,16 @@
 let log = [{
     version: 'v 4.0.7',
-    info: `Added new paste in textarea,
-  support for new language,
-  Added about section`
+    info: `✅Added new paste in textarea,
+  ✅support for new language,
+  ✅Added about section`
 }, {
     version: 'v5.0.0',
-    info: `Added tab for recently edited files
-  implemented saving of setting 
+    info: `✅Added tab for recently edited files
+  ✅implemented saving of setting 
   `
 },{version:'v5.0.1',info: `✅UI cleanUp
 ✅Added Comments
+`},{version:'v5.0.1 (Bug fix)',info: `✅Bug fix
 `}
 ]
 
