@@ -73,7 +73,7 @@ export async function onDeviceReady() {
         })
         if (checkValidity == undefined) {
           workWithFile(fileTruePath);
-          addRecentlyOpenedFile(filename,fileTruePath,FILE_EXTENSIONS[extension])
+          addRecentlyOpenedFile(filename, fileTruePath, FILE_EXTENSIONS[extension])
           window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
 
         } else {
@@ -110,15 +110,25 @@ export async function onDeviceReady() {
         }, () => { console.log('failed to save file'); });
       }
 
-      function addRecentlyOpenedFile(name,url,ext) {
+      function addRecentlyOpenedFile(name, url, ext) {
         let openedFile = makeElm('li')
-        insertAttr(['class=list-group-item bg-transparent'], openedFile)
+        let fPath = makeElm('p')
+        insertAttr(['class=fs-6 fw-light fst-italic'], fPath)
+        fPath.innerText = url
+        openedFile.appendChild(fPath)
+        insertAttr(['class=list-group-item bg-transparent border-bottom border-dark'], openedFile)
         openedFile.innerText = name
-        openedFile.addEventListener('click', function() { workWithFile(url) 
+        openedFile.addEventListener('click', function() {
+          workWithFile(url)
           window.aceEditor.session.setMode(`ace/mode/${ext}`)
         })
-
-        recentFilesTab.appendChild(openedFile)
+        document.querySelectorAll('#recent_file li p').forEach((i) => {
+          if (i.innerText == url) {
+            //do nothing
+          } else {
+            recentFilesTab.appendChild(openedFile)
+          }
+        })
       }
     }, () => { console.log('failed to load file system'); });
 }
