@@ -4,6 +4,7 @@ update automatically to a the change log for every build
 
 P1="www/js/components/tabs/changeLog.js"
 P2=".github/workflows/build.yml"
+P3="sample.txt"
 def read_file(path):
     '''
     return file content
@@ -15,7 +16,8 @@ def write_file(path,new_content):
     write content to file
     '''
     with open(path,'w',encoding='utf-8') as file_handle:
-        return file_handle.write(new_content)
+        file_handle.write(new_content)
+        file_handle.close()
 
 
 content = read_file(P1)
@@ -39,3 +41,5 @@ content_2 = read_file(P2)
 pos2 = content_2.find(' #release')
 newUpdate = content_2.replace(content_2[pos2-6:pos2],version)
 write_file(P2,newUpdate)
+
+write_file(P3,INFO)

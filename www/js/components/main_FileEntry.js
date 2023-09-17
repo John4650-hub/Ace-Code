@@ -109,33 +109,53 @@ export async function onDeviceReady() {
 
         }, () => { console.log('failed to save file'); });
       }
+      let recents = []
 
       function addRecentlyOpenedFile(name, url, ext) {
         let openedFile = makeElm('li')
         let fPath = makeElm('p')
-        insertAttr(['class=fs-6 fw-light fst-italic'], fPath)
+        insertAttr(['class=fs-6 fw-light fst-italic mb-0'], fPath)
         fPath.innerText = url
-        openedFile.appendChild(fPath)
-        insertAttr(['class=list-group-item bg-transparent border-bottom border-dark'], openedFile)
+        let row = makeElm('div')
+        insertAttr(['class=row border-bottom border-white',`id=${url}`],row)
+        insertAttr(['class=col-10 list-group-item bg-transparent border-0 h-25'], openedFile)
+        let closeBtn = makeElm('button')
+        closeBtn.innerHTML = '<i class="fa fa-minus-circle text-danger"></i>'
+        
+        insertAttr(['class=btn btn-dark col-2 fs-2 h-25 align-middle','type=button',`id=${url}row`], closeBtn)
+        closeBtn.addEventListener('click', function() {
+          let rid = this.getAttribute('id')
+          let ridlen = rid.length
+          let i_d = rid.slice(0,ridlen-3)
+          let recentElmId= recents.indexOf(i_d)
+          let myRow = document.getElementById(i_d)
+          myRow.remove()
+          this.remove()
+          recents.splice(recentElmId,1)
+        })
         openedFile.innerText = name
         openedFile.addEventListener('click', function() {
           workWithFile(url)
           window.aceEditor.session.setMode(`ace/mode/${ext}`)
         })
-
-        let recents = document.querySelectorAll('#recent_file li p')
         let foundMatch = false
         for (let i = 0; i < recents.length; i++) {
-          if (recents[i].innerText == url) {
-            foundMatch=true
+          if (recents[i] == url) {
+            console.log('match')
+            foundMatch = true
             break
           } else {
-            foundMatch=false
+            foundMatch = false
           }
         }
-      if (foundMatch==false){
-          recentFilesTab.appendChild(openedFile)
-      }
+        if (foundMatch == false) {
+          recentFilesTab.appendChild(row)
+          
+          row.appendChild(openedFile)
+          row.appendChild(closeBtn)
+          openedFile.appendChild(fPath)
+          recents.push(url)
+        }
       }
     }, () => { console.log('failed to load file system'); });
 }
