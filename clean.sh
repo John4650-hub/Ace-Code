@@ -1,2 +1,2 @@
-rm -r www/js
-rm main.py
+#rm -r www/js
+rm main.py sample.txt
