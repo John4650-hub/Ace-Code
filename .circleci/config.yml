@@ -9,6 +9,7 @@ jobs:
       - run:
          name: generate android project
          command: |
+           sudo su
            npm install --save-dev webpack webpack-cli
            cd www && mkdir dist && cd ..
            npm run build
