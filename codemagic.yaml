@@ -20,6 +20,7 @@ workflows:
         script: |
           ls
           sudo npm install -g cordova@11.0.0
+          cordova requirements
       - name: add android project
         script: |
           sudo cordova platform add android
