@@ -9,12 +9,11 @@ jobs:
       - run:
          name: generate android project
          command: |
-           sudo su
-           npm install --save-dev webpack webpack-cli
+           sudo npm install --save-dev webpack webpack-cli
            cd www && mkdir dist && cd ..
            npm run build
            ls
-           npm install -g cordova@11.0.0
+          sudo npm install -g cordova@11.0.0
            cordova platform add android
            ls
            cordova plugin add cordova-plugin-file@7.0.0
