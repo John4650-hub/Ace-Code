@@ -1,0 +1,5 @@
+workflows: 
+  ace-release: 
+    name: Ace release
+    scripts:
+      - apt list
