@@ -17,7 +17,7 @@ workflows:
       - name: install cordova
         script: |
           ls
-          sudo npm install -g cordova@8.0.0
+          sudo npm install -g cordova@10.0.0
       - name: add android project
         script: |
           sudo cordova platform add android
@@ -28,6 +28,6 @@ workflows:
           pwd
     artifacts:
       - android/app/build/outputs/apk/debug/app-debug.apk
-      - settings.gradle
+      - android/settings.gradle
 
 
