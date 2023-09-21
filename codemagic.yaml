@@ -23,7 +23,6 @@ workflows:
       - name: add android project
         script: |
           sudo cordova platform add android
-          cordova requirements
           sh clean.sh
           cd platforms
           sudo cordova build android
