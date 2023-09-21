@@ -1,6 +1,7 @@
 workflows: 
   ace-release: 
     name: Ace release
+    instance_type: linux
     environment:
       node: 16
       npm: 7.10.0
