@@ -25,6 +25,7 @@ workflows:
           cd platforms
           sudo cordova build android
           ls -a
+          pwd
     artifacts:
       - android/app/build/outputs/apk/debug/app-debug.apk
 
