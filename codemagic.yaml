@@ -3,7 +3,6 @@ workflows:
     name: Ace release
     environment:
       node: 12.14.0
-      npm: 6.13.7
       java: 1.8
     triggering:
       events:
@@ -15,6 +14,7 @@ workflows:
     scripts:
       - name: Build
         script: |
+          npm install -g npm@6.13.7
           sudo npm install --save-dev webpack webpack-cli
           cd www && mkdir dist && cd ..
           npm run build
