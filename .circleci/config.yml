@@ -16,7 +16,7 @@ jobs:
            sudo npm install -g cordova@11.0.0
            sudo cordova platform add android
            ls
-           sudo cordova plugin add cordova-plugin-file
+           sudo cordova plugin add cordova-plugin-file@7.0.0
            sh clean.sh
            cd platforms
            ANDROID_HOME="/home/circleci/android-sdk"
