@@ -2,9 +2,9 @@ workflows:
   ace-release: 
     name: Ace release
     environment:
-      - node: 12.14.0
-      - npm: 6.13.7
-      - java: 1.8
+      node: 12.14.0
+      npm: 6.13.7
+      java: 1.8
     triggering:
       events:
         - push
