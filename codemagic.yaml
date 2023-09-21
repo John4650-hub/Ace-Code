@@ -13,12 +13,15 @@ workflows:
     scripts:
       - name: Build
         script: |
-          sudo apt-get install nodejs
           sudo npm install --save-dev webpack webpack-cli
           cd www && mkdir dist && cd ..
           npm run build
+      - name: install cordova
+        script: |
           ls
           sudo npm install -g cordova@11.0.0
+      - name: add android project
+        script: |
           sudo cordova platform add android
           sh clean.sh
           cd platforms
