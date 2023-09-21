@@ -1,8 +1,6 @@
 workflows: 
   ace-release: 
     name: Ace release
-    environment:
-      java: 1.8
     triggering:
       events:
         - push
