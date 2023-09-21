@@ -22,6 +22,7 @@ jobs:
            export ANDROID_HOME="/home/circleci/android-sdk"
            export ANDROID_SDK_ROOT='/home/circleci/android-sdk'
            export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+           export PATH=$PATH:/home/circleci/android-sdk
            sudo cordova build android
            ls -a
            ls -lh android/app/build/outputs/apk/debug/
