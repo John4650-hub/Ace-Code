@@ -1,2 +1,3 @@
-✅Now able to close recently opened files
-✅fixed error of files not being read
+✅ctrl+S to save changes
+✅Now app can run in background
+✅Prevent abrupt closure of app when using other apps

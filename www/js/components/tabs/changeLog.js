@@ -14,6 +14,9 @@ let log = [{
 `},{version:'v5.0.3',info: `✅Bug fix
 `},{version:'v5.0.4',info: `✅Now able to close recently opened files
 ✅fixed error of files not being read
+`},{version:'v5.0.5',info: `✅ctrl+S to save changes
+✅Now app can run in background
+✅Prevent abrupt closure of app when using other apps
 `}
 ]
 

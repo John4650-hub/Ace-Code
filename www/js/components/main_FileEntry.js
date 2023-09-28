@@ -6,6 +6,17 @@ import { FILES_NOT_ALLOWED, FILE_EXTENSIONS } from "./configs.js";
 
 
 export async function onDeviceReady() {
+  cordova.plugins.backgroundMode.enable();
+  cordova.plugins.backgroundMode.overrideBackButton();
+  cordova.plugins.backgroundMode.setDefaults({
+    title: 'Ace code',
+    text: 'Editor running',
+    icon: 'icon', // this will look for icon.png in platforms/android/res/drawable|mipmap
+    color: 'ffffff', // hex format like 'F14F4D'
+    resume: true,
+    hidden: true,
+    bigText: true
+  })
   /*@@param {Promise} reads-directory-recursively Read the local storage and fill the sidebar with files in it
    **/
   function listDir(url = '', result = []) {
@@ -102,6 +113,17 @@ export async function onDeviceReady() {
           fE = fileEntry
           readFile(fE);
           //SAVE FILE when saveFs btn is clicked
+          aceEditor.commands.addCommand({
+            name: 'save_file',
+            bindKey: {
+              win: 'Ctrl-S',
+              mac: 'Command-M'
+            },
+            exec: function(editor) {
+              saveFile();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+          });
 
           SAVEFS.addEventListener('click', saveFile);
 
@@ -117,21 +139,21 @@ export async function onDeviceReady() {
         insertAttr(['class=fs-6 fw-light fst-italic mb-0'], fPath)
         fPath.innerText = url
         let row = makeElm('div')
-        insertAttr(['class=row border-bottom border-white',`id=${url}`],row)
+        insertAttr(['class=row border-bottom border-white', `id=${url}`], row)
         insertAttr(['class=col-10 list-group-item bg-transparent border-0 h-25'], openedFile)
         let closeBtn = makeElm('button')
         closeBtn.innerHTML = '<i class="fa fa-minus-circle text-danger"></i>'
-        
-        insertAttr(['class=btn btn-dark col-2 fs-2 h-25 align-middle','type=button',`id=${url}row`], closeBtn)
+
+        insertAttr(['class=btn btn-dark col-2 fs-2 h-25 align-middle', 'type=button', `id=${url}row`], closeBtn)
         closeBtn.addEventListener('click', function() {
           let rid = this.getAttribute('id')
           let ridlen = rid.length
-          let i_d = rid.slice(0,ridlen-3)
-          let recentElmId= recents.indexOf(i_d)
+          let i_d = rid.slice(0, ridlen - 3)
+          let recentElmId = recents.indexOf(i_d)
           let myRow = document.getElementById(i_d)
           myRow.remove()
           this.remove()
-          recents.splice(recentElmId,1)
+          recents.splice(recentElmId, 1)
         })
         openedFile.innerText = name
         openedFile.addEventListener('click', function() {
@@ -150,7 +172,7 @@ export async function onDeviceReady() {
         }
         if (foundMatch == false) {
           recentFilesTab.appendChild(row)
-          
+
           row.appendChild(openedFile)
           row.appendChild(closeBtn)
           openedFile.appendChild(fPath)
