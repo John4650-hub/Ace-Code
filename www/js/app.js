@@ -71,5 +71,17 @@ pasteTab("#pasteBin")
 changeLogTab('#changeLog')
 aboutMe('#aboutme')
 
-// recent files
-
+// toggle  file offcanvas shortcut
+const myFilesOffCanvas  = new bootstrap.Offcanvas(document.getElementById('fileSystemCanvas'));
+aceEditor.commands.addCommand({
+  name: 'toggle_side_offCanvas',
+  bindKey: {
+    win: 'Ctrl-O',
+    mac: 'Command-O'
+  },
+  
+  exec: function(editor) {
+    myFilesOffCanvas.toggle()
+  },
+  readOnly: true // false if this command should not apply in readOnly mode
+});

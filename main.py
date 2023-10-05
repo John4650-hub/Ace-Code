@@ -41,5 +41,4 @@ content_2 = read_file(P2)
 pos2 = content_2.find(' #release')
 newUpdate = content_2.replace(content_2[pos2-6:pos2],version)
 write_file(P2,newUpdate)
-
 write_file(P3,INFO)

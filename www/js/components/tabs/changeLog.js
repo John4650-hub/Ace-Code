@@ -17,6 +17,7 @@ let log = [{
 `},{version:'v5.0.5',info: `✅ctrl+S to save changes
 ✅Now app can run in background
 ✅Prevent abrupt closure of app when using other apps
+`},{version:'v5.0.6',info: `✅Now ctrl + S 5o save changes to a file you are currently editing
 `}
 ]
 
