@@ -18,6 +18,7 @@ let log = [{
 ✅Now app can run in background
 ✅Prevent abrupt closure of app when using other apps
 `},{version:'v5.0.6',info: `✅Now ctrl + S 5o save changes to a file you are currently editing
+`},{version:'v5.0.7',info: `✅transpiled code to support old browsers
 `}
 ]
 

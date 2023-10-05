@@ -6,7 +6,8 @@
   "main":"./www/js/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js" 
+    "build": "webpack --config webpack.config.js",
+    "babelit":"npx babel www/dist --out-dir www/dist"
   },
   "keywords": [
     "ecosystem:cordova"
