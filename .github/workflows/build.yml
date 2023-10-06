@@ -44,6 +44,9 @@ jobs:
          ls -lh android/app/build/outputs/apk/debug/
          cd android/app/build/outputs/apk/debug/
          sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code
+         cd /home/runner/work/Ace-Code/Ace-Code
+         jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore app-debug.apk my-key-alias
+
 
      - uses: actions/upload-artifact@v3
        with:
