@@ -44,10 +44,10 @@ jobs:
          ls -a
          ls -lh android/app/build/outputs/apk/debug/
          cd android/app/build/outputs/apk/debug/
-         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code
+         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code/app-d.apk
          cd /home/runner/work/Ace-Code/Ace-Code
-         jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keypass "kaguta256" -storepass "kaguta256" -keystore my-release-key.keystore app-debug.apk my-key-alias
-         zipalign -v 4 app-debug.apk app-debug.apk
+         jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keypass "kaguta256" -storepass "kaguta256" -keystore my-release-key.keystore app-d.apk my-key-alias
+         zipalign -v 4 app-d.apk app-debug.apk
          jarsigner -verify -verbose app-debug.apk
 
      - uses: actions/upload-artifact@v3
