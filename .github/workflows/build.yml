@@ -15,10 +15,8 @@ jobs:
          node-version: 16
      
      - run: sudo npm install --save-dev webpack webpack-cli
-     - run: sudo npm install --save-dev @babel/core @babel/cli @babel/preset-env
      - run: cd www && mkdir dist && cd ..
      - run: npm run build
-     - run: npm run babelit
      - run: ls
      - run: sudo npm install -g cordova@11.0.0 
      - run: sudo cordova platform add android
@@ -44,11 +42,8 @@ jobs:
          ls -a
          ls -lh android/app/build/outputs/apk/debug/
          cd android/app/build/outputs/apk/debug/
-         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code/app-d.apk
+         sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code/
          cd /home/runner/work/Ace-Code/Ace-Code
-         jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keypass "kaguta256" -storepass "kaguta256" -keystore my-release-key.keystore app-d.apk my-key-alias
-         zipalign -v 4 app-d.apk app-debug.apk
-         jarsigner -verify -verbose app-debug.apk
 
      - uses: actions/upload-artifact@v3
        with:
