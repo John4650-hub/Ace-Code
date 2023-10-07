@@ -38,6 +38,7 @@ jobs:
 
      - run: sh clean.sh
      - run: |
+         sudo apt-get install zipalign
          cd platforms
          sudo cordova build android
          ls -a
