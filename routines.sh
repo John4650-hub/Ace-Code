@@ -1,6 +1,4 @@
-python main.py
-txt=$(cat sample.txt)
 git add .
-git commit -m "$txt"
+git commit -m "mainly rearranging project"
 git push
 
