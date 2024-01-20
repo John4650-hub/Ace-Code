@@ -1,30 +1,21 @@
-import { onDeviceReady } from "./components/main_FileEntry.js";
 import { EDITOR_CONFIG } from "./components/configs.js";
 import sett from "./components/tabs/settingsTab.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
 import changeLogTab from "./components/tabs/changeLog.js";
 import aboutMe from "./components/tabs/aboutMe.js";
-import { writeFile } from "./components/File_System/writeFile.js";
-import { readFile } from "./components/File_System/readFile.js";
+import { startApp } from "./components/main_FileEntry.js"
 
 $(document).ready(function() {
   $('[title]').tooltip();
   $('#settingstab-tb').click();
+  startApp()
 })
-
-document.addEventListener('deviceready', onDeviceReady, false);
 
 ace.require("ace/ext/language_tools");
 window.aceEditor = ace.edit('editor');
 
 aceEditor.setOptions(EDITOR_CONFIG);
 aceEditor.commands.removeCommand('showSettingsMenu')
-
-export const SAVEFS = document.getElementById('saveFs');
-
-export const OPENFS = document.getElementById('openFs');
-export const SETFILE = document.getElementById('setFile');
-export let recentFilesTab = document.getElementById('recent_file')
 
 const MENU_TAB = document.querySelector("#menuTab");
 let tabContent = document.querySelector(".tab-content")
@@ -72,16 +63,22 @@ changeLogTab('#changeLog')
 aboutMe('#aboutme')
 
 // toggle  file offcanvas shortcut
-const myFilesOffCanvas  = new bootstrap.Offcanvas(document.getElementById('fileSystemCanvas'));
+const myFilesOffCanvas = new bootstrap.Offcanvas(document.getElementById('fileSystemCanvas'));
 aceEditor.commands.addCommand({
   name: 'toggle_side_offCanvas',
   bindKey: {
     win: 'Ctrl-O',
     mac: 'Command-O'
   },
-  
+
   exec: function(editor) {
     myFilesOffCanvas.toggle()
   },
   readOnly: true // false if this command should not apply in readOnly mode
 });
+function insertAttr(attrs, elm) {
+  for (var i = 0; i < attrs.length; i++) {
+    let nam,val = attrs[i].split('=')
+    elm.setAttribute(nam, val)
+  }
+}

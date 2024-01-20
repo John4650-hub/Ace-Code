@@ -1,183 +1,124 @@
-import { OPENFS, SAVEFS, recentFilesTab } from "../app.js";
-import { writeFile } from "./File_System/writeFile.js";
-import { readFile } from "./File_System/readFile.js";
-import { entryIcon } from "./File_System/fileSysUi.js";
-import { FILES_NOT_ALLOWED, FILE_EXTENSIONS } from "./configs.js";
+import { FILES_NOT_ALLOWED, FILE_EXTENSIONS } from './configs.js';
 
-
-export async function onDeviceReady() {
-  cordova.plugins.backgroundMode.enable();
-  cordova.plugins.backgroundMode.overrideBackButton();
-  cordova.plugins.backgroundMode.setDefaults({
-    title: 'Ace code',
-    text: 'Editor running',
-    icon: 'icon', // this will look for icon.png in platforms/android/res/drawable|mipmap
-    color: 'ffffff', // hex format like 'F14F4D'
-    resume: true,
-    hidden: true,
-    bigText: true
-  })
-  /*@@param {Promise} reads-directory-recursively Read the local storage and fill the sidebar with files in it
-   **/
-  function listDir(url = '', result = []) {
-    return new Promise(function(res, rej) {
-      let path;
-      if (url == '') {
-        path = cordova.file.externalRootDirectory
-      } else {
-        path = url + '/';
-      }
-      window.resolveLocalFileSystemURL(path,
-        function(fs) {
-          const reader = fs.createReader();
-          reader.readEntries(function(entries) {
-            for (let i = 0; i < entries.length; i++) {
-              entries[i].text = entries[i].name
-              if (entries[i].isDirectory == true) {
-                entries[i].state = {
-                  checked: false,
-                  expanded: false,
-                  selected: false
-                }
-                entries[i].nodes = []
-                result.push(entries[i])
-                listDir(entries[i].nativeURL, entries[i].nodes)
-              } else {
-                entries[i].onclick = "getUrls(this)"
-                entryIcon(entries[i])
-                result.push(entries[i]);
-              }
-            }
-          }, (rej) => { return rej });
-        }, (rej) => { return rej });
-      res(result)
+//LOADS DATA FROM THE FOLE SYSTEM
+export function startApp() {
+  function loadFs() {
+    fetch('/load_fs', { method: 'GET' }).
+    then(fs => fs.json()).then(function(dt) {
+      $('#fileList').treeview({ data: dt, showBorder: true })
     })
   }
 
-  let files = await listDir();
-
-  function getTree() {
-    let data = files;
-    return data;
+  window.readFs = function(fileEntryPath) {
+    sessionStorage.setItem('current_file_path', fileEntryPath)
+    fetch('/read_fs', { method: 'POST', body: fileEntryPath }).then(file_data => file_data.json()).then(function(data) {
+      window.aceEditor.setValue(data.text);
+    })
   }
-  setTimeout(() => {
-    $("#fileList").treeview({ data: getTree(), showBorder: false });
-  }, 2500)
+  let file_path_to_save
+  let codeObj
+  window.writeToFs = function() {
+    file_path_to_save = sessionStorage.getItem('current_file_path')
+    if (file_path_to_save == null) {
+      console.log('No open file to save, please open a file in the editor to save ')
+    }
+    else if (file_path_to_save != null) {
+      codeObj = {}
+      codeObj['code'] = window.aceEditor.getValue()
+      codeObj['path'] = file_path_to_save
+      fetch('/write_to_fs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(codeObj)
+      }).then(response => response.text()).then(function(msg) {
+        console.log(msg)
+      })
 
-  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-    function(fs) {
-      /**
-       *@@param {HTML ELEMENT OBJECT } getUrls gets the 
-       * full path of the files and checks whether files 
-       * is good for working with.
-       **/
-      function getUrls(filElm) {
+    }
+  }
+  // 
+  window.getUrls = function(filElm) {
+    let fileUrl = filElm.getAttribute('nativeURL')
+    let fileUrlSplit = fileUrl.split("/")
+    let filename = fileUrlSplit[fileUrlSplit.length - 1]
+    let pattern = /\.[a-z]{1,4}/
+    let extension = filename.match(pattern).toString().slice(1);
+    let checkValidity = FILES_NOT_ALLOWED.find(function(v) {
+      return v === extension
+    })
+    if (checkValidity == undefined) {
+      workWithFile(fileUrl);
+      addRecentlyOpenedFile(filename, fileUrl, FILE_EXTENSIONS[extension])
+      window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
 
-        let fileUrl = filElm.getAttribute('fullPath');
-        let fileTruePath = fileUrl.slice(1)
-        let fileUrlSplit = fileTruePath.split("/")
-        let filename = fileUrlSplit[fileUrlSplit.length - 1]
-        let pattern = /\.[a-z]{1,4}/
-        let extension = filename.match(pattern).toString().slice(1);
-        let checkValidity = FILES_NOT_ALLOWED.find(function(v) {
-          return v === extension
-        })
-        if (checkValidity == undefined) {
-          workWithFile(fileTruePath);
-          addRecentlyOpenedFile(filename, fileTruePath, FILE_EXTENSIONS[extension])
-          window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
+    } else {
+      alert(`file ${filename} is not valid`)
+    }
+  }
+  let recents = []
 
-        } else {
-          alert(`file ${filename} is not valid`)
-        }
+  function addRecentlyOpenedFile(name, url, ext) {
+    let openedFile = makeElm('li')
+    let fPath = makeElm('p')
+    insertAttr(['class=fs-6 fw-light fst-italic mb-0'], fPath)
+    fPath.innerText = url
+    let row = makeElm('div')
+    insertAttr(['class=row border-bottom border-white', `id=${url}`], row)
+    insertAttr(['class=col-10 list-group-item bg-transparent border-0 h-25'], openedFile)
+    let closeBtn = makeElm('button')
+    closeBtn.innerHTML = '<i class="fa fa-minus-circle text-danger"></i>'
+
+    insertAttr(['class=btn btn-dark col-2 fs-2 h-25 align-middle', 'type=button', `id=${url}row`], closeBtn)
+    closeBtn.addEventListener('click', function() {
+      let rid = this.getAttribute('id')
+      let ridlen = rid.length
+      let i_d = rid.slice(0, ridlen - 3)
+      let recentElmId = recents.indexOf(i_d)
+      let myRow = document.getElementById(i_d)
+      myRow.remove()
+      this.remove()
+      recents.splice(recentElmId, 1)
+    })
+    openedFile.innerText = name
+    openedFile.addEventListener('click', function() {
+      workWithFile(url)
+      window.aceEditor.session.setMode(`ace/mode/${ext}`)
+    })
+    let foundMatch = false
+    for (let i = 0; i < recents.length; i++) {
+      if (recents[i] == url) {
+        console.log('match')
+        foundMatch = true
+        break
+      } else {
+        foundMatch = false
       }
+    }
+    if (foundMatch == false) {
+      $('#recent_file').append(row)
 
-      fs.root.getFile('Android/data/com.ace.code/files/settings.json', {
-        create: true,
-        exclusive: false
-      }, function(fEntry) {
-        fEntry.file(function(file) {
-          let reader = new FileReader()
-          reader.onloadend = function() {
-            aceEditor.setOptions(JSON.parse(this.result))
-          }
-          reader.readAsText(file)
-        }, (e) => console.log());
-      }, (e) => console.log(e));
+      row.appendChild(openedFile)
+      row.appendChild(closeBtn)
+      openedFile.appendChild(fPath)
+      recents.push(url)
+    }
+  }
+  loadFs()
 
-      window.getUrls = getUrls
-      let fE; //Helps to avoid saving the same data in various entries
-      function workWithFile(filePath) {
-        fs.root.getFile(filePath, { create: true, exclusive: false }, function(fileEntry) {
-
-          fE = fileEntry
-          readFile(fE);
-          //SAVE FILE when saveFs btn is clicked
-          aceEditor.commands.addCommand({
-            name: 'save_file',
-            bindKey: {
-              win: 'Ctrl-S',
-              mac: 'Command-M'
-            },
-            exec: function(editor) {
-              saveFile();
-            },
-            readOnly: true // false if this command should not apply in readOnly mode
-          });
-
-          SAVEFS.addEventListener('click', saveFile);
-
-          function saveFile() { writeFile(fE, null); }
-
-        }, () => { console.log('failed to save file'); });
-      }
-      let recents = []
-
-      function addRecentlyOpenedFile(name, url, ext) {
-        let openedFile = makeElm('li')
-        let fPath = makeElm('p')
-        insertAttr(['class=fs-6 fw-light fst-italic mb-0'], fPath)
-        fPath.innerText = url
-        let row = makeElm('div')
-        insertAttr(['class=row border-bottom border-white', `id=${url}`], row)
-        insertAttr(['class=col-10 list-group-item bg-transparent border-0 h-25'], openedFile)
-        let closeBtn = makeElm('button')
-        closeBtn.innerHTML = '<i class="fa fa-minus-circle text-danger"></i>'
-
-        insertAttr(['class=btn btn-dark col-2 fs-2 h-25 align-middle', 'type=button', `id=${url}row`], closeBtn)
-        closeBtn.addEventListener('click', function() {
-          let rid = this.getAttribute('id')
-          let ridlen = rid.length
-          let i_d = rid.slice(0, ridlen - 3)
-          let recentElmId = recents.indexOf(i_d)
-          let myRow = document.getElementById(i_d)
-          myRow.remove()
-          this.remove()
-          recents.splice(recentElmId, 1)
-        })
-        openedFile.innerText = name
-        openedFile.addEventListener('click', function() {
-          workWithFile(url)
-          window.aceEditor.session.setMode(`ace/mode/${ext}`)
-        })
-        let foundMatch = false
-        for (let i = 0; i < recents.length; i++) {
-          if (recents[i] == url) {
-            console.log('match')
-            foundMatch = true
-            break
-          } else {
-            foundMatch = false
-          }
-        }
-        if (foundMatch == false) {
-          recentFilesTab.appendChild(row)
-
-          row.appendChild(openedFile)
-          row.appendChild(closeBtn)
-          openedFile.appendChild(fPath)
-          recents.push(url)
-        }
-      }
-    }, () => { console.log('failed to load file system'); });
+  window.workWithFile = function(filePath) {
+    readFs(filePath);
+  }
+  aceEditor.commands.addCommand({
+    name: 'save_file',
+    bindKey: {
+      win: 'Ctrl-S',
+      mac: 'Command-M'
+    },
+    exec: function(editor) {
+      writeToFs;
+    },
+    readOnly: true // false if this command should not apply in readOnly mode
+  });
+  $('#saveFs').click(writeToFs)
+  sessionStorage.clear()
 }

@@ -1,6 +1,6 @@
 import { EDITOR_CONFIG } from "../configs.js";
-import { writeFile } from "../File_System/writeFile.js";
-import { readFile } from '../File_System/readFile.js'
+// import { writeFile } from "../File_System/writeFile.js";
+// import { readFile } from '../File_System/readFile.js'
 
 var themeData = [
     ["Chrome"],
