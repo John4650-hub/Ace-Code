@@ -1,0 +1,19 @@
+{
+  "wrap": true,
+  "enableBasicAutocompletion": true,
+  "enableSnippets": true,
+  "enableLiveAutocompletion": false,
+  "highlightGutterLine": true,
+  "highlightActiveLine": true,
+  "showPrintMargin": true,
+  "showInvisibles": true,
+  "fontSize": "8px",
+  "tabSize": "2",
+  "keyboardHandler": "ace/keyboard/vim",
+  "theme": "ace/theme/mono_industrial",
+  "animatedScroll": false,
+  "enableMultiselect": true,
+  "relativeLineNumbers": true,
+  "behavioursEnabled": true,
+  "showLineNumbers": false
+}

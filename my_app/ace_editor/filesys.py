@@ -78,3 +78,15 @@ def saveFile():
   with open(path_to_file,'w') as fh:
     fh.write(code_txt)
   return "File was successfully saved."
+
+@ace_editor_app.route('/settings',methods=['POST','GET'])
+def saveSettings():
+  if request.method=='POST':
+    setigsObj = request.get_json()
+    with open('settings.json','w') as fh:
+      json.dump(setigsObj,fh,indent=2)
+    return "settings were saved successfully"
+  elif request.method == 'GET':
+    with open('settings.json','r') as fh:
+      data=json.load(fh)
+    return data

@@ -1,6 +1,5 @@
-import { EDITOR_CONFIG } from "../configs.js";
-// import { writeFile } from "../File_System/writeFile.js";
-// import { readFile } from '../File_System/readFile.js'
+import { EDITOR_CONFIG } from '../configs.js'
+
 
 var themeData = [
     ["Chrome"],
@@ -85,7 +84,7 @@ export default function sett(_Par) {
   for (let i = 0; i < themeData.length; i++) {
     themeChoice = themeData[i][0]
     if (themeData[i].length == 3) {
-      themeChoice = themeData[i][1]
+      themeChoice = [i][1]
     }
 
     optn = makeElm('option');
@@ -168,19 +167,10 @@ export default function sett(_Par) {
   let elmIds = ['Themes', 'font-size', 'Tab-Size', 'Relative-Number', 'Show-invisible', 'Enable-autoComplete', 'Enable-behaviours', 'show-line-numbers']
   let options = ['theme', 'fontSize', 'tabSize', 'relativeLineNumbers', 'showInvisibles', 'enableLiveAutocompletion', 'behavioursEnabled', 'showLineNumbers']
 
-  function saveSettingsToFile(obj) {
-    let jsonObj = JSON.stringify(obj)
-    console.log(jsonObj)
-    let extFs = cordova.file.externalDataDirectory
-    let fsEntry;
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-      function(fs) {
-        fs.root.getFile("Android/data/com.ace.code/files/settings.json", { create: true, exclusive: false }, function(fileEntry) {
-          fsEntry = fileEntry;
-          writeFile(fsEntry, jsonObj)
-        }, (e) => console.log(`some error:${e}`))
-      }, (e) => console.log(`some error: ${e}`))
-  }
+  fetch('/settings', { method: 'GET' }).then(res => res.json()).then((config) => {
+    window.aceEditor.setOptions(config);
+    EDITOR_CONFIG=config
+  })
 
   function getValues() {
     for (let i = 0; i < elmIds.length; i++) {
@@ -192,8 +182,11 @@ export default function sett(_Par) {
         EDITOR_CONFIG[options[i]] = elmVal.value;
       }
     }
+    fetch('/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(EDITOR_CONFIG) }).then(res => res.text()).then(function(msg) {
+      console.log(msg);
+    })
 
-    saveSettingsToFile(EDITOR_CONFIG)
+
     window.aceEditor.setOptions(EDITOR_CONFIG);
     //after create a file and write EditorConfig data as a json object;
   }

@@ -9,6 +9,8 @@ $(document).ready(function() {
   $('[title]').tooltip();
   $('#settingstab-tb').click();
   startApp()
+  sett('#settingstaby')
+
 })
 
 ace.require("ace/ext/language_tools");
@@ -57,7 +59,6 @@ fb.setAttribute('class', fb.getAttribute('class') + ' active')
 let ftb = MENU_TAB.querySelector('li button');
 ftb.setAttribute('aria-selected', 'true')
 
-sett('#settingstaby')
 pasteTab("#pasteBin")
 changeLogTab('#changeLog')
 aboutMe('#aboutme')
@@ -76,9 +77,10 @@ aceEditor.commands.addCommand({
   },
   readOnly: true // false if this command should not apply in readOnly mode
 });
+
 function insertAttr(attrs, elm) {
   for (var i = 0; i < attrs.length; i++) {
-    let nam,val = attrs[i].split('=')
+    let nam, val = attrs[i].split('=')
     elm.setAttribute(nam, val)
   }
 }
