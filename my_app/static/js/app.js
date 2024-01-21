@@ -1,4 +1,3 @@
-import { EDITOR_CONFIG } from "./components/configs.js";
 import sett from "./components/tabs/settingsTab.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
 import changeLogTab from "./components/tabs/changeLog.js";
@@ -16,7 +15,6 @@ $(document).ready(function() {
 ace.require("ace/ext/language_tools");
 window.aceEditor = ace.edit('editor');
 
-aceEditor.setOptions(EDITOR_CONFIG);
 aceEditor.commands.removeCommand('showSettingsMenu')
 
 const MENU_TAB = document.querySelector("#menuTab");

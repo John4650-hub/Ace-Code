@@ -1,4 +1,4 @@
-import { EDITOR_CONFIG } from '../configs.js'
+let EDITOR_CONFIG = {}
 
 
 var themeData = [
@@ -84,12 +84,13 @@ export default function sett(_Par) {
   for (let i = 0; i < themeData.length; i++) {
     themeChoice = themeData[i][0]
     if (themeData[i].length == 3) {
-      themeChoice = [i][1]
+      themeChoice = themeData[i][1]
     }
 
     optn = makeElm('option');
     optn.innerText = themeData[i][0]
     optn.setAttribute('value', `ace/theme/${themeChoice.toLowerCase()}`);
+
     labelItem_.appendChild(optn)
   }
 
@@ -169,8 +170,21 @@ export default function sett(_Par) {
 
   fetch('/settings', { method: 'GET' }).then(res => res.json()).then((config) => {
     window.aceEditor.setOptions(config);
-    EDITOR_CONFIG=config
+    EDITOR_CONFIG = config
+    setValues()
   })
+
+  function setValues() {
+    for (let i = 0; i < elmIds.length; i++) {
+      let elmVal = document.getElementById(elmIds[i])
+      if (elmVal.getAttribute('type') == 'checkbox') {
+        elmVal.checked = EDITOR_CONFIG[options[i]];
+      }
+      else {
+        elmVal.value = EDITOR_CONFIG[options[i]];
+      }
+    }
+  }
 
   function getValues() {
     for (let i = 0; i < elmIds.length; i++) {
@@ -184,10 +198,10 @@ export default function sett(_Par) {
     }
     fetch('/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(EDITOR_CONFIG) }).then(res => res.text()).then(function(msg) {
       console.log(msg);
+      window.aceEditor.setOptions(EDITOR_CONFIG);
+
     })
 
 
-    window.aceEditor.setOptions(EDITOR_CONFIG);
-    //after create a file and write EditorConfig data as a json object;
   }
 }

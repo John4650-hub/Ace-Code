@@ -1,20 +1,20 @@
-export const EDITOR_CONFIG = {
-    wrap: true,
-    enableBasicAutocompletion: true,
-    enableSnippets: true,
-    enableLiveAutocompletion: true,
-    highlightGutterLine: true,
-    highlightActiveLine: true,
-    showPrintMargin: true,
-    showInvisibles: true,
-    fontSize: "10px",
-    tabSize: 4,
-    keyboardHandler: 'ace/keyboard/vim',
-    theme: "ace/theme/dracula",
-    animatedScroll: false,
-    enableMultiselect: true,
+// export let  EDITOR_CONFIG = {
+//     wrap: true,
+//     enableBasicAutocompletion: true,
+//     enableSnippets: true,
+//     enableLiveAutocompletion: true,
+//     highlightGutterLine: true,
+//     highlightActiveLine: true,
+//     showPrintMargin: true,
+//     showInvisibles: true,
+//     fontSize: "10px",
+//     tabSize: 4,
+//     keyboardHandler: 'ace/keyboard/vim',
+//     theme: "ace/theme/dracula",
+//     animatedScroll: false,
+//     enableMultiselect: true,
     
-}
+// }
 
 export const FILES_NOT_ALLOWED = [
     "zip",
