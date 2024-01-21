@@ -36,27 +36,29 @@ export function startApp() {
 
     }
   }
-  // 
+  let extension
   window.getUrls = function(filElm) {
     let fileUrl = filElm.getAttribute('nativeURL')
     let fileUrlSplit = fileUrl.split("/")
     let filename = fileUrlSplit[fileUrlSplit.length - 1]
-    let pattern = /\.[a-z]{1,4}/
-    let extension = filename.match(pattern).toString().slice(1);
+    if (filename.includes('.')){
+    let pattern = /\.[a-z|A-Z|0-9]{1,4}/
+    extension = filename.match(pattern).toString().slice(1);
+    }else{extension='txt'}
     let checkValidity = FILES_NOT_ALLOWED.find(function(v) {
-      return v === extension
+      
+      return extension==v
     })
     if (checkValidity == undefined) {
       workWithFile(fileUrl);
       addRecentlyOpenedFile(filename, fileUrl, FILE_EXTENSIONS[extension])
       window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
-
     } else {
       alert(`file ${filename} is not valid`)
-    }
-  }
+    }}
+  
+  
   let recents = []
-
   function addRecentlyOpenedFile(name, url, ext) {
     let openedFile = makeElm('li')
     let fPath = makeElm('p')
@@ -112,10 +114,9 @@ export function startApp() {
     name: 'save_file',
     bindKey: {
       win: 'Ctrl-S',
-      mac: 'Command-M'
     },
     exec: function(editor) {
-      writeToFs;
+      writeToFs();
     },
     readOnly: true // false if this command should not apply in readOnly mode
   });

@@ -9,7 +9,6 @@ $(document).ready(function() {
   $('#settingstab-tb').click();
   startApp()
   sett('#settingstaby')
-
 })
 
 ace.require("ace/ext/language_tools");
@@ -82,3 +81,19 @@ function insertAttr(attrs, elm) {
     elm.setAttribute(nam, val)
   }
 }
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+document.addEventListener(
+  "keydown",
+  (e) => {
+    if (e.key === "F11") {
+      toggleFullScreen();
+    }
+  },
+  false,
+);
