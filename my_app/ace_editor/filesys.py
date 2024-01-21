@@ -4,7 +4,7 @@ import json
 import os
 
 conColor = " text-primary"
-
+result=[]
 def entryIcon(entry):
     ftype = entry['text'].split('.')
     ext = ftype[-1]
@@ -60,7 +60,8 @@ def listDir(url='', result=[]):
 #LOADS THE FILES TO THE LIST
 @ace_editor_app.route('/load_fs', methods=['GET'])
 def loadFs():
-  return listDir(url='/storage/emulated/0')
+  result_=[]
+  return listDir(url='/storage/emulated/0',result=result_)
 
 @ace_editor_app.route('/read_fs', methods=['POST'])
 def readFile():
@@ -77,7 +78,7 @@ def saveFile():
   code_txt=codeObj.get('code')
   with open(path_to_file,'w') as fh:
     fh.write(code_txt)
-  return "File was successfully saved."
+  return "File saved!"
 
 @ace_editor_app.route('/settings',methods=['POST','GET'])
 def saveSettings():

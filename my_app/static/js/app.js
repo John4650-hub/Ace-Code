@@ -81,6 +81,7 @@ function insertAttr(attrs, elm) {
     elm.setAttribute(nam, val)
   }
 }
+
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen();
@@ -97,3 +98,13 @@ document.addEventListener(
   },
   false,
 );
+
+// ALERTS
+window.alert_ = function(message, type) {
+  let wrapper = document.createElement('div')
+  wrapper.innerHTML = '<div id="save_alert" class="alert alert-' + type + ' alert-dismissible start-50 p-0 text-center fw-bolder top-0 m-0" role="alert">' + message + '</div>'
+  $('#on_save_alert').append(wrapper)
+  setTimeout(function() {
+    bootstrap.Alert.getOrCreateInstance($('#save_alert')).close()
+  }, 2000)
+}

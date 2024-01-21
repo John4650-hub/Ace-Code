@@ -19,13 +19,13 @@
 </head>
 
 <body>
-
+  
   <div id="container">
     <div class="container">
       <div id="editor" class="position-fixed bottom-0 start-0 ms-0 mt-1" style=" top:52px;right: 0px;"></div>
 
     </div>
-
+    
     <div id="" class="navbar navbar-dark bg-dark position-absolute w-100" style="height: 3.5em;">
       <p class="text-primary position-absolute top-50 start-50 translate-middle fw-bolder user-select-none">ACE CODE IDE</p>
 
@@ -76,9 +76,12 @@
       <button type="button" class="btn btn-dark text-reset" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa fa-window-close text-danger"></i></button>
     </div>
     <div class="offcanvas-body">
-      <ul class="containerlist-group list-group-flush mh-50 bg-transparent" id="recent_file"></ul>
+      <ul class="container list-group list-group-flush mh-0" id="recent_file"></ul>
 
     </div>
+  </div>
+  <div class="position-absolute top-0 w-50" id="on_save_alert">
+  
   </div>
   <script src="{{ url_for('static', filename='js/console.js')}}"></script>
   <script src="{{ url_for('static', filename='libs/jquery.min.js')}}"></script>

@@ -31,7 +31,7 @@ export function startApp() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(codeObj)
       }).then(response => response.text()).then(function(msg) {
-        console.log(msg)
+        alert_(msg,'success')
       })
 
     }
@@ -62,11 +62,11 @@ export function startApp() {
   function addRecentlyOpenedFile(name, url, ext) {
     let openedFile = makeElm('li')
     let fPath = makeElm('p')
-    insertAttr(['class=fs-6 fw-light fst-italic mb-0'], fPath)
+    insertAttr(['class=fs-6 fw-light text-white fst-italic mb-0'], fPath)
     fPath.innerText = url
     let row = makeElm('div')
     insertAttr(['class=row border-bottom border-white', `id=${url}`], row)
-    insertAttr(['class=col-10 list-group-item bg-transparent border-0 h-25'], openedFile)
+    insertAttr(['class=col-10 bg-dark text-white list-group-item border-0 mh-25'], openedFile)
     let closeBtn = makeElm('button')
     closeBtn.innerHTML = '<i class="fa fa-minus-circle text-danger"></i>'
 
