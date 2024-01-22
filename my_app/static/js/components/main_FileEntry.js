@@ -19,6 +19,7 @@ export function startApp() {
   let codeObj
   window.writeToFs = function() {
     file_path_to_save = sessionStorage.getItem('current_file_path')
+    
     if (file_path_to_save == null) {
       console.log('No open file to save, please open a file in the editor to save ')
     }
@@ -31,7 +32,7 @@ export function startApp() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(codeObj)
       }).then(response => response.text()).then(function(msg) {
-        alert_(msg,'success')
+        alert_(msg, 'success')
       })
 
     }
@@ -41,28 +42,32 @@ export function startApp() {
     let fileUrl = filElm.getAttribute('nativeURL')
     let fileUrlSplit = fileUrl.split("/")
     let filename = fileUrlSplit[fileUrlSplit.length - 1]
-    if (filename.includes('.')){
-    let pattern = /\.[a-z|A-Z|0-9]{1,4}/
-    extension = filename.match(pattern).toString().slice(1);
-    }else{extension='txt'}
+    if (filename.includes('.')) {
+      let pattern = /\.[a-z|A-Z|0-9]{1,4}/
+      extension = filename.match(pattern).toString().slice(1);
+    } else { extension = 'txt' }
     let checkValidity = FILES_NOT_ALLOWED.find(function(v) {
-      
-      return extension==v
+
+      return extension == v
     })
     if (checkValidity == undefined) {
       workWithFile(fileUrl);
+      sessionStorage.setItem('extension',extension)
       addRecentlyOpenedFile(filename, fileUrl, FILE_EXTENSIONS[extension])
       window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
     } else {
       alert(`file ${filename} is not valid`)
-    }}
-  
-  
+    }
+  }
+
+
   let recents = []
+
   function addRecentlyOpenedFile(name, url, ext) {
     let openedFile = makeElm('li')
     let fPath = makeElm('p')
     insertAttr(['class=fs-6 fw-light text-white fst-italic mb-0'], fPath)
+
     fPath.innerText = url
     let row = makeElm('div')
     insertAttr(['class=row border-bottom border-white', `id=${url}`], row)

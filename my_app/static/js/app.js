@@ -12,6 +12,7 @@ $(document).ready(function() {
 })
 
 ace.require("ace/ext/language_tools");
+ace.require('ace/ext/code_lens');
 window.aceEditor = ace.edit('editor');
 
 aceEditor.commands.removeCommand('showSettingsMenu')
@@ -74,6 +75,19 @@ aceEditor.commands.addCommand({
   },
   readOnly: true // false if this command should not apply in readOnly mode
 });
+aceEditor.commands.addCommand({
+  name: 'Format code',
+  bindKey: {
+    win: 'Alt-f',
+    mac: 'Command-f'
+  },
+
+  exec: function(editor) {
+    pyCformat()
+  },
+  readOnly: true // false if this command should not apply in readOnly mode
+});
+
 
 function insertAttr(attrs, elm) {
   for (var i = 0; i < attrs.length; i++) {
@@ -102,9 +116,24 @@ document.addEventListener(
 // ALERTS
 window.alert_ = function(message, type) {
   let wrapper = document.createElement('div')
-  wrapper.innerHTML = '<div id="save_alert" class="alert alert-' + type + ' alert-dismissible start-50 p-0 text-center fw-bolder top-0 m-0" role="alert">' + message + '</div>'
+  wrapper.innerHTML = '<div id="save_alert" class="alert alert-' + type +' alert-dismissible start-50 p-0 text-center fw-bolder top-0 m-0" role="alert">' + message + '</div>'
   $('#on_save_alert').append(wrapper)
   setTimeout(function() {
     bootstrap.Alert.getOrCreateInstance($('#save_alert')).close()
   }, 2000)
+}
+
+window.pyCformat = function() {
+  if (sessionStorage.getItem('extension') == 'py') {
+    let pycode = window.aceEditor.getValue()
+    fetch('/format_python', {
+      method: 'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ 'code': pycode })
+    }).then(res=>res.text()).then(function(data){
+      window.aceEditor.setValue(data);
+    })
+  }else{
+    alert_('Not supported yet!!!','danger')
+  }
 }

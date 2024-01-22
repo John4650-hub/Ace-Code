@@ -42,6 +42,8 @@ var themeData = [
     ["Twilight", "twilight", "dark"],
     ["Vibrant Ink", "vibrant_ink", "dark"]
 ];
+const keyhandlerData = ['vim', 'vscode', 'emacs', 'sublime']
+const cursorStyleData = ['ace', 'slim', 'smooth', 'wide']
 
 /**
  * @param {String} makeElm creates elements
@@ -52,7 +54,7 @@ let col2_;
 let label_;
 let labelItem_;
 let optn;
-let themeChoice;
+let _Choice;
 
 export default function sett(_Par) {
   let parentElm = document.querySelector(_Par);
@@ -76,20 +78,31 @@ export default function sett(_Par) {
     return [a, b, c, d, e];
   }
 
+  //keyhandler row
+[row_, col1_, label_, col2_, labelItem_] = AddElm();
+  label_.innerText = 'Keyboard Handler'
+  insertAttr(['class=form-select', 'id=key_handler'], labelItem_)
+  for (let i = 0; i < keyhandlerData.length; i++) {
+    _Choice = keyhandlerData[i]
+    optn = makeElm('option');
+    optn.innerText = keyhandlerData[i]
+    optn.setAttribute('value', `ace/keyboard/${_Choice.toLowerCase()}`);
 
+    labelItem_.appendChild(optn)
+  }
   //themes Rows
 [row_, col1_, label_, col2_, labelItem_] = AddElm();
   label_.innerText = 'Themes'
   insertAttr(['class=form-select', 'id=Themes'], labelItem_)
   for (let i = 0; i < themeData.length; i++) {
-    themeChoice = themeData[i][0]
+    _Choice = themeData[i][0]
     if (themeData[i].length == 3) {
-      themeChoice = themeData[i][1]
+      _Choice = themeData[i][1]
     }
 
     optn = makeElm('option');
     optn.innerText = themeData[i][0]
-    optn.setAttribute('value', `ace/theme/${themeChoice.toLowerCase()}`);
+    optn.setAttribute('value', `ace/theme/${_Choice.toLowerCase()}`);
 
     labelItem_.appendChild(optn)
   }
@@ -118,7 +131,17 @@ export default function sett(_Par) {
     optn.setAttribute('value', i);
     labelItem_.appendChild(optn);
   }
-
+  //cursorStyle cursorStyleData
+[row_, col1_, label_, col2_, labelItem_] = AddElm();
+  label_.innerText = 'cursor style'
+  insertAttr(['class=form-select', 'id=cursor_style'], labelItem_)
+  for (let i = 0; i < cursorStyleData.length; i++) {
+    _Choice = cursorStyleData[i]
+    optn = makeElm('option');
+    optn.innerText = cursorStyleData[i]
+    optn.setAttribute('value', _Choice);
+    labelItem_.appendChild(optn)
+  }
   //relative number row
 [row_, col1_, label_, col2_, labelItem_] = AddElm('input')
   label_.innerText = 'Relative Number';
@@ -155,8 +178,18 @@ export default function sett(_Par) {
   col2_.style.marginLeft = "60px"
   insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=show-line-numbers'], labelItem_);
 
-  //
-
+  //enable snippets enableSnippets
+[row_, col1_, label_, col2_, labelItem_] = AddElm('input')
+  label_.innerText = 'Enable snippets';
+  col2_.setAttribute('class', 'col form-check');
+  col2_.style.marginLeft = "60px"
+  insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=enable_snippets'], labelItem_);
+  //showPrintMargin show_print_margin
+[row_, col1_, label_, col2_, labelItem_] = AddElm('input')
+  label_.innerText = 'Show print margin';
+  col2_.setAttribute('class', 'col form-check');
+  col2_.style.marginLeft = "60px"
+  insertAttr(['class=form-check-input', 'type=checkbox', 'value= ', 'id=show_print_margin'], labelItem_);
   //save btn row
 [row_, col1_, label_, col2_, labelItem_] = AddElm('button')
   col2_.setAttribute('class', 'col pt-3 pb-1');
@@ -165,8 +198,8 @@ export default function sett(_Par) {
   labelItem_.addEventListener('click', getValues)
 
   //setValue
-  let elmIds = ['Themes', 'font-size', 'Tab-Size', 'Relative-Number', 'Show-invisible', 'Enable-autoComplete', 'Enable-behaviours', 'show-line-numbers']
-  let options = ['theme', 'fontSize', 'tabSize', 'relativeLineNumbers', 'showInvisibles', 'enableLiveAutocompletion', 'behavioursEnabled', 'showLineNumbers']
+  let elmIds = ['key_handler', 'Themes', 'font-size', 'Tab-Size', 'cursor_style', 'Relative-Number', 'Show-invisible', 'Enable-autoComplete', 'Enable-behaviours', 'show-line-numbers', 'enable_snippets', 'show_print_margin']
+  let options = ['keyboardHandler', 'theme', 'fontSize', 'tabSize', 'cursorStyle', 'relativeLineNumbers', 'showInvisibles', 'enableLiveAutocompletion', 'behavioursEnabled', 'showLineNumbers', 'enableSnippets', 'showPrintMargin']
 
   fetch('/settings', { method: 'GET' }).then(res => res.json()).then((config) => {
     window.aceEditor.setOptions(config);

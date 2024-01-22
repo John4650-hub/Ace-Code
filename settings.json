@@ -1,6 +1,7 @@
 {
   "animatedScroll": false,
   "behavioursEnabled": true,
+  "cursorStyle": "wide",
   "enableBasicAutocompletion": true,
   "enableLiveAutocompletion": true,
   "enableMultiselect": true,
@@ -8,7 +9,7 @@
   "fontSize": "12px",
   "highlightActiveLine": true,
   "highlightGutterLine": true,
-  "keyboardHandler": "ace/keyboard/vim",
+  "keyboardHandler": "ace/keyboard/sublime",
   "relativeLineNumbers": false,
   "showInvisibles": true,
   "showLineNumbers": true,
