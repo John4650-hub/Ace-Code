@@ -1,5 +1,5 @@
 
-![alt icon](https://github.com/John4650-hub/Ace-Code/blob/ace_as_pwa/my_app/static/icon/icon.png)
+![alt icon](https://github.com/John4650-hub/Ace-Code/blob/ace_as_pwa/my_app/static/icon/icon.png?raw=true)
 # Ace Code
 ---                                                               This is an inbrowser text editor application.
 **The editor used is Ace, a popular text editor by cloud9**       
