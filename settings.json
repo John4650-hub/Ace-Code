@@ -9,12 +9,12 @@
   "fontSize": "12px",
   "highlightActiveLine": true,
   "highlightGutterLine": true,
-  "keyboardHandler": "ace/keyboard/sublime",
+  "keyboardHandler": "ace/keyboard/vscode",
   "relativeLineNumbers": false,
   "showInvisibles": true,
   "showLineNumbers": true,
   "showPrintMargin": true,
-  "tabSize": "2",
-  "theme": "ace/theme/one_dark",
+  "tabSize": "4",
+  "theme": "ace/theme/dracula",
   "wrap": true
 }

@@ -3,6 +3,11 @@ import pasteTab from "./components/tabs/pasteBinTab.js";
 import changeLogTab from "./components/tabs/changeLog.js";
 import aboutMe from "./components/tabs/aboutMe.js";
 import { startApp } from "./components/main_FileEntry.js"
+import * as prettier from '../libs/standalone.mjs'
+import prettierPluginhtml from '../libs/parser-html.mjs'
+import prettierPluginyaml from '../libs/parser-yaml.mjs'
+import prettierPluginesEstree from '../libs/parser-espree.mjs';
+
 
 $(document).ready(function() {
   $('[title]').tooltip();
@@ -116,24 +121,47 @@ document.addEventListener(
 // ALERTS
 window.alert_ = function(message, type) {
   let wrapper = document.createElement('div')
-  wrapper.innerHTML = '<div id="save_alert" class="alert alert-' + type +' alert-dismissible start-50 p-0 text-center fw-bolder top-0 m-0" role="alert">' + message + '</div>'
+  wrapper.innerHTML = '<div id="save_alert" class="alert alert-' + type + ' alert-dismissible start-50 p-0 text-center fw-bolder top-0 m-0" role="alert">' + message + '</div>'
   $('#on_save_alert').append(wrapper)
   setTimeout(function() {
     bootstrap.Alert.getOrCreateInstance($('#save_alert')).close()
   }, 2000)
 }
-
 window.pyCformat = function() {
-  if (sessionStorage.getItem('extension') == 'py') {
-    let pycode = window.aceEditor.getValue()
-    fetch('/format_python', {
-      method: 'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ 'code': pycode })
-    }).then(res=>res.text()).then(function(data){
-      window.aceEditor.setValue(data);
-    })
-  }else{
-    alert_('Not supported yet!!!','danger')
+  let _code = window.aceEditor.getValue()
+  switch (sessionStorage.getItem('extension')) {
+    case 'py':
+      fetch('/format_python', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'code': _code })
+      }).then(res => res.text()).then(function(data) {
+        window.aceEditor.setValue(data);
+      })
+      break;
+    case 'js':
+      window.aceEditor.setValue(
+        prettier.default.format(_code, {
+          parser: "espree",
+          plugins: [prettierPluginesEstree]
+        }));
+      break;
+    case 'yaml':
+      window.aceEditor.setValue(
+        prettier.default.format(_code, {
+          parser: "yaml",
+          plugins: [prettierPluginyaml]
+        }));
+      break;
+    case 'html':
+      window.aceEditor.setValue(
+        prettier.default.format(_code, {
+          parser: "html",
+          plugins: [prettierPluginhtml]
+        }));
+      break;
+    default:
+      alert_('Not supported yet!!!', 'danger')
   }
+
 }
