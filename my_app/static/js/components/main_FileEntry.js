@@ -43,11 +43,9 @@ export function startApp() {
     let fileUrlSplit = fileUrl.split("/")
     let filename = fileUrlSplit[fileUrlSplit.length - 1]
     if (filename.includes('.')) {
-      let pattern = /\.[a-z|A-Z|0-9]{1,4}/
-      extension = filename.match(pattern).toString().slice(1);
+      extension = filename.substring(filename.lastIndexOf('.')+1)
     } else { extension = 'txt' }
     let checkValidity = FILES_NOT_ALLOWED.find(function(v) {
-
       return extension == v
     })
     if (checkValidity == undefined) {
@@ -56,7 +54,8 @@ export function startApp() {
       addRecentlyOpenedFile(filename, fileUrl, FILE_EXTENSIONS[extension])
       window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
     } else {
-      alert(`file ${filename} is not valid`)
+    myFilesOffCanvas.toggle()
+    alert_(`file ${filename} is not valid`,'danger',3000)
     }
   }
 
@@ -87,9 +86,11 @@ export function startApp() {
       recents.splice(recentElmId, 1)
     })
     openedFile.innerText = name
+    insertAttr(['ext='+sessionStorage.getItem('extension')],openedFile)
     openedFile.addEventListener('click', function() {
       workWithFile(url)
       window.aceEditor.session.setMode(`ace/mode/${ext}`)
+      sessionStorage.setItem('extension',this.getAttribute('ext'))
     })
     let foundMatch = false
     for (let i = 0; i < recents.length; i++) {

@@ -1,5 +1,6 @@
 import sett from "./components/tabs/settingsTab.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
+import compilerTab from "./components/tabs/compiler.js";
 import changeLogTab from "./components/tabs/changeLog.js";
 import aboutMe from "./components/tabs/aboutMe.js";
 import { startApp } from "./components/main_FileEntry.js"
@@ -7,6 +8,7 @@ import * as prettier from '../libs/standalone.mjs'
 import prettierPluginhtml from '../libs/parser-html.mjs'
 import prettierPluginyaml from '../libs/parser-yaml.mjs'
 import prettierPluginesEstree from '../libs/parser-espree.mjs';
+import prettierPluginesBabel from '../libs/parser-babel.mjs';
 
 
 $(document).ready(function() {
@@ -50,9 +52,9 @@ class CreateTabs {
         </button>`
   }
 }
-let tabIcons = ['fa fa-cog text-info', 'fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info', 'fa fa-laptop-code text-info']
-let tabs = ["settingstab", "pasteBin", 'changeLog', 'github', "aboutme"]
-let tabNames = ["settings", "Paste Bin", "change Log", "git", "about"]
+let tabIcons = ['fa fa-cog text-info','fa fa-terminal text-info','fa fa-paste text-info', 'fa fa-clipboard-list text-info', 'fab fa-github text-info', 'fa fa-laptop-code text-info']
+let tabs = ["settingstab","compiler", "pasteBin", 'changeLog', 'github', "aboutme"]
+let tabNames = ["settings","Compiler", "Paste Bin", "change Log", "git", "about"]
 for (let i = 0; i < tabs.length; i++) {
   let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i], tabNames[i]);
 }
@@ -62,12 +64,13 @@ fb.setAttribute('class', fb.getAttribute('class') + ' active')
 let ftb = MENU_TAB.querySelector('li button');
 ftb.setAttribute('aria-selected', 'true')
 
+compilerTab("#compiler")
 pasteTab("#pasteBin")
 changeLogTab('#changeLog')
 aboutMe('#aboutme')
 
 // toggle  file offcanvas shortcut
-const myFilesOffCanvas = new bootstrap.Offcanvas(document.getElementById('fileSystemCanvas'));
+window.myFilesOffCanvas = new bootstrap.Offcanvas(document.getElementById('fileSystemCanvas'));
 aceEditor.commands.addCommand({
   name: 'toggle_side_offCanvas',
   bindKey: {
@@ -88,7 +91,7 @@ aceEditor.commands.addCommand({
   },
 
   exec: function(editor) {
-    pyCformat()
+    Codeformat()
   },
   readOnly: true // false if this command should not apply in readOnly mode
 });
@@ -119,15 +122,15 @@ document.addEventListener(
 );
 
 // ALERTS
-window.alert_ = function(message, type) {
+window.alert_ = function(message, type,timeDelay=2000) {
   let wrapper = document.createElement('div')
   wrapper.innerHTML = '<div id="save_alert" class="alert alert-' + type + ' alert-dismissible start-50 p-0 text-center fw-bolder top-0 m-0" role="alert">' + message + '</div>'
   $('#on_save_alert').append(wrapper)
   setTimeout(function() {
     bootstrap.Alert.getOrCreateInstance($('#save_alert')).close()
-  }, 2000)
+  }, timeDelay)
 }
-window.pyCformat = function() {
+window.Codeformat = function() {
   let _code = window.aceEditor.getValue()
   switch (sessionStorage.getItem('extension')) {
     case 'py':
@@ -142,8 +145,8 @@ window.pyCformat = function() {
     case 'js':
       window.aceEditor.setValue(
         prettier.default.format(_code, {
-          parser: "espree",
-          plugins: [prettierPluginesEstree]
+          parser: "babel",
+          plugins: [prettierPluginesEstree,prettierPluginesBabel]
         }));
       break;
     case 'yaml':

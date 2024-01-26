@@ -6,15 +6,15 @@
   "enableLiveAutocompletion": true,
   "enableMultiselect": true,
   "enableSnippets": true,
-  "fontSize": "12px",
+  "fontSize": "10px",
   "highlightActiveLine": true,
   "highlightGutterLine": true,
-  "keyboardHandler": "ace/keyboard/vscode",
+  "keyboardHandler": "ace/keyboard/vim",
   "relativeLineNumbers": false,
   "showInvisibles": true,
   "showLineNumbers": true,
   "showPrintMargin": true,
-  "tabSize": "4",
+  "tabSize": "2",
   "theme": "ace/theme/dracula",
   "wrap": true
 }
