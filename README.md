@@ -25,7 +25,7 @@ pip install black
 
 ## compiler
 
-To use the compiler, you need to [signup for judge0 api](https://judge0.com/ce) then subscribe for \*_free_
+To use the compiler, you need to [signup for free at RapidAPI  ](https://rapidapi.com/Glavier/api/online-code-compiler/pricing) then subscribe for \*_free_
 Copy ==X-RapidAPI-Key== save it in `Db/token`.
 
 ---

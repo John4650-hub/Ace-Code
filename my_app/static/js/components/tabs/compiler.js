@@ -41,8 +41,8 @@ export default function compilerTab(_par) {
       labelItem_.appendChild(optn)
 
     }
-    if (localStorage.getItem('language_id') != null) {
-      labelItem_.value = localStorage.getItem('language_id')
+    if (localStorage.getItem('lang_id') != null) {
+      labelItem_.value = localStorage.getItem('lang_id')
     }
   });
   [btn_row, btn_col1, btn_label, btn_col2, btn_labelItem] = AddElm(parentElm, 'button')
@@ -50,18 +50,18 @@ export default function compilerTab(_par) {
   btn_labelItem.innerText = 'RUN'
   insertAttr(["class=btn btn-primary", 'id=saveBnt'], btn_labelItem)
   btn_labelItem.addEventListener('click', () => {
-    localStorage.setItem('language_id', labelItem_.value);
+    localStorage.setItem('lang_id', labelItem_.value);
     getValues()
   })
 
-  let b = makeElm('textarea')
-  insertAttr(['class=form-control w-100 m-0', 'id=results_output'], b);
-  insertAttr(["height:500px", "color:white", "backgroundColor:black", "fontFamily:times new roman", "fontSize:12px"], b, true);
+  let b = makeElm('div')
+  insertAttr(['class=container overflow-scroll w-100 bg-dark p-0 m-0 border  border-light', 'id=results_output'], b);
+  insertAttr(["height:500px", "fontFamily:times new roman", "fontSize:12px"], b, true);
   parentElm.appendChild(b);
 }
 
 let elmIds = ['compiler_lang']
-let options = ['language_id']
+let options = ['lang_id']
 
 function getValues() {
   let req = {}
@@ -73,7 +73,7 @@ function getValues() {
 
   }
   let code = window.aceEditor.getValue()
-  let l_id = localStorage.getItem('language_id')
+  let l_id = localStorage.getItem('lang_id')
   let output_ = document.getElementById('results_output')
   fetch('/run_code', {
     method: 'POST',
@@ -81,21 +81,38 @@ function getValues() {
       'content-type': 'application/json'
     },
     body: JSON.stringify({
-      "language_id": l_id,
-      "source_code": code
+      "language": l_id,
+      "version": "latest",
+      "code": code,
+      "input": null
     })
   }).then(res => res.json()).then(function(resp) {
-    out_ = resp['stdout']
-    err_ = resp['stderr']
-    c_out = resp['compile_output']
-    if (out_ != null) {
-      output_.value += "$ "+out_ +'\n'
-    } else {
-      if (err_ != null) {
-        output_.value += "$ "+err_ +"\n"
-      } else {
-        output_.value = "$ "+c_out+"\n"
-      }
-    }
+    out_ = resp['output']
+    makeCard(output_, out_)
   })
+}
+
+function makeCard(par_elm, text_info) {
+  let subPar = makeElm('div')
+  let colm1=makeElm('div')
+  insertAttr(['class=col-9'],colm1)
+  let colm2 = makeElm('div')
+  insertAttr(['class=col-3'],colm2)
+  
+  insertAttr(['class=row border-bottom border-light'],subPar)
+  let outcard = makeElm('textarea')
+  outcard.value = text_info
+  insertAttr(['class=form-control border-0 bg-dark mt-2 text-light', 'rows=5', 'disabled= ', 'readonly= '], outcard)
+  
+  let copybtn = makeElm('button')
+  insertAttr(['class=btn w-100 mb-1', 'code=' + text_info], copybtn)
+  copybtn.innerHTML = "<i class='fa fa-copy text-light'></i>"
+  copybtn.addEventListener('click', function() {
+    navigator.clipboard.writeText(text_info)
+  })
+  colm1.appendChild(outcard)
+  colm2.appendChild(copybtn)
+  subPar.appendChild(colm1)
+  subPar.appendChild(colm2)
+  par_elm.appendChild(subPar)
 }

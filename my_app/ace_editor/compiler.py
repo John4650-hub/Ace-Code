@@ -6,22 +6,12 @@ from my_app import ace_editor_app
 def runC():
   with open("Db/token",'r') as tkn:
     rapid_key=tkn.read()
-  url="https://judge0-extra-ce.p.rapidapi.com/submissions"
-  querystring = {"base64_encoded":"false","wait":"false","fields":"*"}
+  url="https://online-code-compiler.p.rapidapi.com/v1/"
   payload = request.get_json()
   headers = {
       "content-type": "application/json",
-      "Content-Type": "application/json",
       "X-RapidAPI-Key":rapid_key,
-      "X-RapidAPI-Host": "judge0-extra-ce.p.rapidapi.com"
+      "-RapidAPI-Host": "online-code-compiler.p.rapidapi.com"
       }
-  response = requests.post(url, json=payload, headers=headers, params=querystring)
-  url="https://judge0-extra-ce.p.rapidapi.com/submissions/"+response.json()['token']
-  headers = {
-  	"X-RapidAPI-Key": rapid_key,
-  	"X-RapidAPI-Host": "judge0-extra-ce.p.rapidapi.com"
-  }
-  querystring = {"fields":"*"}
-
-  output = requests.get(url, headers=headers, params=querystring)
-  return output.json()
+  response = requests.post(url, json=payload, headers=headers)
+  return response.json()
