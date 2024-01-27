@@ -1,5 +1,6 @@
 
-![alt icon](https://github.com/John4650-hub/Ace-Code/blob/ace_as_pwa/my_app/static/icon/icon.png?raw=true)
+<!--![alt icon]()-->
+<img src="https://github.com/John4650-hub/Ace-Code/blob/ace_as_pwa/my_app/static/icon/icon.png?raw=true"  width="48" height="48">
 # Ace Code
 ---                                                               
 This is an inbrowser text editor application.
