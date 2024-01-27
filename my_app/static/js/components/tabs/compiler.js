@@ -110,9 +110,9 @@ function getValues() {
 function makeCard(par_elm, text_info) {
   let subPar = makeElm("div");
   let colm1 = makeElm("div");
-  insertAttr(["class=col-9"], colm1);
+  insertAttr(["class=col-10"], colm1);
   let colm2 = makeElm("div");
-  insertAttr(["class=col-3"], colm2);
+  insertAttr(["class=col-2"], colm2);
   insertAttr(["class=row border-bottom border-light"], subPar);
   let outcard = makeElm("textarea");
   outcard.value = text_info;
@@ -125,7 +125,7 @@ function makeCard(par_elm, text_info) {
     ],
     outcard
   );
-  insertAttr(['font-size:9px'],outcard,true)
+  insertAttr(['font-size:11px'],outcard,true)
 
   let copybtn = makeElm("button");
   insertAttr(["class=btn w-100 mb-1", "code=" + text_info], copybtn);
