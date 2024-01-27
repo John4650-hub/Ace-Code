@@ -46,7 +46,7 @@ const keyhandlerData = ['vim', 'vscode', 'emacs', 'sublime']
 const cursorStyleData = ['ace', 'slim', 'smooth', 'wide']
 
 /**
- * @param {String} makeElm creates elements
+* @param {String} makeElm creates elements
  **/
 let row_;
 let col1_;

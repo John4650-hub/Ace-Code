@@ -98,3 +98,9 @@ def saveSettings():
         with open("settings.json", "r") as fh:
             data = json.load(fh)
         return data
+
+@ace_editor_app.route("/lang_data", methods=["GET"])
+def lang_data():
+    with open('Db/compilers.json','r') as fh:
+      data = json.load(fh)
+    return data
