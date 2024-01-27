@@ -19,7 +19,7 @@ export function startApp() {
   let codeObj
   window.writeToFs = function() {
     file_path_to_save = sessionStorage.getItem('current_file_path')
-    
+
     if (file_path_to_save == null) {
       console.log('No open file to save, please open a file in the editor to save ')
     }
@@ -43,31 +43,42 @@ export function startApp() {
     let fileUrlSplit = fileUrl.split("/")
     let filename = fileUrlSplit[fileUrlSplit.length - 1]
     if (filename.includes('.')) {
-      extension = filename.substring(filename.lastIndexOf('.')+1)
+      extension = filename.substring(filename.lastIndexOf('.') + 1)
     } else { extension = 'txt' }
     let checkValidity = FILES_NOT_ALLOWED.find(function(v) {
       return extension == v
     })
     if (checkValidity == undefined) {
       workWithFile(fileUrl);
-      sessionStorage.setItem('extension',extension)
+      sessionStorage.setItem('extension', extension)
       addRecentlyOpenedFile(filename, fileUrl, FILE_EXTENSIONS[extension])
       window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`)
     } else {
-    myFilesOffCanvas.toggle()
-    alert_(`file ${filename} is not valid`,'danger',3000)
+      myFilesOffCanvas.toggle()
+      alert_(`file ${filename} is not valid`, 'danger', 3000)
     }
   }
 
 
   let recents = []
+  let recent_files_obj;
 
   function addRecentlyOpenedFile(name, url, ext) {
+    recent_files_obj = {}
+    recent_files_obj["name"] = name
+    recent_files_obj["url"] = url
+    recent_files_obj["ext"] = ext
+
     let openedFile = makeElm('li')
     let fPath = makeElm('p')
     insertAttr(['class=fs-6 fw-light text-white fst-italic mb-0'], fPath)
+    let fpath_txt = url.split('/')
+    if (fpath_txt.length > 3) {
+      fpath_txt = fpath_txt.splice(fpath_txt.length - 2, fpath_txt.length - 1);
+    }
+    fpath_txt = fpath_txt.join("/")
+    fPath.innerText = ".../" + fpath_txt;
 
-    fPath.innerText = url
     let row = makeElm('div')
     insertAttr(['class=row border-bottom border-white', `id=${url}`], row)
     insertAttr(['class=col-10 bg-dark text-white list-group-item border-0 mh-25'], openedFile)
@@ -86,15 +97,15 @@ export function startApp() {
       recents.splice(recentElmId, 1)
     })
     openedFile.innerText = name
-    insertAttr(['ext='+sessionStorage.getItem('extension')],openedFile)
+    insertAttr(['ext=' + sessionStorage.getItem('extension')], openedFile)
     openedFile.addEventListener('click', function() {
       workWithFile(url)
       window.aceEditor.session.setMode(`ace/mode/${ext}`)
-      sessionStorage.setItem('extension',this.getAttribute('ext'))
+      sessionStorage.setItem('extension', this.getAttribute('ext'))
     })
     let foundMatch = false
     for (let i = 0; i < recents.length; i++) {
-      if (recents[i] == url) {
+      if (recents[i]['url'] == url) {
         console.log('match')
         foundMatch = true
         break
@@ -104,15 +115,29 @@ export function startApp() {
     }
     if (foundMatch == false) {
       $('#recent_file').append(row)
-
       row.appendChild(openedFile)
       row.appendChild(closeBtn)
       openedFile.appendChild(fPath)
-      recents.push(url)
+      recents.push(recent_files_obj)
+    }
+    localStorage.setItem('recentlyOpenedFiles', JSON.stringify(recents))
+  }
+
+  function restoreRecentlyOpenedFiles() {
+    if (localStorage.getItem("recentlyOpenedFiles") != null) {
+      //fro -> files recently opened
+      let fro = localStorage.getItem('recentlyOpenedFiles')
+      for (let file of JSON.parse(fro)) {
+
+        let { name, url, ext } = file
+        //destructuring assignment
+        addRecentlyOpenedFile(name, url, ext)
+      }
+      recents = JSON.parse(fro)
     }
   }
-  loadFs()
 
+  loadFs()
   window.workWithFile = function(filePath) {
     readFs(filePath);
   }
@@ -128,4 +153,5 @@ export function startApp() {
   });
   $('#saveFs').click(writeToFs)
   sessionStorage.clear()
+  restoreRecentlyOpenedFiles()
 }

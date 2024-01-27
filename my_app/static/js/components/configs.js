@@ -54,5 +54,6 @@ export const FILE_EXTENSIONS = {
     "xml": "xml",
     "sh": "sh",
     "bash": "sh",
-    "tsx":"tsx"
+    "tsx":"tsx",
+    "md":"markdown"
 }

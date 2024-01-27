@@ -6,6 +6,7 @@ import aboutMe from "./components/tabs/aboutMe.js";
 import { startApp } from "./components/main_FileEntry.js"
 import * as prettier from '../libs/standalone.mjs'
 import prettierPluginhtml from '../libs/parser-html.mjs'
+import prettierPluginMarkdown from '../libs/parser-markdown.mjs'
 import prettierPluginyaml from '../libs/parser-yaml.mjs'
 import prettierPluginesEstree from '../libs/parser-espree.mjs';
 import prettierPluginesBabel from '../libs/parser-babel.mjs';
@@ -161,6 +162,13 @@ window.Codeformat = function() {
         prettier.default.format(_code, {
           parser: "html",
           plugins: [prettierPluginhtml]
+        }));
+      break;
+    case 'md':
+      window.aceEditor.setValue(
+        prettier.default.format(_code, {
+          parser: "markdown",
+          plugins: [prettierPluginMarkdown]
         }));
       break;
     default:

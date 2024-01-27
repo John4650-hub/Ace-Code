@@ -1,4 +1,3 @@
-
 <!--![alt icon]()-->
 <p align="center">
 <img src="https://github.com/John4650-hub/Ace-Code/blob/ace_as_pwa/my_app/static/icon/icon.png?raw=true"  width="100" height="100">
@@ -23,8 +22,12 @@ pip install flask
 ```bash
 pip install black
 ```
+
 ## compiler
-To use the compiler, you need to [signup for judge0 api](https://judge0.com/ce)  then subscribe for **free*
- Copy ==X-RapidAPI-Key== save it in `Db/token`.
+
+To use the compiler, you need to [signup for judge0 api](https://judge0.com/ce) then subscribe for \*_free_
+Copy ==X-RapidAPI-Key== save it in `Db/token`.
+
 ---
-The project is still development🚧🚧 and for builds  check in releases or you can **build**  it yourself by forking and and editing the config.xml file to your desired configurations.
+
+The project is still development🚧🚧 and for builds check in releases or you can **build** it yourself by forking and and editing the config.xml file to your desired configurations.
