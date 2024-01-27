@@ -1,1 +1,3 @@
-./Db/token
+Db/token
+my_app/__pycache__/
+my_app/ace_editor/__pycache__/
