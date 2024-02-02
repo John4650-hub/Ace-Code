@@ -2,7 +2,7 @@ import { FILES_NOT_ALLOWED, FILE_EXTENSIONS } from "./configs.js";
 
 //LOADS DATA FROM THE FOLE SYSTEM
 export function startApp() {
-  function loadFs() {
+  async function loadFs() {
     fetch("/load_fs", { method: "GET" })
       .then((fs) => fs.json())
       .then(function (dt) {

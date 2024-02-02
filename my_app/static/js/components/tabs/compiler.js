@@ -67,7 +67,7 @@ export default function compilerTab(_par) {
     b
   );
   insertAttr(
-    ["height:500px", "fontFamily:times new roman", "fontSize:12px"],
+    ["height:280px", "fontFamily:times new roman", "fontSize:12px"],
     b,
     true
   );

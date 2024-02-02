@@ -1,6 +1,6 @@
 {
   "animatedScroll": false,
-  "behavioursEnabled": true,
+  "behavioursEnabled": false,
   "cursorStyle": "wide",
   "enableBasicAutocompletion": true,
   "enableLiveAutocompletion": true,
@@ -11,6 +11,7 @@
   "highlightGutterLine": true,
   "keyboardHandler": "ace/keyboard/vim",
   "relativeLineNumbers": false,
+  "scrollSpeed": "5",
   "showInvisibles": true,
   "showLineNumbers": true,
   "showPrintMargin": true,

@@ -4,6 +4,7 @@
 </p>
 # Ace Code
 ---                                                               
+**THIS IS AN ANDROID TEXT EDITOR FOR NOW. USE IT WITH THE TERMUX APPLICATION**
 This is an inbrowser text editor application.
 **The editor used is Ace, a popular text editor by cloud9**
 ## Usage
