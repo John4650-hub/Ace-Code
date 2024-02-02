@@ -1,16 +1,14 @@
-from flask import render_template, request
+from flask import render_template, request, send_from_directory
 from my_app import ace_editor_app
 import json
-
+import os
 
 @ace_editor_app.route("/")
 @ace_editor_app.route("/ace_editor")
 def index():
     return render_template("index.html")
 
+@ace_editor_app.route('/deps/<path:filename>')
+def custom_static(filename):
+    return send_from_directory('/storage/emulated/0/Apps/deps', filename)
 
-# @streaker_app.route('/get-streak-data', methods=['GET'])
-# def send_json():
-#   with open('Db/data.json','r') as file:
-#     data = json.sload(file)
-#   return json.dumps(data)
