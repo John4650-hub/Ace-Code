@@ -312,7 +312,6 @@ export default function sett(_Par) {
     })
       .then((res) => res.text())
       .then(function (msg) {
-        console.log(msg);
         window.aceEditor.setOptions(EDITOR_CONFIG);
       });
   }

@@ -20,12 +20,10 @@ $(document).ready(function () {
   sett("#settingstaby");
 });
 
-window.ace.require("ace/ext/language_tools");
-window.ace.require("ace/ext/code_lens");
+ace.require("ace/ext/language_tools");
+ace.require("ace/ext/code_lens");
 
-window.aceEditor = window.ace.edit("editor0");
-console.log(aceEditor)
-
+window.aceEditor = ace.edit("editor0");
 aceEditor.commands.removeCommand("showSettingsMenu");
 
 let MENU_TAB = document.querySelector("#menuTab");
@@ -116,18 +114,6 @@ aceEditor.commands.addCommand({
   },
   readOnly: true, // false if this command should not apply in readOnly mode
 });
-aceEditor.commands.addCommand({
-  name: "Format code",
-  bindKey: {
-    win: "Alt-f",
-    mac: "Command-f",
-  },
-
-  exec: function (editor) {
-    Codeformat();
-  },
-  readOnly: true, // false if this command should not apply in readOnly mode
-});
 
 function insertAttr(attrs, elm) {
   for (var i = 0; i < attrs.length; i++) {
@@ -168,8 +154,9 @@ window.alert_ = function (message, type, timeDelay = 2000) {
     bootstrap.Alert.getOrCreateInstance($("#save_alert")).close();
   }, timeDelay);
 };
-window.Codeformat = function () {
-  let _code = window.aceEditor.getValue();
+window.Codeformat = function (id) {
+  let myeditor = ace.edit(sessionStorage.getItem("current_file_path"));
+ let _code = myeditor.getValue() 
   switch (sessionStorage.getItem("extension")) {
     case "py":
       fetch("/format_python", {
@@ -179,11 +166,11 @@ window.Codeformat = function () {
       })
         .then((res) => res.text())
         .then(function (data) {
-          window.aceEditor.setValue(data);
+          myeditor.setValue(data);
         });
       break;
     case "js":
-      window.aceEditor.setValue(
+      myeditor.setValue(
         prettier.default.format(_code, {
           parser: "babel",
           plugins: [prettierPluginesEstree, prettierPluginesBabel],
@@ -191,7 +178,7 @@ window.Codeformat = function () {
       );
       break;
     case "yaml":
-      window.aceEditor.setValue(
+      myeditor.setValue(
         prettier.default.format(_code, {
           parser: "yaml",
           plugins: [prettierPluginyaml],
@@ -199,7 +186,7 @@ window.Codeformat = function () {
       );
       break;
     case "html":
-      window.aceEditor.setValue(
+      myeditor.setValue(
         prettier.default.format(_code, {
           parser: "html",
           plugins: [prettierPluginhtml],
@@ -207,7 +194,7 @@ window.Codeformat = function () {
       );
       break;
     case "md":
-      window.aceEditor.setValue(
+      myeditor.setValue(
         prettier.default.format(_code, {
           parser: "markdown",
           plugins: [prettierPluginMarkdown],
@@ -218,15 +205,17 @@ window.Codeformat = function () {
       alert_("Not supported yet!!!", "danger");
   }
 };
-
+document.getElementById("Prettify").addEventListener("click",Codeformat)
 //new FileTab()
 MENU_TAB = document.querySelector("#editingFiles");
 export class FileTab extends CreateTabs{
-  constructor(id, name){
+  constructor(id, name,mode){
   super(id,name)
   this.id=id
   this.name=name;
+  this.eMode=mode
   this.elmNode=document.createElement("li");
+  this.elmNode.setAttribute("mode",mode)
 }
 st(){
   let url=this.id
@@ -236,18 +225,12 @@ st(){
   document.getElementById(localStorage.getItem("activeNow")).style.display="none"
   document.getElementById(url).style.display="block";
   localStorage.setItem("activeNow",url)
- let fileUrlSplit = url.split("/");
-    let filename = fileUrlSplit[fileUrlSplit.length - 1];
-    let extension=""
-  if (filename.includes(".")) {
-      extension = filename.substring(filename.lastIndexOf(".") + 1);
-    } else {
-      extension = "txt";
-    }
+    let extension=this.getAttribute("mode")
     sessionStorage.setItem("extension",extension);
-    window.aceEditor.session.setMode(
-        `ace/mode/${FILE_EXTENSIONS[extension]}`
-      );})
+    sessionStorage.setItem("current_file_path",url);
+    ace.edit(this.lastChild.getAttribute("id").slice(0,-3)).session.setMode(`ace/mode/${FILE_EXTENSIONS[extension]}`);
+    window.aceEditor=ace.edit(this.lastChild.getAttribute("id").slice(0,-3))
+  })
   this.addInnerKido();
 
 }

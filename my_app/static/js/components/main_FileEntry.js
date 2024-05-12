@@ -2,7 +2,6 @@ import { FILES_NOT_ALLOWED, FILE_EXTENSIONS } from "./configs.js";
 import { FileTab } from "../app.js";
 import { EDITOR_CONFIGs } from "./tabs/settingsTab.js"
 
-console.log(EDITOR_CONFIGs)
 export function showElm(el){
   document.getElementById(el).style.display="block"
 }
@@ -43,11 +42,11 @@ let parEditor= document.getElementById("editors")
       extension = "txt";
     }
       sessionStorage.setItem("extension",extension);
-    let editor=window.ace.edit(id)
+    let editor=ace.edit(id)
     document.getElementById("saveBnt").click()
-    editor.session.setMode(
-        `ace/mode/${FILE_EXTENSIONS[extension]}`
-      );
+   //  editor.session.setMode(
+  //      `ace/mode/${FILE_EXTENSIONS[extension]}`
+  //    );
     return editor
   }
   window.readFs = function (fileEntryPath) {
@@ -115,7 +114,7 @@ let parEditor= document.getElementById("editors")
       return extension == v;
     });
     if (checkValidity == undefined) {
-      workWithFile(fileUrl,filename);
+      workWithFile(fileUrl,filename,extension);
       sessionStorage.setItem("extension", extension);
       addRecentlyOpenedFile(
         filename,
@@ -183,7 +182,7 @@ let parEditor= document.getElementById("editors")
       insertAttr(["ext=" + sessionStorage.getItem("extension")], openedFile);
     }
     openedFile.addEventListener("click", function () {
-      workWithFile(url,name);
+      workWithFile(url,name,ext);
       if (isRecent) {
         window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[ext]}`);
       } else {
@@ -194,7 +193,6 @@ let parEditor= document.getElementById("editors")
     let foundMatch = false;
     for (let i = 0; i < recents.length; i++) {
       if (recents[i]["url"] == url) {
-        console.log("match");
         foundMatch = true;
         break;
       } else {
@@ -226,7 +224,7 @@ let parEditor= document.getElementById("editors")
 }
 
   loadFs();
-  window.workWithFile = function (filePath,name) {
+  window.workWithFile = function (filePath,name,xte) {
     let alreadyOpen=false
     for (let i=0;i<edittingFile.length;i++){
       if (name==edittingFile[i]){
@@ -236,7 +234,7 @@ let parEditor= document.getElementById("editors")
     }
     if(alreadyOpen==false){
     edittingFile.push(name)
-    new FileTab(filePath,name).st()
+    new FileTab(filePath,name,xte).st()
     readFs(filePath);
     }else{
       alert_("File Already Open","danger")
