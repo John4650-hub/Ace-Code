@@ -1,7 +1,8 @@
 import { FILES_NOT_ALLOWED, FILE_EXTENSIONS } from "./configs.js";
 import { FileTab } from "../app.js";
-//import FileTab from "./components/"
+import { EDITOR_CONFIGs } from "./tabs/settingsTab.js"
 
+console.log(EDITOR_CONFIGs)
 export function showElm(el){
   document.getElementById(el).style.display="block"
 }
@@ -33,17 +34,20 @@ let parEditor= document.getElementById("editors")
     editorElm.style.right="0px"
     editorElm.style.fontSize="10px"
     editorElm.setAttribute("id",id)
-    let editor=ace.edit(id)
-    fetch("/settings", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    })
-      .then((res) => res.text())
-      .then(function (msg) {
-        console.log(editor)
-        editor.setOptions(msg);
-      })
-    
+    let fileUrlSplit = id.split("/");
+    let filename = fileUrlSplit[fileUrlSplit.length - 1];
+    let extension=""
+  if (filename.includes(".")) {
+      extension = filename.substring(filename.lastIndexOf(".") + 1);
+    } else {
+      extension = "txt";
+    }
+      sessionStorage.setItem("extension",extension);
+    let editor=window.ace.edit(id)
+    document.getElementById("saveBnt").click()
+    editor.session.setMode(
+        `ace/mode/${FILE_EXTENSIONS[extension]}`
+      );
     return editor
   }
   window.readFs = function (fileEntryPath) {

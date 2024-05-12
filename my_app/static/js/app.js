@@ -1,4 +1,6 @@
 import sett from "./components/tabs/settingsTab.js";
+
+import { FILE_EXTENSIONS } from "./components/configs.js";
 import pasteTab from "./components/tabs/pasteBinTab.js";
 import compilerTab from "./components/tabs/compiler.js";
 import changeLogTab from "./components/tabs/changeLog.js";
@@ -18,11 +20,11 @@ $(document).ready(function () {
   sett("#settingstaby");
 });
 
-ace.require("ace/ext/language_tools");
-ace.require("ace/ext/code_lens");
+window.ace.require("ace/ext/language_tools");
+window.ace.require("ace/ext/code_lens");
 
-window.aceEditor = ace.edit("editor0");
-
+window.aceEditor = window.ace.edit("editor0");
+console.log(aceEditor)
 
 aceEditor.commands.removeCommand("showSettingsMenu");
 
@@ -234,7 +236,18 @@ st(){
   document.getElementById(localStorage.getItem("activeNow")).style.display="none"
   document.getElementById(url).style.display="block";
   localStorage.setItem("activeNow",url)
-  })
+ let fileUrlSplit = url.split("/");
+    let filename = fileUrlSplit[fileUrlSplit.length - 1];
+    let extension=""
+  if (filename.includes(".")) {
+      extension = filename.substring(filename.lastIndexOf(".") + 1);
+    } else {
+      extension = "txt";
+    }
+    sessionStorage.setItem("extension",extension);
+    window.aceEditor.session.setMode(
+        `ace/mode/${FILE_EXTENSIONS[extension]}`
+      );})
   this.addInnerKido();
 
 }
