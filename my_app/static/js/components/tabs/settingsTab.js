@@ -317,3 +317,4 @@ export default function sett(_Par) {
       });
   }
 }
+export let EDITOR_CONFIGs=EDITOR_CONFIG

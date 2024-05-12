@@ -20,11 +20,13 @@ $(document).ready(function () {
 
 ace.require("ace/ext/language_tools");
 ace.require("ace/ext/code_lens");
-window.aceEditor = ace.edit("editor");
+
+window.aceEditor = ace.edit("editor0");
+
 
 aceEditor.commands.removeCommand("showSettingsMenu");
 
-const MENU_TAB = document.querySelector("#menuTab");
+let MENU_TAB = document.querySelector("#menuTab");
 let tabContent = document.querySelector(".tab-content");
 
 class CreateTabs {
@@ -33,19 +35,16 @@ class CreateTabs {
     this.id = id;
     this.name = name;
     this.elmNode = document.createElement("li");
-    insertAttr(
-      [
-        "class:nav-item",
-        "data-bs-toggle=tooltip",
-        "data-bs-placement=bottom",
-        "title=" + this.name,
-      ],
-      this.elmNode
-    );
 
+  }
+  startMenu(){
     MENU_TAB.appendChild(this.elmNode);
     this.addTabContent();
     this.addInnerKid();
+    this.elmNode.setAttribute("class","nav-item")
+    this.elmNode.setAttribute("data-bs-toggle","tooltip")
+    this.elmNode.setAttribute("data-bs-placement","bottom")
+    this.elmNode.setAttribute("title",name)
   }
   addTabContent() {
     tabContent.innerHTML += `
@@ -86,6 +85,7 @@ let tabNames = [
 ];
 for (let i = 0; i < tabs.length; i++) {
   let tab = new CreateTabs(`${tabs[i]}`, tabIcons[i], tabNames[i]);
+  tab.startMenu()
 }
 
 let fb = tabContent.querySelector("div:first-child");
@@ -216,3 +216,34 @@ window.Codeformat = function () {
       alert_("Not supported yet!!!", "danger");
   }
 };
+
+//new FileTab()
+MENU_TAB = document.querySelector("#editingFiles");
+export class FileTab extends CreateTabs{
+  constructor(id, name){
+  super(id,name)
+  this.id=id
+  this.name=name;
+  this.elmNode=document.createElement("li");
+}
+st(){
+  let url=this.id
+  MENU_TAB.appendChild(this.elmNode);
+  this.elmNode.setAttribute("class","nav-item pt-0 border-top border-end border-success");
+  this.elmNode.addEventListener("click",function(){
+  document.getElementById(localStorage.getItem("activeNow")).style.display="none"
+  document.getElementById(url).style.display="block";
+  localStorage.setItem("activeNow",url)
+  })
+  this.addInnerKido();
+
+}
+
+addInnerKido() {
+    this.elmNode.innerHTML = `<button class="w-100 pt-0 btn btn-dark btn-sm border-bottom border-0 rounded-0 text-center" id="${this.id}-tb" type="button" role="tab" style="display: block; vertical-align: top;">${this.name}</button>`;
+  
+  }
+
+}
+
+

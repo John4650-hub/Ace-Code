@@ -15,7 +15,7 @@
   "showInvisibles": true,
   "showLineNumbers": true,
   "showPrintMargin": true,
-  "tabSize": "2",
-  "theme": "ace/theme/dracula",
+  "tabSize": "1",
+  "theme": "ace/theme/one_dark",
   "wrap": true
 }

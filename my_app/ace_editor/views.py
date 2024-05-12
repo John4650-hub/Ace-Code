@@ -10,5 +10,5 @@ def index():
 
 @ace_editor_app.route('/deps/<path:filename>')
 def custom_static(filename):
-    return send_from_directory('/storage/emulated/0/Apps/deps', filename)
+    return send_from_directory('/storage/emulated/0/.Apps/deps', filename)
 

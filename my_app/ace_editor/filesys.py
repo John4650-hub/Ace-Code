@@ -65,7 +65,9 @@ def listDir(url="", result=[]):
 @ace_editor_app.route("/load_fs", methods=["GET"])
 def loadFs():
     result_ = []
-    return listDir(url="/storage/emulated/0", result=result_)
+    with open("/storage/emulated/0/.Apps/Ace-Code/folder.txt",'r') as folder_path:
+        folder=folder_path.read().strip()
+    return listDir(url=folder, result=result_)
 
 
 @ace_editor_app.route("/read_fs", methods=["POST"])

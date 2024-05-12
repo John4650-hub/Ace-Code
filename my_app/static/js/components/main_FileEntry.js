@@ -1,6 +1,16 @@
 import { FILES_NOT_ALLOWED, FILE_EXTENSIONS } from "./configs.js";
+import { FileTab } from "../app.js";
+//import FileTab from "./components/"
 
-//LOADS DATA FROM THE FOLE SYSTEM
+export function showElm(el){
+  document.getElementById(el).style.display="block"
+}
+export function hidElm(el){
+  document.getElementById(el).style.display="none"
+}
+
+
+ //LOADS DATA FROM THE FOLE SYSTEM
 export function startApp() {
   async function loadFs() {
     fetch("/load_fs", { method: "GET" })
@@ -9,13 +19,58 @@ export function startApp() {
         $("#fileList").treeview({ data: dt, showBorder: true });
       });
   }
-
+let firstTabTaken=false
+let editors = {}
+let edittingFile=[]
+let edits=0
+let aceOpts=window.aceEditor.getOptions()
+let parEditor= document.getElementById("editors")
+  function makeEditor(id){
+    let editorElm= makeElm('div')
+    editorElm.setAttribute("class","position-fixed bottom-0 start-0 ms-0 mt-1")
+    parEditor.appendChild(editorElm)
+    editorElm.style.top="52px"
+    editorElm.style.right="0px"
+    editorElm.style.fontSize="10px"
+    editorElm.setAttribute("id",id)
+    let editor=ace.edit(id)
+    fetch("/settings", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then((res) => res.text())
+      .then(function (msg) {
+        console.log(editor)
+        editor.setOptions(msg);
+      })
+    
+    return editor
+  }
   window.readFs = function (fileEntryPath) {
     sessionStorage.setItem("current_file_path", fileEntryPath);
     fetch("/read_fs", { method: "POST", body: fileEntryPath })
       .then((file_data) => file_data.json())
       .then(function (data) {
-        window.aceEditor.setValue(data.text);
+        if (firstTabTaken == false){
+          window.aceEditor.setValue(data.text);
+          firstTabTaken = true
+          editors["e0"]=fileEntryPath
+          document.getElementById("editor0").setAttribute('id',fileEntryPath)
+          edittingFile.push(fileEntryPath)
+          localStorage.setItem("activeNow",fileEntryPath)
+          edits+=1
+        }else{
+          document.getElementById(localStorage.getItem("activeNow")).style.display="none"
+          let E_id="e"+edits
+          let Elm_id = fileEntryPath
+          localStorage.setItem("activeNow",Elm_id)
+          edittingFile.push(Elm_id)
+          window.aceEditor=makeEditor(Elm_id)
+          window.aceEditor.setValue(data.text);
+          firstTabTaken = true
+          editors[Elm_id]=E_id
+          edits+=1
+        }
       });
   };
   let file_path_to_save;
@@ -56,7 +111,7 @@ export function startApp() {
       return extension == v;
     });
     if (checkValidity == undefined) {
-      workWithFile(fileUrl);
+      workWithFile(fileUrl,filename);
       sessionStorage.setItem("extension", extension);
       addRecentlyOpenedFile(
         filename,
@@ -80,7 +135,6 @@ export function startApp() {
     recent_files_obj = {};
     recent_files_obj["name"] = name;
     recent_files_obj["url"] = url;
-
     let openedFile = makeElm("li");
     let fPath = makeElm("p");
     insertAttr(["class=fs-6 fw-light text-white fst-italic mb-0"], fPath);
@@ -125,7 +179,7 @@ export function startApp() {
       insertAttr(["ext=" + sessionStorage.getItem("extension")], openedFile);
     }
     openedFile.addEventListener("click", function () {
-      workWithFile(url);
+      workWithFile(url,name);
       if (isRecent) {
         window.aceEditor.session.setMode(`ace/mode/${FILE_EXTENSIONS[ext]}`);
       } else {
@@ -165,11 +219,24 @@ export function startApp() {
       }
       recents = JSON.parse(fro);
     }
-  }
+}
 
   loadFs();
-  window.workWithFile = function (filePath) {
+  window.workWithFile = function (filePath,name) {
+    let alreadyOpen=false
+    for (let i=0;i<edittingFile.length;i++){
+      if (name==edittingFile[i]){
+        alreadyOpen=true
+        break
+      }
+    }
+    if(alreadyOpen==false){
+    edittingFile.push(name)
+    new FileTab(filePath,name).st()
     readFs(filePath);
+    }else{
+      alert_("File Already Open","danger")
+    }
   };
   aceEditor.commands.addCommand({
     name: "save_file",

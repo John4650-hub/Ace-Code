@@ -6,7 +6,6 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-  <script src="/deps/eruda.min.js"></script>
   <script src="{{ url_for('static', filename='libs/src-min-noconflict/ace.js')}}" type="text/javascript" charset="utf-8"></script>
 
   <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest')}}">
@@ -20,19 +19,23 @@
 
 <body>
   
-  <div id="container">
-    <div class="container">
-      <div id="editor" class="position-fixed bottom-0 start-0 ms-0 mt-1" style=" top:52px;right: 0px;"></div>
+  <div>
+      <div id=editors>
+        <div id="editor0" class="position-fixed bottom-0 start-0 ms-0 mt-1" style=" top:52px;right: 0px;"></div>
 
     </div>
+    <div class="navbar navbar-dark bg-dark position-absolute w-100 start-0 ms-0 mt-1" style="height: 1em;";></div>
+    <div class="navbar navbar-dark bg-dark position-absolute w-100" style="height: 3.5em;">
+    <ul class="nav nav-tabs nav-fill border-0 w-100 h-50 align-text-tops" role="tablist" id="editingFiles" style="overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap;background-color:black; margin-top:30px;">
     
-    <div id="" class="navbar navbar-dark bg-dark position-absolute w-100" style="height: 3.5em;">
-      <p class="text-primary position-absolute top-50 start-50 translate-middle fw-bolder user-select-none">ACE CODE IDE</p>
+    </ul>
+
+      <p class="text-primary position-absolute top-25 start-50 translate-middle fw-bolder user-select-none">ACE CODE IDE</p>
 
       <div class="position-absolute mx-5 end-0" id="saveFs" type="submit"><i class="fa fa-save text-light fw-bolder"></i></div>
 
-      <div class="position-absolute start-0 top-50 translate-middle ms-4"><i class="fa fa-bars text-light fs-2 fw-bolder opacity-100" id="openFs" data-bs-toggle="offcanvas" data-bs-target="#fileSystemCanvas" aria-controls="fileSystemCanvas" type="submit"></i></div>
-      <div class="position-absolute top-50 start-50 translate-middle me-5 pe-5">
+      <div class="position-absolute start-0 top-25 translate-middle ms-4"><i class="fa fa-bars text-light fs-2 fw-bolder opacity-100" id="openFs" data-bs-toggle="offcanvas" data-bs-target="#fileSystemCanvas" aria-controls="fileSystemCanvas" type="submit"></i></div>
+      <div class="position-absolute top-25 start-50 translate-middle me-5 pe-5">
         <div class="pe-5 me-5">
 
           <i class="fa fa-clipboard-list fs-2 text-light me-5 " data-bs-toggle="offcanvas" data-bs-target="#recentlyOpened" aria-controls="recentlyOpened" id="recentlyOpenedFilDisplay"></i>
@@ -78,12 +81,12 @@
     <div class="offcanvas-body">
       <ul class="container list-group list-group-flush mh-0" id="recent_file"></ul>
 
+
     </div>
   </div>
   <div class="position-absolute top-0 w-50" id="on_save_alert">
   
   </div>
-  <script src="/deps/devTools.js"></script>
   <script src="/deps/jquery.min.js"></script>
   <script src="{{ url_for('static', filename='libs/src-min-noconflict/ext-language_tools.js')}}"></script>
 
