@@ -40,6 +40,9 @@ jobs:
 
      - run: sh clean.sh
      - run: |
+         cd /home/runner/work/Ace-Code/Ace-Code/platforms/android/
+         sudo gradle wrapper --gradle-version 8.0
+         cd -
          sudo apt-get install zipalign
          cd platforms
          sudo cordova build android
