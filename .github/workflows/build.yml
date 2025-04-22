@@ -40,6 +40,11 @@ jobs:
 
      - run: sh clean.sh
      - run: |
+         export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
+         export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
+         export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/
+         export PATH=$PATH:$ANDROID_SDK_ROOT/emulator/
+         
          cd /home/runner/work/Ace-Code/Ace-Code/platforms/android/
          sudo gradle wrapper --gradle-version 8.0
          cd -
