@@ -35,7 +35,7 @@ jobs:
      - name: Setup sdk
        uses: android-actions/setup-android@v3
        with:
-         cmdline-tools-version: 11479570
+         cmdline-tools-version: 12266719
   
 
      - run: sh clean.sh
