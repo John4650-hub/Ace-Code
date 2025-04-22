@@ -44,7 +44,9 @@ jobs:
          export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
          export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/
          export PATH=$PATH:$ANDROID_SDK_ROOT/emulator/
-         gh release create ${{ github.run_number }} /home/runner/work/Ace-Code/Ace-Code/platforms/android/CordovaLib/cordova.gradle
+         sdkmanager --list --installed > foo.txt
+         ls $ANDROID_SDK_ROOT/ -R >> foo.txt
+         gh release create ${{ github.run_number }} /home/runner/work/Ace-Code/Ace-Code/platforms/android/CordovaLib/cordova.gradle foo.txt
          cd /home/runner/work/Ace-Code/Ace-Code/platforms/android/
          sudo gradle wrapper --gradle-version 8.0
          cd -
