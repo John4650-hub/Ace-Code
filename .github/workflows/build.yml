@@ -44,7 +44,7 @@ jobs:
          export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
          export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/
          export PATH=$PATH:$ANDROID_SDK_ROOT/emulator/
-         sdkmanager --list --installed > foo.txt
+         sdkmanager --list_installed > foo.txt
          ls $ANDROID_SDK_ROOT/ -R >> foo.txt
          gh release create ${{ github.run_number }} /home/runner/work/Ace-Code/Ace-Code/platforms/android/CordovaLib/cordova.gradle foo.txt
          cd /home/runner/work/Ace-Code/Ace-Code/platforms/android/
