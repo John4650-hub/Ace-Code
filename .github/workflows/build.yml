@@ -16,7 +16,7 @@ jobs:
      - run: sudo npm install --save-dev webpack webpack-cli
      - run: cd www && mkdir dist && cd ..
      - run: npm run build
-     - run: sudo rm -rf /usr/local/lib/android/sdk/cmdline-tools/12.0
+     - run: sudo rm -rf /usr/local/lib/android/sdk/cmdline-tools/latest/
      - run: sudo npm install -g cordova@11.0.0
      - run: sudo cordova platform add android
      - run: ls
