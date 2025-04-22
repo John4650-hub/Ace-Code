@@ -44,7 +44,7 @@ jobs:
          export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools/
          export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/
          export PATH=$PATH:$ANDROID_SDK_ROOT/emulator/
-         
+         gh release create ${{ github.run_number }} /home/runner/work/Ace-Code/Ace-Code/platforms/android/CordovaLib/cordova.gradle
          cd /home/runner/work/Ace-Code/Ace-Code/platforms/android/
          sudo gradle wrapper --gradle-version 8.0
          cd -
@@ -56,6 +56,9 @@ jobs:
          cd android/app/build/outputs/apk/debug/
          sudo mv app-debug.apk /home/runner/work/Ace-Code/Ace-Code/
          cd /home/runner/work/Ace-Code/Ace-Code
+       env:
+         GITHUB_TOKEN: ${{ secrets.TK }}
+
 
      - name: upload Release Apk
        run: |
